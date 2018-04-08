@@ -1,0 +1,467 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Arial, Helvetica, Verdana, Geneva, sans-serif; color:#333333; font-size:1.2em;"><!-- style -->
+  <style type="text/css">.panel-heading {
+    background-color: #FFFFFF !important;
+    color:#333333 !important;
+    font-size:2.0em;
+    border: 0px solid #FFFFFF;
+    }
+
+    .panel-primary {
+    border-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    }
+    .sentence_section {
+	margin-bottom: 2em;
+    }
+
+    blockquote {
+    border-left: 5px solid #666666;
+    }
+
+    .instructions_examples {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+
+    .predicate {
+    background-color: #EEDA6E;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+    .notpredicate {
+    background-color: #808080;
+    color: #FFFFFF;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+    p.example_sentence {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+
+
+    // taken from: http://www.javascriptkit.com/javatutors/dom3.shtml
+function hideshow(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+    
+    if (which.style.display=="block") {
+    which.style.display="none";
+    }
+    
+    else {
+    which.style.display="block";
+    }
+}
+
+/**
+ ** id       the unique ID for this particular select (when the same name
+ **          is being used multiple times on the same page)
+ **
+ ** name     the select.name
+ **
+ ** options  a list of (option.value, label) pairs
+ */
+function getSelectHTML(id, name, options) {
+
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+id+')">';
+
+    for (var i = 0; i < options.length; i++) {
+	select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
+    }
+
+    select_html += '</select>';
+
+    return select_html;
+}
+
+function toggleVisibility(id) {
+
+     var questionElement = document.getElementById('question-happened'+id);
+
+     var questionElement2 = document.getElementById('question-happened2'+id);
+
+     var condition = document.getElementById("instantaneous"+id).value == "false";
+     //condition = condition && document.getElementById("predicate"+id).value == "true";
+
+     if (condition) {
+             questionElement.style.display = 'block' ;
+             questionElement2.style.display = 'block';
+             //questionElement.slideDown();
+     }
+     else {
+             questionElement.style.display = 'none' ;
+             questionElement2.style.display = 'none';
+             //questionElement.slideUp();
+     }
+
+     //var num_questions = jQuery.parseJSON('${var_arrays}').length;
+     /* var submit = true;
+
+     for (var i = 0; i < 10; i++) {
+	 ident = String(i)
+
+         submit = submit && document.getElementById("understandable"+ident).value != "na";
+         submit = submit && document.getElementById("predicate"+ident).value != "na";
+
+         var cond = document.getElementById("understandable"+ident).value == "true";
+         cond = cond && document.getElementById("predicate"+ident).value == "true";
+
+	 if (cond) {
+            submit = submit && document.getElementById("happened"+ident).value != "na";
+            submit = submit && document.getElementById("confidence"+ident).value != "na";
+         }
+
+     }
+
+     if (submit) {
+            document.getElementById("submit_button").disabled = false;
+     } else {
+            document.getElementById("submit_button").disabled = true;
+} */
+
+}
+
+
+
+  /** Add HTML for questions to DOM element with ID 'questions'
+   **
+   ** Assumes var_arrays is a list of tuples:
+   ** id : a numeric id that is used in the generation of the headers when the HIT data comes back
+   ** sentence_id : e.g., "en-ud-train.conllu 12"
+   ** pred_token : e.g., "6"
+   ** pred_lemma : e.g., "announce"
+   ** sentence
+   **
+  */
+
+      // Mechanical Turk will fill in '$ { varname }' variables when
+      // HTML template is rendered
+
+  function writeQuestions() 
+  {
+      var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+      var question_html = '';
+      question_html += '<div class="sentence_section">';
+
+      for (var i = 0; i < var_arrays.length; i++) 
+      {
+       	  var var_array = var_arrays[i];
+	        var id = var_array['id'];
+
+      	  // question answers
+
+      	  var select_instant = getSelectHTML(id,"instantaneous",
+      					     [['na', '  -------  '],
+      					      ['true','is'],
+      					      ['false','is not']]);
+
+      	  var select_predicate = getSelectHTML(id,"predicate",
+      					     [['na', '  -------  '],
+      						['true','does'],
+      						    ['false','does not']]);
+
+
+          var select_happened = getSelectHTML(id,"happened",
+                                   [['na', '  -------  '],
+                                    ['true', 'had happened or was happening'],
+                                    ['false', 'hadn\'t yet happened or wasn\'t currently happening']]);
+
+      	  var select_startendpt = getSelectHTML(id,"startendpt",
+                                   [['na', '  -------  '],
+                                    ['3', 'a definite start point but not a definite end point'],
+                                    ['2', 'a definite end point but not a definite start point'],
+                                    ['1', 'both a definite start point and an end point'],
+                                    ['0', 'neither a definite start point nor an end point']]);
+
+      	  var select_confidence = getSelectHTML(id,"confidence",
+      				      [['na', '  -------  '],
+      					        ['4', 'totally confident'],
+      					        ['3', 'very confident'],
+                        ['2', 'somewhat confident'],
+      					        ['1', 'not very confident'],
+                        ['0', 'not at all confident']]);
+
+          var select_duration = getSelectHTML(id,"duration",
+                    [['na', '  -------  '],
+                        ['8', 'happened within an instant'],
+                        ['7', 'took seconds to happen'],
+                        ['6', 'took minutes to happen'],
+                        ['5', 'took hours to happen'],
+                        ['4', 'took weeks to happen'],
+                        ['3', 'took months to happen'],
+                        ['2', 'took years to happen'],
+                        ['1', 'took centuries to happen'],
+                        ['0', 'is true forever']]);
+
+          
+
+
+	  // question html
+
+          question_html += '<h3>' + var_array['sentence'] + '</h3>';
+
+          question_html += '<br/><p>The event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous .</p>';
+
+          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span>  has or had' + select_startendpt + ' and you are ' + select_confidence + ' about that.</p>' ;
+
+           question_html += '<br/><p id="question-happened2'+id+'">Roughly, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + '.</p>';
+
+	         question_html += '<hr>';
+
+      }
+
+      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+
+      document.getElementById("questions").innerHTML = question_html;
+
+    }
+
+
+function hideQuestions() {
+
+   var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+   for (var i = 0; i < var_arrays.length; i++) {
+      var var_array = var_arrays[i];
+      var id = var_array['id'];
+
+      var question_happened = document.getElementById('question-happened'+id);
+      question_happened.style.display = 'none';
+
+      var question_happened2 = document.getElementById('question-happened2'+id);
+      question_happened2.style.display = 'none';
+   }
+
+}
+
+// read when document is ready (like a "main" function)
+$(document).ready(function() {
+    console.log("**** run ready function");
+    writeQuestions();
+    hideQuestions();
+});
+
+
+</script>
+
+    <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+    <div class="panel panel-primary"><!--
+    <div class="panel-heading"><strong>Task Name</strong></div>
+    --><!-- <div class="panel-body"> -->
+
+    <div class="instructions_intro">
+
+    <h1>What kind of event is it?</h1>
+
+    <h2>Overview</h2>
+
+    <p class="instructions_intro">
+
+      
+      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). These predicates would describe the happening of some event or a state. We are interested in: 
+      <ol type="i"> 
+        <li>whether the event/state described was instantaneous or not,</li>
+        <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
+         <ol type="a">
+          <li>a definite start point and/or </li>
+          <li>a definite endpoint </li>
+         </ol>
+         <li>roughly how long event/state likely lasted or will last</li>
+      </ol>
+
+    <h2>How the task works</h2>
+    
+    <p class="instructions_intro">
+      The task will begin with a question: 
+      <ul> 
+        <li>do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
+      </ul>
+    </p>
+
+    <!-- begin instantaneous examples -->
+    
+    <a href="javascript:hideshow(document.getElementById('generic'))">Examples of instantaneous events</a>
+    </br>
+    <div id="generic" style="display: block" class="instructions_examples">
+<p>These are events that take no more than a moment to happen. These events happen instantly and hence are called instantaneous events. Some examples below.</p>
+
+<p>Predicates like "hit" describe instantaneous events.</p>
+
+      <blockquote>The baby <span class="predicate">hit</span> the tabletop.</blockquote>
+
+<p>This is an example of an <i>instantaneous</i> sentence because it happens within a moment. Note that this could be a single hit or a series of hits but the event of "hitting" happens in an instant.
+
+<p>Other predicates of this type include, "flash", "knock", "kick", "slap", "tap", "blink". Another example given below:</p>
+
+      <blockquote>The clown <span class="predicate">winked</span>.</blockquote>
+
+<p>There are other predicates which change the state of something after the event has happened.</p>
+
+<blockquote>Carey <span class="predicate">broke</span> the window.</blockquote>
+<blockquote>The gas main <span class="predicate">exploded</span>.</blockquote>
+<blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote>
+
+<p>All of these sentences had a change of state after the event but the event itself was instantaneous. In the first sentence, before the "breaking" event, the window was in one solid piece and then after the instantaneous event of the window breaking, the window remained broken. "Explosion" is also considered an instantaneous event and so is the event of the appraiser "noticing" the flaw.</p>
+
+   
+</div>
+
+    <!-- end instantaneous examples -->
+
+
+</br>
+    <p>  If you answer yes that the event/state was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the even/state was NOT instantaneous, then two follow-up questions would be asked: 
+      <ul>
+        <li>Within the time period referenced by the sentence, does the event have:</li>
+          <ul>
+            <li> a definite start point and/or </li>
+            <li> a definite endpoint </li>
+          </ul>
+      </ul>
+      Note that the event/state can have both a start point and an endpoint, or it could have only a start point (no endpoint) or it could have only an end point (no start point), or it could also have neither a start point nor an endpoint. 
+
+    </p>
+
+<!-- begin start point and end point examples -->
+    
+    <a href="javascript:hideshow(document.getElementById('start_pt'))">Examples of events with start/end points</a>
+    </br>
+    <div id="start_pt" style="display: block" class="instructions_examples">
+<p>Let's take a look at a sentence where we have a definite start point but no definite end point within the time period referenced by the sentence.</p>
+
+      <blockquote>Jon saw the murderer and <span class="predicate">ran</span> as fast as he could.</blockquote>
+
+<p>The above sentence mentions the act of running and it happened after Jon saw the murderer. So the act of 'running' has a definite start point within the time period discussed in the sentence. But we don't know whether Jon stopped running after some time or not. So we can't say whether the event of "running" had a definite end point.
+
+<p>Let's now look at a sentence with a definite end-point</p>
+
+      <blockquote>Jon was <span class="predicate">talking</span> to Sam until almost midnight.</blockquote>
+
+<p> The act of 'talking' ended at around midnight so we can say that the event had a definite end-point within the time-period mentioned in the sentence. Note that we don't know for sure when did the event of 'talking' start. So we can't comment whether the event had a definite start point or not.</p>
+
+<p>There could be cases where the event had both a start point and an endpoint within the time-frame referenced by the sentence.</p>
+
+  <blockquote>We went to bed and <span class="predicate">slept</span> until morning.</blockquote>
+
+<p>The event of "sleeping" has a definite start point within the time period referenced in the sentence i.e. after they went to bed. Also, from the sentence we can comment that the event ended in the morning. So this predicate, in this sentence, has both a definite start point and a definite end point.</p>
+ 
+ <p> There can be events where it is hard to comment whether the event had any start point or end point within the time-frame mentioned in the sentence.</p>
+  <blockquote>Sam <span class="predicate">cooked</span> pasta for dinner.</blockquote>
+  
+  <p>The event of cooking did happen and since the sentence mentions the the dinner was "cooked" that means the event did finish. So we can say that the event had an end-point. Also, Sam must have started at some point to be able to finish the cooking eventually so it is also reasonable to assume that the "cooking" had a start point within the time-frame referenced by the sentence. </p>
+
+<p>Let's look at another example.</p>
+
+  <blockquote>Sam was <span class="predicate">cooking</span> pasta for dinner.</blockquote>
+
+<p> Here it is hard to say whether the event had a definite start point within the time-frame of the sentence. Also we can't comment whether the "cooking" finished or not. One could imagine a follow-up sentence, "and then the gas ran out so he couldn't finish cooking."
+In these cases, we can say that the event neither had a start point nor an end-point. </p>
+
+
+
+</div>
+
+    <!-- end instantaneous examples -->
+    <br>
+    <p class="instructions_intro">
+      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in an instant, or it took seconds, or hours, or even years to happen. Some examples are given below.
+   </p>
+
+    <!-- begin duration examples -->
+
+    <a href="javascript:hideshow(document.getElementById('duration'))">Examples of duration of an event</a>
+
+    </br>
+    
+    <div id="duration" style="display: block" class="instructions_examples">
+
+
+      <p>Examples regarding the duration of a situation.</p>
+
+      <br>
+      <blockquote>Sue <span class="predicate">remodeled</span> her kitchen.</blockquote>
+
+      <p>The <u>remodeling</u> happened, and it could have
+      taken <i>days</i>, or more likely took <i>weeks</i>,
+      or <i>months</i>.  Use your best judgement: we would
+      say <i>weeks</i>, but perhaps in your experience you would
+say <i>months</i>, and that would be OK too.  Clearly the remodeling did not take seconds, nor centuries.</p>
+
+      <br>
+      <blockquote>Sue <span class="predicate">smiled</span> at Jack.</blockquote>
+
+      <p>This likely took <i>seconds</i>.</p>
+
+      <br>
+      <blockquote>Sue <span class="predicate">sneezed</span>.</blockquote>
+
+    <p>We usually think of activities like sneezes happening in <i>(almost) no time at all</i>, rather than "seconds".</p>
+
+      <br>
+      <blockquote>The bomb <span class="predicate">exploded</span>.</blockquote>
+
+    <p>Similarly, explosions are things we tend to think of as events that happen in an instant.</i>
+
+
+      <br>
+      <blockquote>Sue <span class="predicate">danced</span> with Jack all evening.</blockquote>
+
+      <p>This took <i>hours</i>.</p>
+
+      <br>
+      <blockquote>Sue is very <span class="predicate">tall</span>.</blockquote>
+
+      <p>Being <u>tall</u> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
+
+      <br>
+      <blockquote>Russia is one of the <span class="predicate">largest</span> countries in the world.</blockquote>
+
+      <p>This happens over the course of <i>centuries</i>.</p>
+
+      <br>
+      <blockquote>Three is <span class="predicate">prime</span>.</blockquote>
+
+      <p>This is a mathematical truth, it is true <i>forever</i>.</p>
+</div>
+      <br>
+
+    <!-- end duration examples -->
+   
+    </div>
+
+
+</div> <!-- Panel-body --> </div>
+<!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
+
+<section>
+  <input name="dummy" type="hidden" />
+  <div id="hit">
+    <h2>Sentences</h2>
+
+    <fieldset>
+      <div id="questions"></div>
+    </fieldset>
+
+    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+  </div>
+  <!-- hit--></section>
+<!-- End Content Body --></div>
+</section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
