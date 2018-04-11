@@ -364,13 +364,19 @@ $(document).ready(function() {
     <p class="instructions_intro">
 
       
-      In this task, you will be presented with a sentence containing two <span class="predicate">yellow-highlighted</span> words, followed by questions about these words. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). These predicates would describe the happening of some event or a state. We are interested in knowing the relations between the events described by these predicates. 
+      In this task, you will be presented with a sentence containing two <span class="predicate">yellow-highlighted</span> words, followed by questions about these words. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness).
+    </p>
 
+    <p class="instructions_intro">
+      We are interested in knowing the chronology of the situations described by these predicates: did one happen before/after the other?; did they overlap in time?; etc. 
+
+      </p>
+      
     <h2>How the task works</h2>
 
     <p class="instructions_intro">
       The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar. If the event described by the predicate is instantaneous, then the slider bar will have a single slider which can be moved along the horizontal line.
-      <br> Single slider for an <b>instantaneous event</b> is shown below. Click and drag the slider horizontly to change the range. </br>
+      <br>A single slider for an <b>instantaneous event</b> is shown below. Click and drag the slider horizontly to change the range. </br>
       <div id="generic" style="display: block" class="instructions_examples">
         
        <div class="slider">
@@ -386,7 +392,7 @@ $(document).ready(function() {
     </p>
 
     <p> 
-      Some events have a definite start point, but no definite end-point. The predicates describing these types of events will also have a single slider but the area after the slider would be highlighted to show that the event started at the position of the slider and the event continued after that.
+      Some events have a definite start point, but no definite end-point, within the time described by the sentence. The predicates describing these types of events will also have a single slider but the area after the slider would be highlighted to show that the event started at the position of the slider and the event continued after that.
     </p>
 
     <p>Single slider for an event with a <b>definite start point</b> looks like this:</p>
@@ -403,7 +409,7 @@ $(document).ready(function() {
     </div>
 
     <p> 
-      Some events have a definite end point, but no definite start point. The predicates describing these types of events will also have a single slider but the area before the slider would be highlighted to show that the event ended at the position of the slider and the event happened before that point.
+      Some events have a definite end point, but no definite start point, within the time described by the sentence. The predicates describing these types of events will also have a single slider but the area before the slider would be highlighted to show that the event ended at the position of the slider and the event happened before that point.
     </p>
 
     <p>Single slider for an event with a <b>definite end point</b> looks like this:</p>
@@ -443,7 +449,7 @@ $(document).ready(function() {
     <a href="javascript:hideshow(document.getElementById('generic'))">Examples with one instantaneous event</a>
     </br>
     <div id="generic" style="display: block" class="instructions_examples">
-<p>Let's consider an example of where one event is instantaneous and the other one has a definite start point but no definite end-point</p>
+<p>Let's consider an example where one event is instantaneous and the other one has a definite start point but no definite end-point</p>
 
       
       <blockquote>Sam <span class="predicate">broke</span> the window and <span class="predicate">ran</span> away.</blockquote>
