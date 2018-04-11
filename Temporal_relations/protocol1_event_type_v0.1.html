@@ -28,6 +28,11 @@
     padding: 0.5em;
     }
 
+    .terminology{
+    color: #FF0000;
+    font-weight:bold;
+    }
+    
     .predicate {
     background-color: #EEDA6E;
     padding-left: 3px;
@@ -273,7 +278,7 @@ $(document).ready(function() {
     <p class="instructions_intro">
 
       
-      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). These predicates would describe the happening of some event or a state. We are interested in: 
+      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to: 
       <ol type="i"> 
         <li>whether the event/state described was instantaneous or not,</li>
         <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
@@ -298,25 +303,29 @@ $(document).ready(function() {
     <a href="javascript:hideshow(document.getElementById('generic'))">Examples of instantaneous events</a>
     </br>
     <div id="generic" style="display: block" class="instructions_examples">
-<p>These are events that take no more than a moment to happen. These events happen instantly and hence are called instantaneous events. Some examples below.</p>
+<p>Instantaneous situations take effectively no time at all to happen. For example, predicates like <span class="predicate">shattered</span> generally describe an instantaneous situation.</p>
 
-<p>Predicates like "hit" describe instantaneous events.</p>
+      <blockquote>The glass <span class="predicate">shattered</span>.</blockquote>
 
-      <blockquote>The baby <span class="predicate">hit</span> the tabletop.</blockquote>
+<p>Contrast this with a predicate like <span class="predicate">running</span>, which generally <b>doesn't</b> describe an instantaneous situation.</p>
 
-<p>This is an example of an <i>instantaneous</i> sentence because it happens within a moment. Note that this could be a single hit or a series of hits but the event of "hitting" happens in an instant.
+      <blockquote>The woman was <span class="predicate">running</span> through the park.</blockquote>
 
-<p>Other predicates of this type include, "flash", "knock", "kick", "slap", "tap", "blink". Another example given below:</p>
+<p>Other predicates, like <span class="predicate">flashed</span>, can refer to an instantaneous situation, as in:</p>
 
-      <blockquote>The clown <span class="predicate">winked</span>.</blockquote>
+      <blockquote>The light <span class="predicate">flashed</span> once.</blockquote>
 
-<p>There are other predicates which change the state of something after the event has happened.</p>
+<p>But they do not always refer to an instantaneous situation. For example, <span class="predicate">flashing</span> is not instantaneous in:</p>
 
-<blockquote>Carey <span class="predicate">broke</span> the window.</blockquote>
-<blockquote>The gas main <span class="predicate">exploded</span>.</blockquote>
-<blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote>
+      <blockquote>The strobe light was <span class="predicate">flashing</span> all night.</blockquote>
 
-<p>All of these sentences had a change of state after the event but the event itself was instantaneous. In the first sentence, before the "breaking" event, the window was in one solid piece and then after the instantaneous event of the window breaking, the window remained broken. "Explosion" is also considered an instantaneous event and so is the event of the appraiser "noticing" the flaw.</p>
+<p>While individual flashes might be instantaneous, the collection of flashes described by <span class="predicate">flashing</span> occur over time.</p>
+      
+<p>Other predicates, like <span class="predicate">broke</span>, describe situations where something undergoes a change - in the case of <span class="predicate">broke</span>, a change from being unbroken to broken. For predicates like this, we are interested in the change itself, not the situation before or after the change.</p>
+
+<blockquote>The teenager <span class="predicate">broke</span> the window.</blockquote>
+<!-- <blockquote>The gas main <span class="predicate">exploded</span>.</blockquote> -->
+<!-- <blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote> -->
 
    
 </div>
@@ -325,7 +334,7 @@ $(document).ready(function() {
 
 
 </br>
-    <p>  If you answer yes that the event/state was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the even/state was NOT instantaneous, then two follow-up questions would be asked: 
+    <p>  If you answer that the situation was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the situation was <b>not</b> instantaneous, then two follow-up questions would be asked: 
       <ul>
         <li>Within the time period referenced by the sentence, does the event have:</li>
           <ul>
@@ -333,7 +342,7 @@ $(document).ready(function() {
             <li> a definite endpoint </li>
           </ul>
       </ul>
-      Note that the event/state can have both a start point and an endpoint, or it could have only a start point (no endpoint) or it could have only an end point (no start point), or it could also have neither a start point nor an endpoint. 
+      The situation could have both a start point and an endpoint, or it could have only a start point (and no endpoint), or it could have only an end point (and no start point), or it could also have neither a start point nor an endpoint. 
 
     </p>
 
@@ -344,33 +353,27 @@ $(document).ready(function() {
     <div id="start_pt" style="display: block" class="instructions_examples">
 <p>Let's take a look at a sentence where we have a definite start point but no definite end point within the time period referenced by the sentence.</p>
 
-      <blockquote>Jon saw the murderer and <span class="predicate">ran</span> as fast as he could.</blockquote>
+      <blockquote>Jon saw the murderer and then <span class="predicate">ran</span> as fast as he could.</blockquote>
 
-<p>The above sentence mentions the act of running and it happened after Jon saw the murderer. So the act of 'running' has a definite start point within the time period discussed in the sentence. But we don't know whether Jon stopped running after some time or not. So we can't say whether the event of "running" had a definite end point.
+<p>The situation described by <span class="predicate">ran</span> has a definite start point within the time period discussed in the sentence - probably, right after he saw the murderer. Presumably, Jon stopped running after some time, but when Jon stopped running isn't mentioned by the sentence, so the situation described by  <span class="predicate">ran</span> does <b>not</b> have a definite end point <i>within the time period referenced by the sentence</i>.
 
-<p>Let's now look at a sentence with a definite end-point</p>
+<p>Let's now look at a sentence with a definite end-point.</p>
 
       <blockquote>Jon was <span class="predicate">talking</span> to Sam until almost midnight.</blockquote>
 
-<p> The act of 'talking' ended at around midnight so we can say that the event had a definite end-point within the time-period mentioned in the sentence. Note that we don't know for sure when did the event of 'talking' start. So we can't comment whether the event had a definite start point or not.</p>
+<p> The situation described by <span class="predicate">talking</span> ended at around midnight so we can say that the event had a definite end-point within the time-period mentioned in the sentence. Presumably, Jon started talking at some point, but when he started isn't mentioned by the sentence, so the situation described by  <span class="predicate">talking</span> does <b>not</b> have a definite start point <i>within the time period referenced by the sentence</i>.</p>
 
 <p>There could be cases where the event had both a start point and an endpoint within the time-frame referenced by the sentence.</p>
 
-  <blockquote>We went to bed and <span class="predicate">slept</span> until morning.</blockquote>
+  <blockquote>They went to bed and <span class="predicate">slept</span> until morning.</blockquote>
 
-<p>The event of "sleeping" has a definite start point within the time period referenced in the sentence i.e. after they went to bed. Also, from the sentence we can comment that the event ended in the morning. So this predicate, in this sentence, has both a definite start point and a definite end point.</p>
+<p>The situation referred to by <span class="predicate">slept</span> has a definite start point within the time period referenced in the sentence - after they went to bed - and it also has an end-point - in the morning.</p>
  
- <p> There can be events where it is hard to comment whether the event had any start point or end point within the time-frame mentioned in the sentence.</p>
-  <blockquote>Sam <span class="predicate">cooked</span> pasta for dinner.</blockquote>
+<p> There can be predicates that describe situations that have neither a start-point nor an end-point within the time-frame mentioned in the sentence. For instance, consider:</p>
+
+  <blockquote>Sam <span class="predicate">has</span> red.</blockquote>
   
-  <p>The event of cooking did happen and since the sentence mentions the the dinner was "cooked" that means the event did finish. So we can say that the event had an end-point. Also, Sam must have started at some point to be able to finish the cooking eventually so it is also reasonable to assume that the "cooking" had a start point within the time-frame referenced by the sentence. </p>
-
-<p>Let's look at another example.</p>
-
-  <blockquote>Sam was <span class="predicate">cooking</span> pasta for dinner.</blockquote>
-
-<p> Here it is hard to say whether the event had a definite start point within the time-frame of the sentence. Also we can't comment whether the "cooking" finished or not. One could imagine a follow-up sentence, "and then the gas ran out so he couldn't finish cooking."
-In these cases, we can say that the event neither had a start point nor an end-point. </p>
+  <p>The predicate <span class="predicate">has</span> refers to a state that presumably started when Sam was child and will end when his hair begins to turn grey, but the sentence does not explicitly mention those times, so we say that the event neither had a start point nor an end-point.</p>
 
 
 
@@ -379,7 +382,7 @@ In these cases, we can say that the event neither had a start point nor an end-p
     <!-- end instantaneous examples -->
     <br>
     <p class="instructions_intro">
-      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in an instant, or it took seconds, or hours, or even years to happen. Some examples are given below.
+      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in an instant, or it took seconds, or hours, or even years to happen.
    </p>
 
     <!-- begin duration examples -->
@@ -391,52 +394,42 @@ In these cases, we can say that the event neither had a start point nor an end-p
     <div id="duration" style="display: block" class="instructions_examples">
 
 
-      <p>Examples regarding the duration of a situation.</p>
+      <p>Consider a predicate like <span class="predicate">remodeled</span>.</p>
 
       <br>
       <blockquote>Sue <span class="predicate">remodeled</span> her kitchen.</blockquote>
 
-      <p>The <u>remodeling</u> happened, and it could have
-      taken <i>days</i>, or more likely took <i>weeks</i>,
+      <p>The situation described by <span class="predicate">remodeled</span> could have
+      taken <i>days</i>, but more likely it took <i>weeks</i>,
       or <i>months</i>.  Use your best judgement: we would
       say <i>weeks</i>, but perhaps in your experience you would
-say <i>months</i>, and that would be OK too.  Clearly the remodeling did not take seconds, nor centuries.</p>
+say <i>months</i>, and that would be an okay response too.  But the remodeling clearly did not take seconds, nor centuries.</p>
 
+      <p>A case of something that would take <i>seconds</i> is the situation described by <span class="predicate">smiled</span>.</p>
+      
       <br>
       <blockquote>Sue <span class="predicate">smiled</span> at Jack.</blockquote>
 
-      <p>This likely took <i>seconds</i>.</p>
-
-      <br>
-      <blockquote>Sue <span class="predicate">sneezed</span>.</blockquote>
-
-    <p>We usually think of activities like sneezes happening in <i>(almost) no time at all</i>, rather than "seconds".</p>
-
-      <br>
-      <blockquote>The bomb <span class="predicate">exploded</span>.</blockquote>
-
-    <p>Similarly, explosions are things we tend to think of as events that happen in an instant.</i>
-
-
+      <p>This took <i>hours</i>.</p>
+      
       <br>
       <blockquote>Sue <span class="predicate">danced</span> with Jack all evening.</blockquote>
 
-      <p>This took <i>hours</i>.</p>
-
+      <p>Being <u>tall</u> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
+      
       <br>
       <blockquote>Sue is very <span class="predicate">tall</span>.</blockquote>
 
-      <p>Being <u>tall</u> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
-
+      <p>This happens over the course of <i>centuries</i>.</p>
+      
       <br>
       <blockquote>Russia is one of the <span class="predicate">largest</span> countries in the world.</blockquote>
 
-      <p>This happens over the course of <i>centuries</i>.</p>
-
+      <p>This is a mathematical truth, it is true <i>forever</i>.</p>
+      
       <br>
       <blockquote>Three is <span class="predicate">prime</span>.</blockquote>
 
-      <p>This is a mathematical truth, it is true <i>forever</i>.</p>
 </div>
       <br>
 
