@@ -99,16 +99,21 @@ function toggleVisibility(id) {
 
      var questionElement2 = document.getElementById('question-happened2'+id);
 
+     var questionElement3 = document.getElementById('question-happened3'+id);
+
      var condition = document.getElementById("instantaneous"+id).value == "false";
      //condition = condition && document.getElementById("predicate"+id).value == "true";
 
      if (condition) {
              questionElement.style.display = 'block' ;
              questionElement2.style.display = 'block';
+             questionElement3.style.display = 'block';
+
              //questionElement.slideDown();
      }
      else {
              questionElement.style.display = 'none' ;
+             questionElement2.style.display = 'none';
              questionElement2.style.display = 'none';
              //questionElement.slideUp();
      }
@@ -186,13 +191,6 @@ function toggleVisibility(id) {
                                     ['true', 'had happened or was happening'],
                                     ['false', 'hadn\'t yet happened or wasn\'t currently happening']]);
 
-      	  var select_startendpt = getSelectHTML(id,"startendpt",
-                                   [['na', '  -------  '],
-                                    ['3', 'a definite start-point but not a definite end-point'],
-                                    ['2', 'a definite end-point but not a definite start-point'],
-                                    ['1', 'both a definite start-point and an end-point'],
-                                    ['0', 'neither a definite start-point nor an end-point']]);
-
       	  var select_confidence = getSelectHTML(id,"confidence",
       				      [['na', '  -------  '],
       					        ['4', 'totally confident'],
@@ -219,11 +217,13 @@ function toggleVisibility(id) {
 
           question_html += '<h3>' + var_array['sentence'] + '</h3>';
 
-          question_html += '<br/><p>The event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous .</p>';
+          question_html += '<br/><p>The situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous  and you are '+ select_confidence + ' about that.</p>' ;
 
-          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span>  has or had' + select_startendpt + ' and you are ' + select_confidence + ' about that.</p>' ;
+          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite start-point, and you are ' + select_confidence + ' about that.</p>' ;
 
-           question_html += '<br/><p id="question-happened2'+id+'">Roughly, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + '.</p>';
+          question_html += '<br/><p id="question-happened2'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite end-point, and you are ' + select_confidence + ' about that.</p>' ;
+
+           question_html += '<br/><p id="question-happened3'+id+'">Roughly, the situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + ' and you are ' +  select_confidence + ' about that.</p>';
 
 	         question_html += '<hr>';
 
@@ -249,6 +249,9 @@ function hideQuestions() {
 
       var question_happened2 = document.getElementById('question-happened2'+id);
       question_happened2.style.display = 'none';
+
+      var question_happened3 = document.getElementById('question-happened3'+id);
+      question_happened3.style.display = 'none';
    }
 
 }
