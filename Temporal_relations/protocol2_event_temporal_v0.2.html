@@ -160,10 +160,10 @@ function toggleVisibility(id) {
 
       	  var select_startendpt = getSelectHTML(id,"startendpt",
                                    [['na', '  -------  '],
-                                    ['3', 'a definite start point but not a definite end point'],
-                                    ['2', 'a definite end point but not a definite start point'],
-                                    ['1', 'both a definite start point and an end point'],
-                                    ['0', 'neither a definite start point nor an end point']]);
+                                    ['3', 'a definite start-point but not a definite end-point'],
+                                    ['2', 'a definite end-point but not a definite start-point'],
+                                    ['1', 'both a definite start-point and an end-point'],
+                                    ['0', 'neither a definite start-point nor an end-point']]);
 
       	  var select_confidence = getSelectHTML(id,"confidence",
       				      [['na', '  -------  '],
@@ -375,7 +375,7 @@ $(document).ready(function() {
     <h2>How the task works</h2>
 
     <p class="instructions_intro">
-      The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar. If the event described by the predicate is instantaneous, then the slider bar will have a single slider which can be moved along the horizontal line.
+      The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar. If the situation described by the predicate is instantaneous, then the slider bar will have a single slider which can be moved along the horizontal line.
       <br>A single slider for an <b>instantaneous event</b> is shown below. Click and drag the slider horizontly to change the range. </br>
       <div id="generic" style="display: block" class="instructions_examples">
         
@@ -392,10 +392,10 @@ $(document).ready(function() {
     </p>
 
     <p> 
-      Some events have a definite start point, but no definite end-point, within the time described by the sentence. The predicates describing these types of events will also have a single slider but the area after the slider would be highlighted to show that the event started at the position of the slider and the event continued after that.
+      Some events have a definite start-point, but no definite end-point, within the time described by the sentence. The predicates describing these types of situations will also have a single slider but the area after the slider would be highlighted to show that the event started at the position of the slider and the event continued after that.
     </p>
 
-    <p>Single slider for an event with a <b>definite start point</b> looks like this:</p>
+    <p>Single slider for an event with a <b>definite start-point</b> looks like this:</p>
     <div id="generic" style="display: block" class="instructions_examples">
       <div class="slider-start">
             <b>Range:</b>
@@ -409,10 +409,10 @@ $(document).ready(function() {
     </div>
 
     <p> 
-      Some events have a definite end point, but no definite start point, within the time described by the sentence. The predicates describing these types of events will also have a single slider but the area before the slider would be highlighted to show that the event ended at the position of the slider and the event happened before that point.
+      Some events have a definite end-point, but no definite start-point, within the time described by the sentence. The predicates describing these types of situations will also have a single slider but the area before the slider would be highlighted to show that the event ended at the position of the slider and the event happened before that point.
     </p>
 
-    <p>Single slider for an event with a <b>definite end point</b> looks like this:</p>
+    <p>Single slider for an event with a <b>definite end-point</b> looks like this:</p>
     <div id="generic" style="display: block" class="instructions_examples">
       <div class="slider-end">
             <b>Range:</b>
@@ -425,10 +425,10 @@ $(document).ready(function() {
     </div>
 
     <p> 
-      Some events have both a definite start point and a definite end point. The predicates describing these types of events will have a dual slider and the area between the sliders would be highlighted to reflect that the event happened between those two points.
+      Some events have both a definite start-point and a definite end-point. The predicates describing these types of situations will have a dual slider and the area between the sliders would be highlighted to reflect that the event happened between those two points.
     </p>
 
-    <p>Dual slider for an event with a <b>both definite start/end points</b> looks like this:</p>
+    <p>Dual slider for an event with a <b>both definite start/end-points</b> looks like this:</p>
     <div id="generic" style="display: block" class="instructions_examples">
       <div class="slider-range">
             <b>Range:</b>
@@ -449,7 +449,7 @@ $(document).ready(function() {
     <a href="javascript:hideshow(document.getElementById('generic'))">Examples with one instantaneous event</a>
     </br>
     <div id="generic" style="display: block" class="instructions_examples">
-<p>Let's consider an example where one event is instantaneous and the other one has a definite start point but no definite end-point</p>
+<p>Let's consider an example where one event is instantaneous and the other one has a definite start-point but no definite end-point.</p>
 
       
       <blockquote>Sam <span class="predicate">broke</span> the window and <span class="predicate">ran</span> away.</blockquote>
@@ -473,19 +473,21 @@ $(document).ready(function() {
             <b>Range:</b>
             <span class="amount"></span>
                 <div class="hiddenValues" style="display: none;"> 
-                <div class="currentValue"> 60 </div> 
+                <div class="currentValue"> 50 </div> 
                 </div> <!-- end hiddenValues --> 
           <div class="slider-sub"></div> 
        </div>
       </p>
        
-<p>This is an example of where the first predicate describes an <i>instantaneous</i> event, hence has a single slider with no highlighting around it. The event "ran" had a definite start point after the event of "breaking" the window, but it has no definite endpoint. Hence, "ran" has a single slider with the area to its right highlighted reflecting that the event of "running" continues after that point. Note that the range value that you choose doesn't matter here. All the slider positions where the range value of "ran" is greater than the range value of "broken" are correct. Don't worry too much about the exact values of range. They are just meant to get a sense of the chronology of events. </p>
+<p>The predicate <span class="predicate">broke</span> has a single slider with no highlighting around it because it describes an <i>instantaneous</i> situation. The predicate <span class="predicate">ran</span> describes a situation having a definite start-point within the time period discussed in the sentence - probably, right after he broke the window. Hence, it has a single slider with the area to its right highlighted reflecting that the situation continues after that point. </p>
 
-<p>Let's take another example</p>
+<p> Note that the range values of these sliders are flexible. In the above example, all we want to know is that the slider range value (or slider position) of <span class="predicate">ran</span> is greater than the range value of <span class="predicate">broke</span>. Don't worry too much about the exact values of range. They are just meant to get a sense of the chronology of events. </p>
 
-      <blockquote>The musician <span class="predicate">composed</span> the symphony and <span class="predicate">saved</span> a draft online.</blockquote>
+<p>Let's take another example.</p>
 
-      <p><span class="predicate">composed</span> 
+      <blockquote>The musician <span class="predicate">played</span> guitar for two hours and then <span class="predicate">left</span> the music room.</blockquote>
+
+      <p><span class="predicate">played</span> 
       <div class="slider-range">
             <b>Range:</b>
             <span class="amount"></span>
@@ -498,7 +500,7 @@ $(document).ready(function() {
       </p>
 
 
-    <p><span class="predicate">saved</span> 
+    <p><span class="predicate">left</span> 
       <div class="slider">
             <b>Range:</b>
             <span class="amount"></span>
@@ -509,9 +511,9 @@ $(document).ready(function() {
        </div>
     </p>
 
-  <p>In the above example, we can say that the event of "composing" the symphony had some definite start point and also finished within the time-period referenced by the sentence. So it has a dual slider to describe the start point and end point of the event "composed". From the sentence, we can say that the event of "saving" the draft would have happened after the musician finished composing. Hence, the range value of the single slider for "saved" is after the range value of the slider for "composed".
+    <p>The predicate <span class="predicate">played</span> has a dual slider with the area between the sliders highlighted to reflect a definite start-point and a definite end-point. The predicate <span class="predicate">left</span> has a single slider with no highlighting as it describes an <i>instantaneous</i> situation. Again, note that the slider position (or range value) of the situation described by <span class="predicate">left</span> is after the end-point of the situation described by <span class="predicate">played</span>. 
 
-  <p> We can also have sentences where an instantaneous event is contained within another event </p>
+  <p> Next, let's look at a situation where an instantaneous event is contained within another event.</p>
 
     <blockquote>We <span class="predicate">drove</span> the car from New York City to Boston and realized only later that we had <span class="predicate">escaped</span> a major highway crash on our route.</blockquote>
 
@@ -546,7 +548,7 @@ $(document).ready(function() {
 
 <br>
 
-<p> Next, let's look at sentences where none of the events are instantaneous </p>
+<p> Finally, let's look at sentences where none of the events are instantaneous </p>
 
 <!-- begin withh NO instantaneous examples -->
     
@@ -554,36 +556,37 @@ $(document).ready(function() {
     </br>
     <div id="generic" style="display: block" class="instructions_examples">
 
-<p>In some sentences, one event is contained in the other event. We want to capture the chronology of these events using the sliders. Consider the example below</p>
+<p>In some situations, one event is contained in the other event. We want to capture the chronology of these events using the sliders. Consider the example below:</p>
 
-  <blockquote>Bob <span class="predicate">watched</span> movies all night yesterday but also managed to <span class="predicate">work</span> on his math assignment while watching them.</blockquote>
+  <blockquote>We went to the stadium and <span class="predicate">played</span> football all night yesterday only <span class="predicate">resting</span> for a few minutes between the matches.</blockquote>
 
-  <p><span class="predicate">watched</span> 
+
+  <p><span class="predicate">played</span> 
       <div class="slider-range">
             <b>Range:</b>
             <span class="amount"></span>
                 <div class="hiddenValues" style="display: none;"> 
-                <div class="ValueStart"> 30 </div> 
+                <div class="ValueStart"> 20 </div> 
                 <div class="ValueEnd"> 80 </div>
                 </div> <!-- end hiddenValues --> 
             <div class="slider-sub"></div> 
        </div>
     </p>
 
-    <p><span class="predicate">work</span> 
+    <p><span class="predicate">resting</span> 
       <div class="slider-range">
             <b>Range:</b>
             <span class="amount"></span>
                 <div class="hiddenValues" style="display: none;"> 
-                <div class="ValueStart"> 37 </div> 
-                <div class="ValueEnd"> 65 </div> 
+                <div class="ValueStart"> 40 </div> 
+                <div class="ValueEnd"> 60 </div> 
                 </div> <!-- end hiddenValues --> 
             <div class="slider-sub"></div> 
        </div>
     </p>
 
 
-<p>In the above example, the event of Bob "working" on his math assignment happened between the event of him "watching" the movies. Hence, the slider positions of "work" are contained within the slider positions of "watched". </p>
+<p>In the above example, the situation described by the predicate <span class="predicate">resting</span> took place somewhere between the situation described by the predicate <span class="predicate">played</span>.</p>
 
 </div>
 
