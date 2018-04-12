@@ -32,7 +32,7 @@
     color: #FF0000;
     font-weight:bold;
     }
-    
+
     .predicate {
     background-color: #EEDA6E;
     padding-left: 3px;
@@ -62,11 +62,11 @@ function hideshow(which){
     if (!document.getElementById) {
     return;
     }
-    
+
     if (which.style.display=="block") {
     which.style.display="none";
     }
-    
+
     else {
     which.style.display="block";
     }
@@ -161,14 +161,14 @@ function toggleVisibility(id) {
       // Mechanical Turk will fill in '$ { varname }' variables when
       // HTML template is rendered
 
-  function writeQuestions() 
+  function writeQuestions()
   {
       var var_arrays = jQuery.parseJSON('${var_arrays}');
 
       var question_html = '';
       question_html += '<div class="sentence_section">';
 
-      for (var i = 0; i < var_arrays.length; i++) 
+      for (var i = 0; i < var_arrays.length; i++)
       {
        	  var var_array = var_arrays[i];
 	        var id = var_array['id'];
@@ -210,7 +210,7 @@ function toggleVisibility(id) {
                         ['1', 'took centuries to happen'],
                         ['0', 'is true forever']]);
 
-          
+
 
 
 	  // question html
@@ -279,9 +279,9 @@ $(document).ready(function() {
 
     <p class="instructions_intro">
 
-      
-      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to: 
-      <ol type="i"> 
+
+      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
+      <ol type="i">
         <li>whether the event/state described was instantaneous or not,</li>
         <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
          <ol type="a">
@@ -292,16 +292,16 @@ $(document).ready(function() {
       </ol>
 
     <h2>How the task works</h2>
-    
+
     <p class="instructions_intro">
-      The task will begin with a question: 
-      <ul> 
+      The task will begin with a question:
+      <ul>
         <li>Do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
       </ul>
     </p>
 
     <!-- begin instantaneous examples -->
-    
+
     <a href="javascript:hideshow(document.getElementById('generic'))">Examples of instantaneous events</a>
     </br>
     <div id="generic" style="display: block" class="instructions_examples">
@@ -322,21 +322,21 @@ $(document).ready(function() {
       <blockquote>The strobe light was <span class="predicate">flashing</span> all night.</blockquote>
 
 <p>While individual flashes might be instantaneous, the collection of flashes described by <span class="predicate">flashing</span> occur over time.</p>
-      
+
 <p>Other predicates, like <span class="predicate">broke</span>, describe situations where something undergoes a change - in the case of <span class="predicate">broke</span>, a change from being unbroken to broken. For predicates like this, we are interested in the change itself, not the situation before or after the change.</p>
 
 <blockquote>The teenager <span class="predicate">broke</span> the window.</blockquote>
 <!-- <blockquote>The gas main <span class="predicate">exploded</span>.</blockquote> -->
 <!-- <blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote> -->
 
-   
+
 </div>
 
     <!-- end instantaneous examples -->
 
 
 </br>
-    <p>  If you answer that the situation was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the situation was <b>not</b> instantaneous, then two follow-up questions would be asked: 
+    <p>  If you answer that the situation was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the situation was <b>not</b> instantaneous, then two follow-up questions would be asked:
       <ul>
         <li>Within the time period referenced by the sentence, does the event have:</li>
           <ul>
@@ -344,12 +344,12 @@ $(document).ready(function() {
             <li> a definite end-point </li>
           </ul>
       </ul>
-      The situation could have both a start-point and an end-point, or it could have only a start-point (and no end-point), or it could have only an end-point (and no start-point), or it could also have neither a start-point nor an end-point. 
+      The situation could have both a start-point and an end-point, or it could have only a start-point (and no end-point), or it could have only an end-point (and no start-point), or it could also have neither a start-point nor an end-point.
 
     </p>
 
 <!-- begin start-point and end-point examples -->
-    
+
     <a href="javascript:hideshow(document.getElementById('start_pt'))">Examples of events with start/end-points</a>
     </br>
     <div id="start_pt" style="display: block" class="instructions_examples">
@@ -370,11 +370,11 @@ $(document).ready(function() {
   <blockquote>They went to bed and <span class="predicate">slept</span> until morning.</blockquote>
 
 <p>The situation referred to by <span class="predicate">slept</span> has a definite start-point within the time period referenced in the sentence - after they went to bed - and it also has an end-point - in the morning.</p>
- 
+
 <p> There can be predicates that describe situations that have neither a start-point nor an end-point within the time-frame mentioned in the sentence. For instance, consider:</p>
 
   <blockquote>Sam <span class="predicate">has</span> red hair.</blockquote>
-  
+
   <p>The predicate <span class="predicate">has</span> refers to a state that presumably started when Sam was child and will end when his hair begins to turn grey, but the sentence does not explicitly mention those times, so we say that the event neither had a start-point nor an end-point.</p>
 
 
@@ -384,7 +384,7 @@ $(document).ready(function() {
     <!-- end instantaneous examples -->
     <br>
     <p class="instructions_intro">
-      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in an instant, or it took seconds, or hours, or even years to happen.
+      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, years, decades, or centuries to happen, or if it's possibly always true.
    </p>
 
     <!-- begin duration examples -->
@@ -392,7 +392,7 @@ $(document).ready(function() {
     <a href="javascript:hideshow(document.getElementById('duration'))">Examples of duration of an event</a>
 
     </br>
-    
+
     <div id="duration" style="display: block" class="instructions_examples">
 
 
@@ -401,46 +401,49 @@ $(document).ready(function() {
       <blockquote>Sue <span class="predicate">remodeled</span> her kitchen.</blockquote>
 
       <p>The situation described by <span class="predicate">remodeled</span> could have
-      taken <i>days</i>, but more likely it took <i>weeks</i>,
-      or <i>months</i>.  Use your best judgement: we would
+      taken <i>days</i>, <i>weeks</i>,
+      or <i>months</i>, depending on the job; but the remodeling clearly did not take seconds, nor centuries.
+      You should choose the option that you think is most likely: we would
       say <i>weeks</i>, but perhaps in your experience you would
-say <i>months</i>, and that would be an okay response too.  But the remodeling clearly did not take seconds, nor centuries.</p>
+say <i>months</i>, and that would be an okay response too.</p>
 
       <p>A case of something that would take <i>seconds</i> is the situation described by <span class="predicate">smiled</span>.</p>
-      
+
       <blockquote>Sue <span class="predicate">smiled</span> at Jack.</blockquote>
 
-      <p> A predicate like <span class="predicate">danced</span> might take minutes or even hours to happen. 
+      <p> A predicate like <span class="predicate">danced</span> might describe a situation that takes minutes or even hours to happen.
 
       <blockquote>Sue <span class="predicate">danced</span> with Jack all evening.</blockquote>
 
-      <p>The situation described by the predicate in the above sentence possibly took <i>hours</i>.</p>
+      <p>For instance, the situation described by <span class="predicate">danced</span> in the above sentence took <i>hours</i>.</p>
       <br>
 
-      <p>Some events could take decades to happen. Consider the predicate <span class="predicate">tall</span>.</p>
-      
+      <p>Some predicates, like <span class="predicate">tall</span>, can describe situations that hold over decades.</p>
+
       <blockquote>Sue is very <span class="predicate">tall</span>.</blockquote>
 
-       <p> Being <span class="predicate">tall</span> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
+       <p> Being <span class="predicate">tall</span> is not likely to change through most of a person's life, and because people tend to live for decades, we would say this happened over <i>decades</i>.</p>
 
       <br>
-      <p> An example of a situation that takes centuries to happen could be the property of being <span class="predicate">largest</span> of something. </p>
+      <p> An example of a situation that takes centuries to happen could be properties of countries, like being <span class="predicate">largest</span>. </p>
+
       <blockquote>Russia is one of the <span class="predicate">largest</span> countries in the world.</blockquote>
 
-      <p>This happens over the course of <i>centuries</i>.</p>
+      <p>This will depend on the country in question, along with the other countries in the world, but the situation described by <span class="predicate">largest</span> likely happens over the course of <i>centuries</i>.</p>
 
       <br>
-      <p>Situations described by some predicates could be true <i>forever</i>.</p>
-      
+      <p>Finally, situations described by some predicates could be true <i>forever</i>.</p>
+
       <blockquote>Three is <span class="predicate">prime</span>.</blockquote>
-      <p>This is a mathematical truth, it is true <i>forever</i>.</p>
-      
+
+      <p>This is a mathematical truth, and so it is true <i>forever</i>.</p>
+
 
 </div>
       <br>
 
     <!-- end duration examples -->
-   
+
     </div>
 
 
