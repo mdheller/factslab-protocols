@@ -191,7 +191,7 @@ function toggleVisibility(id) {
                                     ['true', 'had happened or was happening'],
                                     ['false', 'hadn\'t yet happened or wasn\'t currently happening']]);
 
-      	  var select_confidence = getSelectHTML(id,"confidence",
+      	  var select_confidence_instantaneous = getSelectHTML(id,"confidence_instantaneous",
       				      [['na', '  -------  '],
       					        ['4', 'totally confident'],
       					        ['3', 'very confident'],
@@ -199,6 +199,31 @@ function toggleVisibility(id) {
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);
 
+      	  var select_confidence_startpoint = getSelectHTML(id,"confidence_startpoint",
+      				      [['na', '  -------  '],
+      					        ['4', 'totally confident'],
+      					        ['3', 'very confident'],
+                        ['2', 'somewhat confident'],
+      					        ['1', 'not very confident'],
+                        ['0', 'not at all confident']]);
+
+      	  var select_confidence_endpoint = getSelectHTML(id,"confidence_endpoint",
+      				      [['na', '  -------  '],
+      					        ['4', 'totally confident'],
+      					        ['3', 'very confident'],
+                        ['2', 'somewhat confident'],
+      					        ['1', 'not very confident'],
+                        ['0', 'not at all confident']]);
+
+      	  var select_confidence_duration = getSelectHTML(id,"confidence_duration",
+      				      [['na', '  -------  '],
+      					        ['4', 'totally confident'],
+      					        ['3', 'very confident'],
+                        ['2', 'somewhat confident'],
+      					        ['1', 'not very confident'],
+                        ['0', 'not at all confident']]);                          
+                          
+                          
           var select_duration = getSelectHTML(id,"duration",
                     [['na', '  -------  '],
                         ['7', 'took seconds to happen'],
@@ -217,13 +242,13 @@ function toggleVisibility(id) {
 
           question_html += '<h3>' + var_array['sentence'] + '</h3>';
 
-          question_html += '<br/><p>The situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous  and you are '+ select_confidence + ' about that.</p>' ;
+          question_html += '<br/><p>The situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous  and you are '+ select_confidence_instantaneous + ' about that.</p>' ;
 
-          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite start-point, and you are ' + select_confidence + ' about that.</p>' ;
+          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite start-point, and you are ' + select_confidence_startpoint + ' about that.</p>' ;
 
-          question_html += '<br/><p id="question-happened2'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite end-point, and you are ' + select_confidence + ' about that.</p>' ;
+          question_html += '<br/><p id="question-happened2'+id+'">Within the time period referenced by the sentence, the situation referred to by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_predicate + ' have a definite end-point, and you are ' + select_confidence_endpoint + ' about that.</p>' ;
 
-           question_html += '<br/><p id="question-happened3'+id+'">Roughly, the situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + ' and you are ' +  select_confidence + ' about that.</p>';
+           question_html += '<br/><p id="question-happened3'+id+'">Roughly, the situation described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + ' and you are ' +  select_confidence_duration + ' about that.</p>';
 
 	         question_html += '<hr>';
 
