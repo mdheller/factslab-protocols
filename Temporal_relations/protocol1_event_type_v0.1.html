@@ -188,10 +188,10 @@ function toggleVisibility(id) {
 
       	  var select_startendpt = getSelectHTML(id,"startendpt",
                                    [['na', '  -------  '],
-                                    ['3', 'a definite start point but not a definite end point'],
-                                    ['2', 'a definite end point but not a definite start point'],
-                                    ['1', 'both a definite start point and an end point'],
-                                    ['0', 'neither a definite start point nor an end point']]);
+                                    ['3', 'a definite start-point but not a definite end-point'],
+                                    ['2', 'a definite end-point but not a definite start-point'],
+                                    ['1', 'both a definite start-point and an end-point'],
+                                    ['0', 'neither a definite start-point nor an end-point']]);
 
       	  var select_confidence = getSelectHTML(id,"confidence",
       				      [['na', '  -------  '],
@@ -203,7 +203,6 @@ function toggleVisibility(id) {
 
           var select_duration = getSelectHTML(id,"duration",
                     [['na', '  -------  '],
-                        ['8', 'happened within an instant'],
                         ['7', 'took seconds to happen'],
                         ['6', 'took minutes to happen'],
                         ['5', 'took hours to happen'],
@@ -283,8 +282,8 @@ $(document).ready(function() {
         <li>whether the event/state described was instantaneous or not,</li>
         <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
          <ol type="a">
-          <li>a definite start point and/or </li>
-          <li>a definite endpoint </li>
+          <li>a definite start-point and/or </li>
+          <li>a definite end-point </li>
          </ol>
          <li>roughly how long event/state likely lasted or will last</li>
       </ol>
@@ -294,7 +293,7 @@ $(document).ready(function() {
     <p class="instructions_intro">
       The task will begin with a question: 
       <ul> 
-        <li>do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
+        <li>Do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
       </ul>
     </p>
 
@@ -315,7 +314,7 @@ $(document).ready(function() {
 
       <blockquote>The light <span class="predicate">flashed</span> once.</blockquote>
 
-<p>But they do not always refer to an instantaneous situation. For example, <span class="predicate">flashing</span> is not instantaneous in:</p>
+<p>But they do not always refer to an instantaneous situation. For example, <span class="predicate">flashing</span> is <b>not</b> instantaneous in:</p>
 
       <blockquote>The strobe light was <span class="predicate">flashing</span> all night.</blockquote>
 
@@ -338,42 +337,42 @@ $(document).ready(function() {
       <ul>
         <li>Within the time period referenced by the sentence, does the event have:</li>
           <ul>
-            <li> a definite start point and/or </li>
-            <li> a definite endpoint </li>
+            <li> a definite start-point and/or </li>
+            <li> a definite end-point </li>
           </ul>
       </ul>
-      The situation could have both a start point and an endpoint, or it could have only a start point (and no endpoint), or it could have only an end point (and no start point), or it could also have neither a start point nor an endpoint. 
+      The situation could have both a start-point and an end-point, or it could have only a start-point (and no end-point), or it could have only an end-point (and no start-point), or it could also have neither a start-point nor an end-point. 
 
     </p>
 
-<!-- begin start point and end point examples -->
+<!-- begin start-point and end-point examples -->
     
-    <a href="javascript:hideshow(document.getElementById('start_pt'))">Examples of events with start/end points</a>
+    <a href="javascript:hideshow(document.getElementById('start_pt'))">Examples of events with start/end-points</a>
     </br>
     <div id="start_pt" style="display: block" class="instructions_examples">
-<p>Let's take a look at a sentence where we have a definite start point but no definite end point within the time period referenced by the sentence.</p>
+<p>Let's take a look at a sentence where we have a definite start-point but no definite end-point within the time period referenced by the sentence.</p>
 
       <blockquote>Jon saw the murderer and then <span class="predicate">ran</span> as fast as he could.</blockquote>
 
-<p>The situation described by <span class="predicate">ran</span> has a definite start point within the time period discussed in the sentence - probably, right after he saw the murderer. Presumably, Jon stopped running after some time, but when Jon stopped running isn't mentioned by the sentence, so the situation described by  <span class="predicate">ran</span> does <b>not</b> have a definite end point <i>within the time period referenced by the sentence</i>.
+<p>The situation described by <span class="predicate">ran</span> has a definite start-point within the time period discussed in the sentence - probably, right after he saw the murderer. Presumably, Jon stopped running after some time, but when Jon stopped running isn't mentioned by the sentence, so the situation described by  <span class="predicate">ran</span> does <b>not</b> have a definite end-point <i>within the time period referenced by the sentence</i>.
 
 <p>Let's now look at a sentence with a definite end-point.</p>
 
       <blockquote>Jon was <span class="predicate">talking</span> to Sam until almost midnight.</blockquote>
 
-<p> The situation described by <span class="predicate">talking</span> ended at around midnight so we can say that the event had a definite end-point within the time-period mentioned in the sentence. Presumably, Jon started talking at some point, but when he started isn't mentioned by the sentence, so the situation described by  <span class="predicate">talking</span> does <b>not</b> have a definite start point <i>within the time period referenced by the sentence</i>.</p>
+<p> The situation described by <span class="predicate">talking</span> ended at around midnight so we can say that the event had a definite end-point within the time-period mentioned in the sentence. Presumably, Jon started talking at some point, but when he started isn't mentioned by the sentence, so the situation described by  <span class="predicate">talking</span> does <b>not</b> have a definite start-point <i>within the time period referenced by the sentence</i>.</p>
 
-<p>There could be cases where the event had both a start point and an endpoint within the time-frame referenced by the sentence.</p>
+<p>There could be cases where the event had both a start-point and an end-point within the time-frame referenced by the sentence.</p>
 
   <blockquote>They went to bed and <span class="predicate">slept</span> until morning.</blockquote>
 
-<p>The situation referred to by <span class="predicate">slept</span> has a definite start point within the time period referenced in the sentence - after they went to bed - and it also has an end-point - in the morning.</p>
+<p>The situation referred to by <span class="predicate">slept</span> has a definite start-point within the time period referenced in the sentence - after they went to bed - and it also has an end-point - in the morning.</p>
  
 <p> There can be predicates that describe situations that have neither a start-point nor an end-point within the time-frame mentioned in the sentence. For instance, consider:</p>
 
-  <blockquote>Sam <span class="predicate">has</span> red.</blockquote>
+  <blockquote>Sam <span class="predicate">has</span> red hair.</blockquote>
   
-  <p>The predicate <span class="predicate">has</span> refers to a state that presumably started when Sam was child and will end when his hair begins to turn grey, but the sentence does not explicitly mention those times, so we say that the event neither had a start point nor an end-point.</p>
+  <p>The predicate <span class="predicate">has</span> refers to a state that presumably started when Sam was child and will end when his hair begins to turn grey, but the sentence does not explicitly mention those times, so we say that the event neither had a start-point nor an end-point.</p>
 
 
 
@@ -396,7 +395,6 @@ $(document).ready(function() {
 
       <p>Consider a predicate like <span class="predicate">remodeled</span>.</p>
 
-      <br>
       <blockquote>Sue <span class="predicate">remodeled</span> her kitchen.</blockquote>
 
       <p>The situation described by <span class="predicate">remodeled</span> could have
@@ -407,28 +405,33 @@ say <i>months</i>, and that would be an okay response too.  But the remodeling c
 
       <p>A case of something that would take <i>seconds</i> is the situation described by <span class="predicate">smiled</span>.</p>
       
-      <br>
       <blockquote>Sue <span class="predicate">smiled</span> at Jack.</blockquote>
 
-      <p>This took <i>hours</i>.</p>
-      
-      <br>
+      <p> A predicate like <span class="predicate">danced</span> might take minutes or even hours to happen. 
+
       <blockquote>Sue <span class="predicate">danced</span> with Jack all evening.</blockquote>
 
-      <p>Being <u>tall</u> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
-      
+      <p>The situation described by the predicate in the above sentence possibly took <i>hours</i>.</p>
       <br>
+
+      <p>Some events could take decades to happen. Consider the predicate <span class="predicate">tall</span>.</p>
+      
       <blockquote>Sue is very <span class="predicate">tall</span>.</blockquote>
 
-      <p>This happens over the course of <i>centuries</i>.</p>
-      
+       <p> Being <span class="predicate">tall</span> is not likely to change through most of a person's life, so we would say this happened over <i>decades</i>.</p>
+
       <br>
+      <p> An example of a situation that takes centuries to happen could be the property of being <span class="predicate">largest</span> of something. </p>
       <blockquote>Russia is one of the <span class="predicate">largest</span> countries in the world.</blockquote>
 
+      <p>This happens over the course of <i>centuries</i>.</p>
+
+      <br>
+      <p>Situations described by some predicates could be true <i>forever</i>.</p>
+      
+      <blockquote>Three is <span class="predicate">prime</span>.</blockquote>
       <p>This is a mathematical truth, it is true <i>forever</i>.</p>
       
-      <br>
-      <blockquote>Three is <span class="predicate">prime</span>.</blockquote>
 
 </div>
       <br>
