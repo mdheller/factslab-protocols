@@ -20,14 +20,14 @@
     blockquote {
     border-left: 5px solid #666666;
     }
-    
+
     .instructions_examples {
     border: 1px solid #E0E0E0;
     background-color: #F0F0FF;
     margin-left: 0em;
     padding: 0.5em;
     }
-    
+
     .predicate {
     background-color: #BC0D0C;
     padding-left: 3px;
@@ -36,10 +36,9 @@
     }
 
     .noun {
-    background-color: #006FA8;
+    background-color: #EEDA6E;
     padding-left: 3px;
     padding-right: 3px;
-    color:#FFFFFF;
     }
 
     p.example_sentence {
@@ -59,11 +58,11 @@ function hideshow(which){
     if (!document.getElementById) {
     return;
     }
-    
+
     if (which.style.display=="block") {
     which.style.display="none";
     }
-    
+
     else {
     which.style.display="block";
     }
@@ -129,11 +128,11 @@ function toggleVisibility(responseType, id) {
 
      // if (responseType == "question-noun-class") {
       // maybe put an abstraction question
-     // }     
+     // }
 
      if (condition) {
              questionElement.style.visibility = 'visible';
-     } 
+     }
      else {
              questionElement.style.visibility = 'hidden';
      }
@@ -326,43 +325,100 @@ $(document).ready(function() {
     <h2>Overview</h2>
 
     <p class="instructions_intro">
-      In this task you will be presented with a sentence containing <span class="noun">a word highlighted in blue</span>, <span class="predicate">a word highlighted in red</span> followed by questions about these words. The yellow highlighted words are <i>nouns</i>, and the red highlighted words are <i>predicates</i>. Nouns refer to entities like lions, chairs etc and predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness).
+      In this task, you will be presented with a sentence containing <span class="noun">a word highlighted in yellow</span> followed by questions about that word.
+      We call the highlighted words <span class="noun">nouns</span>. Nouns can refer to particular things (or groups of things), like particular lions, particular chairs, particular
+      ideas, or particular thoughts. But they can also refer to types of things – animal species (lion, dog, cat), kinds of inanimate things (chair, bottle, computer), etc. – or even
+      very abstract concepts – wealth, power, justice, crime, etc.
 
-      We are interested in studying the properties of certain sentences called <b>generics</b>. For example, the sentence "<span class="noun">Lions</span> eat meat" is a generic sentence, where lion is the noun. Generic sentences express general truths of the world or essential properties of nouns. Contrast this with a sentence like "<span class="noun">John</span> smoked a cigar", where John is the noun. This is not a generic sentence.     
+      We are interested in distinguishing among the different sorts of things nouns refer to in a particular sentence, and so the questions you will be asked about the
+      highlighted noun will be:
+
+      <ol type="i">
+        <li>whether the noun refers to a particular thing</li>
+        <li>whether the noun refers to a type of thing</li>
+         <li>whether the noun refers to an abstract concept</li>
+      </ol>
+
+      We give examples that will help you answer these questions below.
+
     </p>
 
     <h2>How the task works</h2>
 
     <p class="instructions_intro">
-        The task for each sentence has two parts. Part I has questions about the noun. Each question has only two answers in a drop down menu(of the form yes/no, is/is not, does/does not). Depending on the answer to a question, the following questions may or may not appear. <b>You must answer the question taking into consideration the context of the whole sentence.</b>
-        
-        1) Something <b>particular</b>
+        The first question is about whether the noun refers to a particular thing.
 
-        <blockquote><span class="noun">Roxane the lion</span> likes to play with her food.</blockquote>
-        <span class="noun">Roxane the lion</span> <b>is</b> a particular noun in this sentence.
+        An example of a noun referring to a particular thing can be seen in the following sentence:
 
-        <blockquote><span class="noun">The lions</span> roared in unison.</blockquote>
-        <span class="noun">The lions</span> <b>is</b> a particular noun in this sentence, since it refers to a specific group of lions engaging in the act of roaring. 
+        <blockquote>That <span class="noun">lion</span> likes to play with her food.</blockquote>
+
+        In this sentence, the noun <span class="noun">lion</span> refers to a particular lion that likes to play with her food.
+
+        An example of a noun referring to a particular group of things can be seen in the following sentence:
+
+        <blockquote>The <span class="noun">lions</span> roared in unison.</blockquote>
+
+        In this sentence, the noun <span class="noun">lions</span> refers to a particular group of things: a group of lions engaging in the act of roaring.
+
+        <!-- We don't necessarily need to know exactly which thing or group of things a noun refers to
 
         <blockquote><span class="noun">A lion</span> escaped from his enclosure the other day.</blockquote>
-        <span class="noun">A lion</span> <b>is</b> a particular noun in this sentence, since it refers to a specific lion which escaped.
 
-        <blockquote><span class="noun">Lions</span> eat meat.</blockquote> 
+        <span class="noun">lion</span> <b>is</b> a particular noun in this sentence, since it refers to a specific lion which escaped. -->
+
+        Not all nouns refer to physical things, but that doesn't mean they don't refer to particular things. An example of a noun referring to
+        a particular non-physical thing can be seen in the following sentence:
+
+        <blockquote>That <span class="noun">idea</span> is stupid.</blockquote>
+
+        In this sentence, the noun <span class="noun">idea</span> refers to a particular non-physical thing.
+
+        <!-- <blockquote><span class="noun">Lions</span> eat meat.</blockquote>
         <span class="noun">Lions</span> <b>is not</b> a particular noun in this sentence, since the sentence does not talk about any specific lion(or lions). It talks about lions in general.
 
-        <blockquote><span class="noun">Wealth</span> is concentrated among the rich.</blockquote> 
-        <span class="noun">Wealth</span> <b>is not</b> particular noun in this sentence, since it talks about wealth in general.
+        <blockquote><span class="noun">Wealth</span> is concentrated among the rich.</blockquote>
+        <span class="noun">Wealth</span> <b>is not</b> particular noun in this sentence, since it talks about wealth in general. -->
 
-        2) Does the noun refer to a class of things?
+        The second question is about whether the noun refers to a type of thing.
 
-        c) an abstract entity(like "love", "justice"). You will also be asked to give a rating of how sure you are of this answer of yours(from 1(uncertain) to 7(very certain))
+        An example of a noun referring to a type of thing can be seen in the following sentence:
 
-        Part II has questions about the predicate. You will be asked if you think the sentence is 
-        1)Does the predicate talk about a dynamic event 
+        <blockquote><span class="noun">Lions</span> eat meat.</blockquote>
 
-        2) Does the predicate talk about a particular event or a particular set of events?
+        In this sentence, the noun <span class="noun">lions</span> refers to lions in general – not any particular lion.
 
-        3) Does the predicate tell you something about the future, that is, is it predictive?
+        Not all nouns that refer to types of things refer to animal species.  An example of this can be seen in the following sentence:
+
+        <blockquote>Coke <span class="noun">bottles</span> have long necks.</blockquote>
+
+        In this sentence, the noun <span class="noun">bottles</span> refers to Coke bottles in general – not any particular Coke bottle.
+
+        Nouns that refer to types of things can come in various forms. For instance, we can also talk about Coke bottles in general using the following sentence:
+
+        <blockquote>The Coke <span class="noun">bottle</span> has changed shape many times over the years.</blockquote>
+
+        In this case, you should also answer that the noun <span class="noun">bottle</span> refers to a type of thing.
+
+        The third question is about whether the noun refers to an abstract concept.
+
+        An example of a noun referring to an abstract concept can be seen in the following sentence:
+
+        <blockquote><span class="noun">Corruption</span> is rampant in Washington.</blockquote>
+
+        In this sentence, the noun <span class="noun">corruption</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
+        Rather, it refers directly to the abstract concept of corruption.
+
+        Sometimes it will be difficult to tell what a noun refers to. Consider the following sentence:
+
+        <blockquote>The <span class="noun">service</span> is bad at that restaurant.</blockquote>
+
+        In this sentence, it seems reasonable to say that the noun <span class="noun">service</span> refers to a particular thing – service at that restaurant.
+        But it also seems reasonable to say that it refers to a type of thing, which encompasses all the different acts of service carried out at the restaurant.
+        It could even be that the noun <span class="noun">service</span> refers to an abstract concept of service more generally, since service at a restaurant
+        can involve lots of different types of things mashed together – how nice the waiters are, the ambiance of the restaurant, quality of the food, etc. –
+        that we wouldn't naturally call one type of thing.
+
+        For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
 
     </p>
 
@@ -373,13 +429,13 @@ $(document).ready(function() {
 
 
 <section>
-  <input name="dummy", type="hidden" />  
+  <input name="dummy", type="hidden" />
   <div id="hit">
     <h2>Sentences</h2>
 
     <fieldset>
       <div id="questions">
-          
+
 
       </div>
     </fieldset>
