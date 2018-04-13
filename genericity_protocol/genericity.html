@@ -156,128 +156,125 @@ function toggleVisibility(responseType, id) {
       // Mechanical Turk will fill in '$ { varname }' variables when
       // HTML template is rendered
 
-  function writeQuestions() {
-      var var_arrays = jQuery.parseJSON('${var_arrays}');
+    function writeQuestions() {
+        var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-      var question_html = '';
-      question_html += '<div class="sentence_section">';
+        var question_html = '';
+        question_html += '<div class="sentence_section">';
+        for (var i = 0; i < var_arrays.length; i++) {
+            var var_array = var_arrays[i];
+            var id = var_array['id'];
+            // question answers
+            var select_understandable = getSelectHTML(id,"understandable",
+                             [['na', '  -------  '],
+                              ['true','is'],
+                              ['false','is not']]);
 
-      for (var i = 0; i < var_arrays.length; i++) {
-          var var_array = var_arrays[i];
-      var id = var_array['id'];
+            var select_noun = getSelectHTML(id,"noun",
+                             [['na', '  -------  '],
+                            ['true','does'],
+                                ['false','does not']]);
 
-      // question answers
+            var select_noun = getSelectHTML(id,"predicate",
+                             [['na', '  -------  '],
+                            ['true','does'],
+                                ['false','does not']]);
 
-      var select_understandable = getSelectHTML(id,"understandable",
-                         [['na', '  -------  '],
-                          ['true','is'],
-                          ['false','is not']]);
+            var select_noun_part = getSelectHTML(id,"noun_particularity",
+                             [['na', '  -------  '],
+                              ['true','denotes'],
+                              ['false','does not denote']]);
 
-      var select_noun = getSelectHTML(id,"noun",
-                         [['na', '  -------  '],
-                        ['true','does'],
-                            ['false','does not']]);
+            var select_noun_class = getSelectHTML(id,"noun_class",
+                             [['na', '  -------  '],
+                              ['true','denotes'],
+                              ['false','does not denote']]);
 
-      var select_noun = getSelectHTML(id,"predicate",
-                         [['na', '  -------  '],
-                        ['true','does'],
-                            ['false','does not']]);
+            var select_dynamicity = getSelectHTML(id,"dynamicity",
+                                [['na', '  -------  '],
+                                 ['true','is'],
+                             ['false','is not']]);
 
-      var select_noun_part = getSelectHTML(id,"noun_particularity",
-                         [['na', '  -------  '],
-                          ['true','denotes'],
-                          ['false','does not denote']]);
+            var select_eventivity = getSelectHTML(id,"eventivity",
+                             [['na', '  -------  '],
+                              ['true','does'],
+                              ['false','does not']]);
 
-      var select_noun_class = getSelectHTML(id,"noun_class",
-                         [['na', '  -------  '],
-                          ['true','denotes'],
-                          ['false','does not denote']]);
+            var select_predictability = getSelectHTML(id,"predictability",
+                             [['na', '  -------  '],
+                              ['true','does'],
+                              ['false','does not']]);
 
-      var select_dynamicity = getSelectHTML(id,"dynamicity",
-                            [['na', '  -------  '],
-                             ['true','is'],
-                         ['false','is not']]);
+            var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
+                              [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
 
-      var select_eventivity = getSelectHTML(id,"eventivity",
-                         [['na', '  -------  '],
-                          ['true','does'],
-                          ['false','does not']]);
+            var select_noun_class_certainty = getSelectHTML(
+                              id,"noun_class_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
 
-      var select_predictability = getSelectHTML(id,"predictability",
-                         [['na', '  -------  '],
-                          ['true','does'],
-                          ['false','does not']]);
+            var select_dynamicity_certainty = getSelectHTML(
+                              id,"dynamicity_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
 
-      var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
-                          [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+            var select_eventivity_certainty = getSelectHTML(
+                              id,"eventivity_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
 
-      var select_noun_class_certainty = getSelectHTML(
-                          id,"noun_class_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+            var select_predictability_certainty = getSelectHTML(
+                              id,"predictability_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
 
-      var select_dynamicity_certainty = getSelectHTML(
-                          id,"dynamicity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+            // question html
 
-      var select_eventivity_certainty = getSelectHTML(
-                          id,"eventivity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+            question_html += '<h2> Part I </h2>' 
+              question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
 
-      var select_predictability_certainty = getSelectHTML(
-                          id,"predictability_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+            question_html += '<br/><p>The sentence ' + select_understandable + ' understandable, and <span class="noun">' + var_array['noun'] + '</span> ' + select_noun + ' refers to a noun-like entity';
 
-      // question html
+            question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun <span class="noun">' + var_array['noun'] + '</span>' + select_noun_part + ' a particular object in and I am ' + select_noun_part_certainty + 'about my choice.</p>';
 
-          question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
+            question_html += '<br/><p id="question-noun-class"' + id + '"> The noun <span class="noun">' + var_array['noun'] + '</span>' + select_noun_class + ' a class of objects and I am ' + select_noun_class_certainty + 'about my choice.</p>';
 
-      question_html += '<br/><p>The sentence ' + select_understandable + ' understandable, and <span class="noun">' + var_array['noun_lemma'] + '</span> ' + select_noun + ' refer to a noun-like entity and <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_pred + ' refer to a predicate</p>';
+            question_html += '<h2> Part II </h2>' 
+            question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
 
-      question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun <span class="noun">' + var_array['noun_lemma'] + '</span>' + select_noun_part + ' a particular object in and I am ' + select_certainty + 'about my choice.</p>';
+            question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_dynamicity_certainty + 'about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun <span class="noun">' + var_array['noun_lemma'] + '</span>' + select_noun_class + ' a class of objects and I am ' + select_certainty + 'about my choice.</p>';
+            question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_eventivity_certainty + 'about my choice.</p>';
 
-      question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
+            question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_predictability_certainty + 'about my choice.</p>';
 
-      question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_certainty + 'about my choice.</p>';
+            question_html += '<br/><hr>';
+        }
+        question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
-      question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_certainty + 'about my choice.</p>';
-
-      question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_certainty + 'about my choice.</p>';
-
-      question_html += '<br/><hr>';
-      }
-
-      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
-
-      document.getElementById("questions").innerHTML = question_html;
-
-  }
+        document.getElementById("questions").innerHTML = question_html;
+}
 
 function hideQuestions() {
 
@@ -353,15 +350,23 @@ $(document).ready(function() {
         <blockquote><span class="noun">Wealth</span> is concentrated among the rich.</blockquote> 
         <span class="noun">Wealth</span> <b>is not</b> particular noun in this sentence, since it talks about wealth in general.
 
+        <br><br>
+
         2) Does the noun refer to a class of things?
+        <br><br>
+        3) an abstract entity(like "love", "justice"). You will also be asked to give a rating of how sure you are of this answer of yours(from 1(uncertain) to 7(very certain))
 
-        c) an abstract entity(like "love", "justice"). You will also be asked to give a rating of how sure you are of this answer of yours(from 1(uncertain) to 7(very certain))
+        <br><br>
+        Part II has questions about the predicate. You will be asked the following questions about the predicate.
 
-        Part II has questions about the predicate. You will be asked if you think the sentence is 
-        1)Does the predicate talk about a dynamic event 
+        <br><br>
 
+        1)Does the predicate talk about a dynamic event? Dynamic events are things like running or kicking, and states of being are things like happiness or redness.
+
+        <br><br>
         2) Does the predicate talk about a particular event or a particular set of events?
 
+        <br><br>
         3) Does the predicate tell you something about the future, that is, is it predictive?
 
     </p>
@@ -379,7 +384,6 @@ $(document).ready(function() {
 
     <fieldset>
       <div id="questions">
-          
 
       </div>
     </fieldset>
