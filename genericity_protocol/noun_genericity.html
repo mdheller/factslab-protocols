@@ -32,11 +32,10 @@
     background-color: #BC0D0C;
     padding-left: 3px;
     padding-right: 3px;
-    color:#FFFFFF;
     }
 
     .noun {
-    background-color: #EEDA6E;
+    background-color: #EBC944;
     padding-left: 3px;
     padding-right: 3px;
     }
@@ -77,8 +76,7 @@ function hideshow(which){
  ** options  a list of (option.value, label) pairs
  */
 function getSelectHTML(id, name, options) {
-
-    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+"'"+name+"'"+','+id+')">';
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility()">';
 
     for (var i = 0; i < options.length; i++) {
     select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
@@ -90,55 +88,32 @@ function getSelectHTML(id, name, options) {
 }
 
 
-function toggleVisibility(responseType, id) {
+function toggleVisibility() {
+      // Toggle the submit button availability
+      var num_questions = jQuery.parseJSON('${var_arrays}').length;
+      var submit = true;
 
-     if (responseType == "understandable" || responseType == "noun") {
-      var questionElement = document.getElementById('question-noun-particularity'+id);
+      for (var i = 1; i < 11; i++) {
+          id = String(i)
+          // console.log(i)
+          submit = submit && 
+          document.getElementById("noun_particularity"+id).value != "na" && 
+          document.getElementById("noun_class"+id).value != "na" && 
+          document.getElementById("noun_abs"+id).value != "na" && 
+          document.getElementById("noun_part_certainty"+id).value != "na" && 
+          document.getElementById("noun_class_certainty"+id).value != "na" && 
+          document.getElementById("noun_abs_certainty"+id).value != "na"
+         }
 
-      var condition = document.getElementById("understandable"+id).value == "true";
-      condition = condition && document.getElementById("predicate"+id).value == "true";
-      condition = condition && ocument.getElementById("noun"+id).value == "true";
-     }
 
-     if (responseType == "question-noun-particularity") {
-      var questionElement = document.getElementById('question-noun-class'+id);
-
-      var condition = document.getElementById("question-noun-particularity"+id).value == "false";
-     }
-
-     // for now pred questions follow after the noun class question
-
-     if (responseType == "question-noun-class") {
-      var questionElement = document.getElementById('question-pred-dynamicity'+id);
-
-      var condition = true;
-     }
-
-      if (responseType == "question-pred-dynamicity") {
-      var questionElement = document.getElementById('question-pred-eventivity'+id);
-
-      var condition = document.getElementById("question-pred-dynamicity"+id).value == "true";
-     }
-
-     if (responseType == "question-pred-eventivity") {
-      var questionElement = document.getElementById('question-pred-predictability'+id);
-
-      var condition = true;
-     }
-
-     // if (responseType == "question-noun-class") {
-      // maybe put an abstraction question
-     // }
-
-     if (condition) {
-             questionElement.style.visibility = 'visible';
-     }
-     else {
-             questionElement.style.visibility = 'hidden';
-     }
+     if (submit) {
+            document.getElementById("submit_button").disabled=false;
+                  }  
+      else {
+            document.getElementById("submit_button").disabled=true;
+            } 
 
 }
-
 
 
   /** Add HTML for questions to DOM element with ID 'questions'
@@ -163,49 +138,39 @@ function toggleVisibility(responseType, id) {
 
       for (var i = 0; i < var_arrays.length; i++) {
           var var_array = var_arrays[i];
-      var id = var_array['id'];
+          var id = var_array['id'];
 
       // question answers
 
-      var select_understandable = getSelectHTML(id,"understandable",
-                         [['na', '  -------  '],
-                          ['true','is'],
-                          ['false','is not']]);
-
-      var select_noun = getSelectHTML(id,"noun",
-                         [['na', '  -------  '],
-                        ['true','does'],
-                            ['false','does not']]);
-
-      var select_noun = getSelectHTML(id,"predicate",
-                         [['na', '  -------  '],
-                        ['true','does'],
-                            ['false','does not']]);
-
       var select_noun_part = getSelectHTML(id,"noun_particularity",
                          [['na', '  -------  '],
-                          ['true','denotes'],
-                          ['false','does not denote']]);
+                          ['true','does'],
+                          ['false','does not']]);
 
       var select_noun_class = getSelectHTML(id,"noun_class",
                          [['na', '  -------  '],
-                          ['true','denotes'],
-                          ['false','does not denote']]);
+                          ['true','does'],
+                          ['false','does not']]);
 
-      var select_dynamicity = getSelectHTML(id,"dynamicity",
-                            [['na', '  -------  '],
-                             ['true','is'],
-                         ['false','is not']]);
-
-      var select_eventivity = getSelectHTML(id,"eventivity",
+      var select_noun_abs = getSelectHTML(id,"noun_abs",
                          [['na', '  -------  '],
                           ['true','does'],
                           ['false','does not']]);
 
-      var select_predictability = getSelectHTML(id,"predictability",
-                         [['na', '  -------  '],
-                          ['true','does'],
-                          ['false','does not']]);
+      // var select_dynamicity = getSelectHTML(id,"dynamicity",
+      //                       [['na', '  -------  '],
+      //                        ['true','is'],
+      //                    ['false','is not']]);
+
+      // var select_eventivity = getSelectHTML(id,"eventivity",
+      //                    [['na', '  -------  '],
+      //                     ['true','does'],
+      //                     ['false','does not']]);
+
+      // var select_predictability = getSelectHTML(id,"predictability",
+      //                    [['na', '  -------  '],
+      //                     ['true','does'],
+      //                     ['false','does not']]);
 
       var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
                           [['na', '  -------  '],
@@ -224,50 +189,58 @@ function toggleVisibility(responseType, id) {
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      var select_dynamicity_certainty = getSelectHTML(
-                          id,"dynamicity_certainty",
-                            [['na', '  -------  '],
+      var select_noun_abs_certainty = getSelectHTML(id,"noun_abs_certainty",
+                          [['na', '  -------  '],
                             ['4', 'totally confident'],
                             ['3', 'very confident'],
                             ['2', 'somewhat confident'],
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      var select_eventivity_certainty = getSelectHTML(
-                          id,"eventivity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+      // var select_dynamicity_certainty = getSelectHTML(
+      //                     id,"dynamicity_certainty",
+      //                       [['na', '  -------  '],
+      //                       ['4', 'totally confident'],
+      //                       ['3', 'very confident'],
+      //                       ['2', 'somewhat confident'],
+      //                       ['1', 'not very confident'],
+      //                       ['0', 'not at all confident']]);
 
-      var select_predictability_certainty = getSelectHTML(
-                          id,"predictability_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+      // var select_eventivity_certainty = getSelectHTML(
+      //                     id,"eventivity_certainty",
+      //                       [['na', '  -------  '],
+      //                       ['4', 'totally confident'],
+      //                       ['3', 'very confident'],
+      //                       ['2', 'somewhat confident'],
+      //                       ['1', 'not very confident'],
+      //                       ['0', 'not at all confident']]);
+
+      // var select_predictability_certainty = getSelectHTML(
+      //                     id,"predictability_certainty",
+      //                       [['na', '  -------  '],
+      //                       ['4', 'totally confident'],
+      //                       ['3', 'very confident'],
+      //                       ['2', 'somewhat confident'],
+      //                       ['1', 'not very confident'],
+      //                       ['0', 'not at all confident']]);
 
       // question html
 
           question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
 
-      question_html += '<br/><p>The sentence ' + select_understandable + ' understandable, and <span class="noun">' + var_array['noun_lemma'] + '</span> ' + select_noun + ' refer to a noun-like entity and <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_pred + ' refer to a predicate</p>';
+      question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun <span class="noun">' + var_array['noun_lemma'] + '</span>' + select_noun_part + ' a particular object in and I am ' + select_certainty + 'about my choice.</p>';
+      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun <span class="noun">' + var_array['noun_lemma'] + '</span>' + select_noun_class + ' a class of objects and I am ' + select_certainty + 'about my choice.</p>';
+      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
 
-      question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
+      // question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
 
-      question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_certainty + 'about my choice.</p>';
+      // question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_certainty + 'about my choice.</p>';
 
-      question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_certainty + 'about my choice.</p>';
+      // question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_certainty + 'about my choice.</p>';
 
-      question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_certainty + 'about my choice.</p>';
+      // question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_certainty + 'about my choice.</p>';
 
       question_html += '<br/><hr>';
       }
@@ -278,36 +251,36 @@ function toggleVisibility(responseType, id) {
 
   }
 
-function hideQuestions() {
+// function hideQuestions() {
 
-   var var_arrays = jQuery.parseJSON('${var_arrays}');
+//    var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-   for (var i = 0; i < var_arrays.length; i++) {
-      var var_array = var_arrays[i];
-      var id = var_array['id'];
+//    for (var i = 0; i < var_arrays.length; i++) {
+//       var var_array = var_arrays[i];
+//       var id = var_array['id'];
 
-      var question_noun_particularity = document.getElementById('question-noun-particularity'+id);
-      question_noun_particularity.style.visibility = 'hidden';
+//       var question_noun_particularity = document.getElementById('question-noun-particularity'+id);
+//       question_noun_particularity.style.visibility = 'hidden';
 
-      var question_noun_class = document.getElementById('question-noun-class'+id);
-      question_noun_class.style.visibility = 'hidden';
+//       var question_noun_class = document.getElementById('question-noun-class'+id);
+//       question_noun_class.style.visibility = 'hidden';
 
-      var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
-      question_pred_dynamicity.style.visibility = 'hidden';
+//       var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
+//       question_pred_dynamicity.style.visibility = 'hidden';
 
-      var question_pred_eventivity = document.getElementById('question-pred-eventivity'+id);
-      question_pred_eventivity.style.visibility = 'hidden';
+//       var question_pred_eventivity = document.getElementById('question-pred-eventivity'+id);
+//       question_pred_eventivity.style.visibility = 'hidden';
 
-      var question_pred_predictability = document.getElementById('question-pred-predictability'+id);
-      question_pred_predictability.style.visibility = 'hidden';
-   }
-}
+//       var question_pred_predictability = document.getElementById('question-pred-predictability'+id);
+//       question_pred_predictability.style.visibility = 'hidden';
+//    }
+// }
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     console.log("**** run ready function");
     writeQuestions();
-    hideQuestions();
+    // hideQuestions();
 });
 
 
@@ -440,7 +413,7 @@ $(document).ready(function() {
       </div>
     </fieldset>
 
-    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
   </div>
   <!-- hit--></section>
 <!-- End Content Body --></div>
