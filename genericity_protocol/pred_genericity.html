@@ -116,7 +116,7 @@ function toggleVisibility() {
    ** id : a numeric id that is used in the generation of the headers when the HIT data comes back
    ** sentence_id : e.g., "en-ud-train.conllu 12"
    ** pred_token : e.g., "6"
-   ** noun_lemma : e.g., "announce"
+   ** predicate_lemma : e.g., "anpredicatece"
    ** sentence
    **
   */
@@ -205,12 +205,6 @@ function hideQuestions() {
       var var_array = var_arrays[i];
       var id = var_array['id'];
 
-      var question_noun_particularity = document.getElementById('question-noun-particularity'+id);
-      question_noun_particularity.style.visibility = 'hidden';
-
-      var question_noun_class = document.getElementById('question-noun-class'+id);
-      question_noun_class.style.visibility = 'hidden';
-
       var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
       question_pred_dynamicity.style.visibility = 'hidden';
 
@@ -244,18 +238,13 @@ $(document).ready(function() {
     <h2>Overview</h2>
 
     <p class="instructions_intro">
-      In this task, you will be presented with a sentence containing <span class="noun">a word highlighted in yellow</span> followed by questions about that word.
-      We call the highlighted words <span class="noun">predicates</span>. Nouns can refer to particular things (or groups of things), like particular lions, particular chairs, particular
-      ideas, or particular thoughts. But they can also refer to types of things – animal species (lion, dog, cat), kinds of inanimate things (chair, bottle, computer), etc. – or even
-      very abstract concepts – wealth, power, justice, crime, etc.
-
-      We are interested in distinguishing among the different sorts of things nouns refer to in a particular sentence, and so the questions you will be asked about the
-      highlighted noun will be:
+      In this task, you will be presented with a sentence containing <span class="predicate">a word highlighted in yellow</span> followed by questions about that word.
+      We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
 
       <ol type="i">
-        <li>whether the noun refers to a particular thing</li>
-        <li>whether the noun refers to a type of thing</li>
-         <li>whether the noun refers to an abstract concept</li>
+        <li>whether the predicate describes a dynamic situation</li>
+        <li>whether the predicate describes a particular situation(s)</li>
+        <li>whether the predicate describes a general property</li>
       </ol>
 
       We give examples that will help you answer these questions below.
@@ -265,75 +254,78 @@ $(document).ready(function() {
     <h2>How the task works</h2>
 
     <p class="instructions_intro">
-        The first question is about whether the noun refers to a particular thing.
+        The task will begin with a question:
 
-        An example of a noun referring to a particular thing can be seen in the following sentence:
+        The first question is about whether the predicate describes a dynamic situation.
+        </br>
+        <h4><a href="javascript:hideshow(document.getElementById('dyn_examples'))">Examples of dynamic situations (click to hide/show)</a></h4>
+        <div id="dyn_examples" style="display: block" class="instructions_examples">
+        An example of a predicate describing a dynamic situation can be seen in the following sentence:
 
-        <blockquote>That <span class="noun">lion</span> likes to play with her food.</blockquote>
+        <blockquote>Hannah is <span class="predicate">running</span> a half marathon tomorrow.</blockquote>
 
-        In this sentence, the noun <span class="noun">lion</span> refers to a particular lion that likes to play with her food.
+        In this sentence, the predicate <span class="predicate">running</span> is dynamic - there is a point where Hannah started to run, then continued running, and stops running.
 
-        An example of a noun referring to a particular group of things can be seen in the following sentence:
+        Dynamic predicates can appear in various forms. For example the sentence below descibes :
 
-        <blockquote>The <span class="noun">lions</span> roared in unison.</blockquote>
+        <blockquote>The <span class="predicate">lions</span> roared in unison.</blockquote>
 
-        In this sentence, the noun <span class="noun">lions</span> refers to a particular group of things: a group of lions engaging in the act of roaring.
+        In this sentence, the predicate <span class="predicate">lions</span> refers to a particular group of things: a group of lions engaging in the act of roaring.
 
-        <!-- We don't necessarily need to know exactly which thing or group of things a noun refers to
-
-        <blockquote><span class="noun">A lion</span> escaped from his enclosure the other day.</blockquote>
-
-        <span class="noun">lion</span> <b>is</b> a particular noun in this sentence, since it refers to a specific lion which escaped. -->
-
-        Not all nouns refer to physical things, but that doesn't mean they don't refer to particular things. An example of a noun referring to
+        Not all predicates refer to physical things, but that doesn't mean they don't refer to particular things. An example of a predicate referring to
         a particular non-physical thing can be seen in the following sentence:
 
-        <blockquote>That <span class="noun">idea</span> is stupid.</blockquote>
+        <blockquote>That <span class="predicate">idea</span> is stupid.</blockquote>
 
-        In this sentence, the noun <span class="noun">idea</span> refers to a particular non-physical thing.
+        In this sentence, the predicate <span class="predicate">idea</span> refers to a particular non-physical thing.
 
-        <!-- <blockquote><span class="noun">Lions</span> eat meat.</blockquote>
-        <span class="noun">Lions</span> <b>is not</b> a particular noun in this sentence, since the sentence does not talk about any specific lion(or lions). It talks about lions in general.
+        </div>
 
-        <blockquote><span class="noun">Wealth</span> is concentrated among the rich.</blockquote>
-        <span class="noun">Wealth</span> <b>is not</b> particular noun in this sentence, since it talks about wealth in general. -->
+        If you answered no to the first question, there will be no more questions for that predicate. If you answered yes, you will be presented with two questions.
 
-        The second question is about whether the noun refers to a type of thing.
+        The second question is about whether the predicate describes a particular situation or partcular situations.
 
-        An example of a noun referring to a type of thing can be seen in the following sentence:
+        </br>
+        <h4><a href="javascript:hideshow(document.getElementById('part_examples'))">Examples of particular situations (click to hide/show)</a></h4>
+        <div id="part_examples" style="display: block" class="instructions_examples">
+        An example of a predicate referring to a type of thing can be seen in the following sentence:
 
-        <blockquote><span class="noun">Lions</span> eat meat.</blockquote>
+        <blockquote><span class="predicate">Lions</span> eat meat.</blockquote>
 
-        In this sentence, the noun <span class="noun">lions</span> refers to lions in general – not any particular lion.
+        In this sentence, the predicate <span class="predicate">lions</span> refers to lions in general – not any particular lion.
 
-        Not all nouns that refer to types of things refer to animal species.  An example of this can be seen in the following sentence:
+        Not all predicates that refer to types of things refer to animal species.  An example of this can be seen in the following sentence:
 
-        <blockquote>Coke <span class="noun">bottles</span> have long necks.</blockquote>
+        <blockquote>Coke <span class="predicate">bottles</span> have long necks.</blockquote>
 
-        In this sentence, the noun <span class="noun">bottles</span> refers to Coke bottles in general – not any particular Coke bottle.
+        In this sentence, the predicate <span class="predicate">bottles</span> refers to Coke bottles in general – not any particular Coke bottle.
 
-        Nouns that refer to types of things can come in various forms. For instance, we can also talk about Coke bottles in general using the following sentence:
+        predicates that refer to types of things can come in various forms. For instance, we can also talk about Coke bottles in general using the following sentence:
 
-        <blockquote>The Coke <span class="noun">bottle</span> has changed shape many times over the years.</blockquote>
+        <blockquote>The Coke <span class="predicate">bottle</span> has changed shape many times over the years.</blockquote>
 
-        In this case, you should also answer that the noun <span class="noun">bottle</span> refers to a type of thing.
+        In this case, you should also answer that the predicate <span class="predicate">bottle</span> refers to a type of thing.
+      </div>
 
-        The third question is about whether the noun refers to an abstract concept.
 
-        An example of a noun referring to an abstract concept can be seen in the following sentence:
+        The third question is about whether the predicate describes a general predictive property or habit.
+      </br>
+        <h4><a href="javascript:hideshow(document.getElementById('pred_examples'))">Examples of predictive predicates (click to hide/show)</a></h4>
+        <div id="pred_examples" style="display: block" class="instructions_examples">
+        An example of a predicate referring to an abstract concept can be seen in the following sentence:
 
-        <blockquote><span class="noun">Corruption</span> is rampant in Washington.</blockquote>
+        <blockquote><span class="predicate">Corruption</span> is rampant in Washington.</blockquote>
 
-        In this sentence, the noun <span class="noun">corruption</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
+        In this sentence, the predicate <span class="predicate">corruption</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
         Rather, it refers directly to the abstract concept of corruption.
 
-        Sometimes it will be difficult to tell what a noun refers to. Consider the following sentence:
+        Sometimes it will be difficult to tell what a predicate refers to. Consider the following sentence:
 
-        <blockquote>The <span class="noun">service</span> is bad at that restaurant.</blockquote>
+        <blockquote>The <span class="predicate">service</span> is bad at that restaurant.</blockquote>
 
-        In this sentence, it seems reasonable to say that the noun <span class="noun">service</span> refers to a particular thing – service at that restaurant.
+        In this sentence, it seems reasonable to say that the predicate <span class="predicate">service</span> refers to a particular thing – service at that restaurant.
         But it also seems reasonable to say that it refers to a type of thing, which encompasses all the different acts of service carried out at the restaurant.
-        It could even be that the noun <span class="noun">service</span> refers to an abstract concept of service more generally, since service at a restaurant
+        It could even be that the predicate <span class="predicate">service</span> refers to an abstract concept of service more generally, since service at a restaurant
         can involve lots of different types of things mashed together – how nice the waiters are, the ambiance of the restaurant, quality of the food, etc. –
         that we wouldn't naturally call one type of thing.
 
