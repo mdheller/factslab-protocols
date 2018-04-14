@@ -28,12 +28,6 @@
     padding: 0.5em;
     }
 
-    .predicate {
-    background-color: #BC0D0C;
-    padding-left: 3px;
-    padding-right: 3px;
-    }
-
     .noun {
     background-color: #EBC944;
     padding-left: 3px;
@@ -108,9 +102,11 @@ function toggleVisibility() {
 
      if (submit) {
             document.getElementById("submit_button").disabled=false;
+            document.getElementById("submit_descr").style.display="none";
                   }  
       else {
             document.getElementById("submit_button").disabled=true;
+            document.getElementById("submit_descr").style.display="block";
             } 
 
 }
@@ -157,21 +153,6 @@ function toggleVisibility() {
                           ['true','does'],
                           ['false','does not']]);
 
-      // var select_dynamicity = getSelectHTML(id,"dynamicity",
-      //                       [['na', '  -------  '],
-      //                        ['true','is'],
-      //                    ['false','is not']]);
-
-      // var select_eventivity = getSelectHTML(id,"eventivity",
-      //                    [['na', '  -------  '],
-      //                     ['true','does'],
-      //                     ['false','does not']]);
-
-      // var select_predictability = getSelectHTML(id,"predictability",
-      //                    [['na', '  -------  '],
-      //                     ['true','does'],
-      //                     ['false','does not']]);
-
       var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
                           [['na', '  -------  '],
                             ['4', 'totally confident'],
@@ -197,35 +178,6 @@ function toggleVisibility() {
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      // var select_dynamicity_certainty = getSelectHTML(
-      //                     id,"dynamicity_certainty",
-      //                       [['na', '  -------  '],
-      //                       ['4', 'totally confident'],
-      //                       ['3', 'very confident'],
-      //                       ['2', 'somewhat confident'],
-      //                       ['1', 'not very confident'],
-      //                       ['0', 'not at all confident']]);
-
-      // var select_eventivity_certainty = getSelectHTML(
-      //                     id,"eventivity_certainty",
-      //                       [['na', '  -------  '],
-      //                       ['4', 'totally confident'],
-      //                       ['3', 'very confident'],
-      //                       ['2', 'somewhat confident'],
-      //                       ['1', 'not very confident'],
-      //                       ['0', 'not at all confident']]);
-
-      // var select_predictability_certainty = getSelectHTML(
-      //                     id,"predictability_certainty",
-      //                       [['na', '  -------  '],
-      //                       ['4', 'totally confident'],
-      //                       ['3', 'very confident'],
-      //                       ['2', 'somewhat confident'],
-      //                       ['1', 'not very confident'],
-      //                       ['0', 'not at all confident']]);
-
-      // question html
-
           question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
 
       question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
@@ -234,53 +186,19 @@ function toggleVisibility() {
 
       question_html += '<br/><p id="question-noun-class"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
 
-      // question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
-
-      // question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_certainty + 'about my choice.</p>';
-
-      // question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_certainty + 'about my choice.</p>';
-
-      // question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_certainty + 'about my choice.</p>';
-
       question_html += '<br/><hr>';
       }
 
-      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+      question_html += 'Comments(optional):<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
       document.getElementById("questions").innerHTML = question_html;
 
   }
 
-// function hideQuestions() {
-
-//    var var_arrays = jQuery.parseJSON('${var_arrays}');
-
-//    for (var i = 0; i < var_arrays.length; i++) {
-//       var var_array = var_arrays[i];
-//       var id = var_array['id'];
-
-//       var question_noun_particularity = document.getElementById('question-noun-particularity'+id);
-//       question_noun_particularity.style.visibility = 'hidden';
-
-//       var question_noun_class = document.getElementById('question-noun-class'+id);
-//       question_noun_class.style.visibility = 'hidden';
-
-//       var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
-//       question_pred_dynamicity.style.visibility = 'hidden';
-
-//       var question_pred_eventivity = document.getElementById('question-pred-eventivity'+id);
-//       question_pred_eventivity.style.visibility = 'hidden';
-
-//       var question_pred_predictability = document.getElementById('question-pred-predictability'+id);
-//       question_pred_predictability.style.visibility = 'hidden';
-//    }
-// }
-
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     console.log("**** run ready function");
     writeQuestions();
-    // hideQuestions();
 });
 
 
@@ -413,7 +331,10 @@ $(document).ready(function() {
       </div>
     </fieldset>
 
-    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
+    <div>
+        <p id="submit_descr">Please answer all the questions</p>
+        <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true />
+    </div>
   </div>
   <!-- hit--></section>
 <!-- End Content Body --></div>
