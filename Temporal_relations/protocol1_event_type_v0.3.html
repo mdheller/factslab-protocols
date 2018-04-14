@@ -104,47 +104,61 @@ function toggleVisibility(id) {
      var condition = document.getElementById("instantaneous"+id).value == "false";
      //condition = condition && document.getElementById("predicate"+id).value == "true";
 
-     if (condition) {
+    
+      if (condition) {
              questionElement.style.display = 'block' ;
              questionElement2.style.display = 'block';
              questionElement3.style.display = 'block';
 
              //questionElement.slideDown();
-     }
-     else {
+      }
+      else {
              questionElement.style.display = 'none' ;
              questionElement2.style.display = 'none';
-             questionElement2.style.display = 'none';
+             questionElement3.style.display = 'none';
              //questionElement.slideUp();
-     }
+           }
+    
+    // Enable/Disable the submit button:
+    
+    var num_questions = jQuery.parseJSON('${var_arrays}').length;
+    var submit = true;
 
-     //var num_questions = jQuery.parseJSON('${var_arrays}').length;
-     /* var submit = true;
+     for (var i = 1; i < (num_questions+1); i++) 
+     {
+	     ident = i
 
-     for (var i = 0; i < 10; i++) {
-	 ident = String(i)
+         submit = submit && document.getElementById("instantaneous"+ident).value != "na";
+         submit = submit && document.getElementById("confidence_instantaneous"+ident).value != "na";
 
-         submit = submit && document.getElementById("understandable"+ident).value != "na";
-         submit = submit && document.getElementById("predicate"+ident).value != "na";
+         var cond = document.getElementById("instantaneous"+ident).value == "false";
+         //cond = cond && document.getElementById("predicate"+ident).value == "true";
 
-         var cond = document.getElementById("understandable"+ident).value == "true";
-         cond = cond && document.getElementById("predicate"+ident).value == "true";
-
-	 if (cond) {
-            submit = submit && document.getElementById("happened"+ident).value != "na";
-            submit = submit && document.getElementById("confidence"+ident).value != "na";
-         }
-
-     }
+	      if (cond) 
+           { 
+               submit = submit && document.getElementById("startpt"+ident).value != "na" 
+                           && document.getElementById("confidence_startpoint"+ident).value != "na"
+                          && document.getElementById("endpt"+ident).value != "na"
+                          && document.getElementById("confidence_endpoint"+ident).value != "na"
+                        && document.getElementById("duration"+ident).value != "na"
+                         && document.getElementById("confidence_duration"+ident).value != "na";
+                         
+           }
+        
+      }
 
      if (submit) {
             document.getElementById("submit_button").disabled = false;
-     } else {
+            document.getElementById("all_fillup").style.display = 'none';
+                  }  
+      else {
             document.getElementById("submit_button").disabled = true;
-} */
+            document.getElementById("all_fillup").style.display = 'block';
+            
+            } 
 
-}
-
+  }
+     
 
 
   /** Add HTML for questions to DOM element with ID 'questions'
@@ -251,7 +265,7 @@ function toggleVisibility(id) {
 
       }
 
-      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+      question_html += 'Comments (optional):<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
       document.getElementById("questions").innerHTML = question_html;
 
@@ -281,8 +295,10 @@ function hideQuestions() {
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     console.log("**** run ready function");
+
     writeQuestions();
     hideQuestions();
+
 });
 
 
@@ -481,7 +497,9 @@ say <i>months</i>, and that would be an okay response too.</p>
       <div id="questions"></div>
     </fieldset>
 
-    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+    <div>
+      <p id="all_fillup"> Please answer all the questions to enable the submit button.<p>
+      <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true/></div>
   </div>
   <!-- hit--></section>
 <!-- End Content Body --></div>
