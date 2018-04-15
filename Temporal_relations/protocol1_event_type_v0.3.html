@@ -72,6 +72,17 @@ function hideshow(which){
     }
 }
 
+
+function hideshow_all(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+
+    which.style.display="none";
+  }
+
+
 /**
  ** id       the unique ID for this particular select (when the same name
  **          is being used multiple times on the same page)
@@ -247,8 +258,6 @@ function toggleVisibility(id) {
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);                          
                           
-                        
-
 	  // question html
 
           question_html += '<h3>' + var_array['sentence'] + '</h3>';
@@ -328,7 +337,11 @@ $(document).ready(function() {
          </ol>
          <li>roughly how long event/state likely lasted or will last</li>
       </ol>
+      <a href="javascript:hideshow_all(document.getElementById('instant_instr'));
+                          hideshow_all(document.getElementById('start_end_instr'));
+                          hideshow_all(document.getElementById('duration_instr'))">Click here to hide all examples</a>
 
+    </p>
     <h2>How the task works</h2>
 
     <p class="instructions_intro">
@@ -340,9 +353,9 @@ $(document).ready(function() {
 
     <!-- begin instantaneous examples -->
 
-    <a href="javascript:hideshow(document.getElementById('generic'))">Examples of instantaneous events</a>
+    <a href="javascript:hideshow(document.getElementById('instant_instr'))">Examples of instantaneous events</a>
     </br>
-    <div id="generic" style="display: block" class="instructions_examples">
+    <div id="instant_instr" style="display: block" class="instructions_examples">
 <p>Instantaneous situations take effectively no time at all to happen. For example, predicates like <span class="predicate">shattered</span> generally describe an instantaneous situation.</p>
 
       <blockquote>The glass <span class="predicate">shattered</span>.</blockquote>
@@ -374,7 +387,7 @@ $(document).ready(function() {
 
 
 </br>
-    <p>  If you answer that the situation was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the situation was <b>not</b> instantaneous, then two follow-up questions would be asked:
+    <p class="instructions_intro">  If you answer that the situation was indeed instantaneous, no more questions would pop up and you can move on the next sentence. If you answer that the situation was <b>not</b> instantaneous, then two follow-up questions would be asked:
       <ul>
         <li>Within the time period referenced by the sentence, does the event have:</li>
           <ul>
@@ -385,12 +398,12 @@ $(document).ready(function() {
       The situation could have both a start-point and an end-point, or it could have only a start-point (and no end-point), or it could have only an end-point (and no start-point), or it could also have neither a start-point nor an end-point.
 
     </p>
-
+    <br>
 <!-- begin start-point and end-point examples -->
-
-    <a href="javascript:hideshow(document.getElementById('start_pt'))">Examples of events with start/end-points</a>
+    <a href="javascript:hideshow(document.getElementById('start_end_instr'))">Examples of events with start/end-points</a>
     </br>
-    <div id="start_pt" style="display: block" class="instructions_examples">
+    <br><br>
+    <div id="start_end_instr" style="display: block" class="instructions_examples">
 <p>Let's take a look at a sentence where we have a definite start-point but no definite end-point within the time period referenced by the sentence.</p>
 
       <blockquote>Jon saw the murderer and then <span class="predicate">ran</span> as fast as he could.</blockquote>
@@ -427,11 +440,11 @@ $(document).ready(function() {
 
     <!-- begin duration examples -->
 
-    <a href="javascript:hideshow(document.getElementById('duration'))">Examples of duration of an event</a>
+    <a href="javascript:hideshow(document.getElementById('duration_instr'))">Examples of duration of an event</a>
 
     </br>
 
-    <div id="duration" style="display: block" class="instructions_examples">
+    <div id="duration_instr" style="display: block" class="instructions_examples">
 
 
       <p>Consider a predicate like <span class="predicate">remodeled</span>.</p>
