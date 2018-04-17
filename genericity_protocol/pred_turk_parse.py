@@ -6,7 +6,7 @@ import re
 import random
 
 
-def html_ify(s):
+def htmlify(s):
     '''
         Takes care of &quot &lsqb &rsqb &#39
     '''
@@ -50,16 +50,18 @@ for file in files:
     path = home + file
     with open(path, 'r') as infile:
         data = infile.read()
-        parsed += [(path[-17:] + " " + sent_id, PredPatt(ud_parse)) for
+        parsed += [(path[-18:] + " " + sent_id, PredPatt(ud_parse)) for
             sent_id, ud_parse in load_conllu(data)]
 
 random.shuffle(parsed)
 
+# Create dictionary for each predicate token and write as json dump
+# Create a new line after every 10 tokens - each HIT has 10 questions
 with open('pred_dataset.csv', 'w+') as outfile:
     outfile.write("var_arrays\n")
     for sent_id, parse_sen in parsed:
         raw_sentence = " ".join([token.text for token in parse_sen.tokens])
-        raw_sentence = html_ify(raw_sentence)
+        raw_sentence = htmlify(raw_sentence)
         for predicate in parse_sen.instances:
             token_dict = {}
             pred_token = predicate.root.position

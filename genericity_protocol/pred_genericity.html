@@ -70,7 +70,7 @@ function hideshow(which){
  ** options  a list of (option.value, label) pairs
  */
 function getSelectHTML(id, name, options) {
-    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility()">';
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility(' + id + ')">';
 
     for (var i = 0; i < options.length; i++) {
     select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
@@ -82,31 +82,56 @@ function getSelectHTML(id, name, options) {
 }
 
 
-function toggleVisibility() {
-      // Toggle the submit button availability
-      var num_questions = jQuery.parseJSON('${var_arrays}').length;
-      var submit = true;
+function toggleVisibility(id) {
+    // toggle the visibility of the second and third question
 
-      for (var i = 1; i < 11; i++) {
-          id = String(i)
-          // console.log(i)
-          submit = submit && 
-          document.getElementById("pred_dynamicity"+id).value != "na" && 
-          document.getElementById("pred_eventivity"+id).value != "na" && 
-          document.getElementById("pred_predictability"+id).value != "na" && 
-          document.getElementById("dynamicity_certainty"+id).value != "na" && 
-          document.getElementById("eventivity_certainty"+id).value != "na" && 
-          document.getElementById("predictability_certainty"+id).value != "na"
-         }
+    var question_eventivity = document.getElementById('question-pred-eventivity' + id);
+    var question_predictability = document.getElementById('question-pred-predictability' + id);
+    var cond = document.getElementById('pred_dynamicity' + id).value == "true";
+
+    if (cond) {
+        console.log("hello");
+        question_eventivity.style.display = 'block';
+        question_predictability.style.display = 'block';
+    }
+
+    else {
+        console.log("yo");
+        question_eventivity.style.display = 'none';
+        question_predictability.style.display = 'none';
+    }
+
+    // Toggle the submit button availability
+    var num_questions = jQuery.parseJSON('${var_arrays}').length;
+    var submit = true;
+
+    for (var i = 1; i < 11; i++) {
+        id = String(i);
+        // console.log(i)
+        var cond_dyn =  document.getElementById("pred_dynamicity" + id).value == "false"
+        if (cond_dyn) {
+            submit = submit && 
+            document.getElementById("pred_dynamicity" + id).value != "na" && 
+            document.getElementById("dynamicity_certainty" + id).value != "na"
+        }
+        else {
+        submit = submit && 
+        document.getElementById("pred_dynamicity" + id).value != "na" && 
+        document.getElementById("pred_eventivity" + id).value != "na" && 
+        document.getElementById("pred_predictability" + id).value != "na" && 
+        document.getElementById("dynamicity_certainty" + id).value != "na" && 
+        document.getElementById("eventivity_certainty" + id).value != "na" && 
+        document.getElementById("predictability_certainty" + id).value != "na";
+        }
+     }
 
 
-     if (submit) {
-            document.getElementById("submit_button").disabled=false;
-                  }  
-      else {
-            document.getElementById("submit_button").disabled=true;
-            } 
-
+    if (submit) {
+        document.getElementById("submit_button").disabled=false;
+    }  
+    else {
+        document.getElementById("submit_button").disabled=true;
+    } 
 }
 
 
@@ -124,44 +149,35 @@ function toggleVisibility() {
       // Mechanical Turk will fill in '$ { varname }' variables when
       // HTML template is rendered
 
-  function writeQuestions() {
-      var var_arrays = jQuery.parseJSON('${var_arrays}');
+function writeQuestions() {
+    var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-      var question_html = '';
-      question_html += '<div class="sentence_section">';
+    var question_html = '';
+    question_html += '<div class="sentence_section">';
 
-      for (var i = 0; i < var_arrays.length; i++) {
-          var var_array = var_arrays[i];
-          var id = var_array['id'];
+    for (var i = 0; i < var_arrays.length; i++) {
+        var var_array = var_arrays[i];
+        var id = var_array['id'];
 
-      // question answers
+        // question answers
 
-      var select_dynamicity = getSelectHTML(id,"pred_dynamicity",
-                            [['na', '  -------  '],
-                             ['true','is'],
-                         ['false','is not']]);
+        var select_dynamicity = getSelectHTML(id,"pred_dynamicity",
+                                            [['na', '  -------  '],
+                                            ['true','is'],
+                                            ['false','is not']]);
 
-      var select_eventivity = getSelectHTML(id,"pred_eventivity",
-                         [['na', '  -------  '],
-                          ['true','does'],
-                          ['false','does not']]);
+        var select_eventivity = getSelectHTML(id,"pred_eventivity",
+                                            [['na', '  -------  '],
+                                            ['true','does'],
+                                            ['false','does not']]);
 
-      var select_predictability = getSelectHTML(id,"pred_predictability",
-                         [['na', '  -------  '],
-                          ['true','does'],
-                          ['false','does not']]);
+        var select_predictability = getSelectHTML(id,"pred_predictability",
+                                                [['na', '  -------  '],
+                                                ['true','does'],
+                                                ['false','does not']]);
 
-      var select_dynamicity_certainty = getSelectHTML(
-                          id,"dynamicity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
-
-      var select_eventivity_certainty = getSelectHTML(
-                          id,"eventivity_certainty",
+        var select_dynamicity_certainty = getSelectHTML(
+                            id,"dynamicity_certainty",
                             [['na', '  -------  '],
                             ['4', 'totally confident'],
                             ['3', 'very confident'],
@@ -169,8 +185,17 @@ function toggleVisibility() {
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      var select_predictability_certainty = getSelectHTML(
-                          id,"predictability_certainty",
+        var select_eventivity_certainty = getSelectHTML(
+                            id,"eventivity_certainty",
+                            [['na', '  -------  '],
+                            ['4', 'totally confident'],
+                            ['3', 'very confident'],
+                            ['2', 'somewhat confident'],
+                            ['1', 'not very confident'],
+                            ['0', 'not at all confident']]);
+
+        var select_predictability_certainty = getSelectHTML(
+                            id,"predictability_certainty",
                             [['na', '  -------  '],
                             ['4', 'totally confident'],
                             ['3', 'very confident'],
@@ -180,47 +205,47 @@ function toggleVisibility() {
 
       // question html
 
-          question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
+        question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
 
-      question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_dynamicity + 'is dynamic and I am ' + select_certainty + 'about my choice.</p>';
+        question_html += '<br/><p>The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_dynamicity + ' dynamic and I am ' + select_dynamicity_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_certainty + 'about my choice.</p>';
+        question_html += '<br/><p id="question-pred-eventivity' + id + '">The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_eventivity + ' refer to an event or a set of events ' + select_eventivity_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_certainty + 'about my choice.</p>';
+        question_html += '<br/><p id="question-pred-predictability' + id + '">The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_predictability + ' tell me something about the likelihood of the situation happening again in the future ' + select_predictability_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><hr>';
-      }
+        question_html += '<br/><hr>';
+    }
 
-      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+    console.log(question_html)
 
-      document.getElementById("questions").innerHTML = question_html;
+    question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
-  }
+    document.getElementById("questions").innerHTML = question_html;
+
+}
 
 function hideQuestions() {
 
-   var var_arrays = jQuery.parseJSON('${var_arrays}');
+    var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-   for (var i = 0; i < var_arrays.length; i++) {
-      var var_array = var_arrays[i];
-      var id = var_array['id'];
+    for (var i = 0; i < var_arrays.length; i++) {
+        var var_array = var_arrays[i];
+        var id = var_array['id'];
 
-      var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
-      question_pred_dynamicity.style.visibility = 'hidden';
+        var question_eventivity = document.getElementById('question-pred-eventivity' + id);
+        console.log(question_eventivity)
+        question_eventivity.style.display = 'none';
 
-      var question_pred_eventivity = document.getElementById('question-pred-eventivity'+id);
-      question_pred_eventivity.style.visibility = 'hidden';
-
-      var question_pred_predictability = document.getElementById('question-pred-predictability'+id);
-      question_pred_predictability.style.visibility = 'hidden';
-   }
+        var question_predictability = document.getElementById('question-pred-predictability' + id);
+        question_predictability.style.display = 'none';
+    }
 }
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     console.log("**** run ready function");
     writeQuestions();
-    // hideQuestions();
+    hideQuestions();
 });
 
 
@@ -244,7 +269,7 @@ $(document).ready(function() {
       <ol type="i">
         <li>whether the predicate describes a dynamic situation</li>
         <li>whether the predicate describes a particular situation(s)</li>
-        <li>whether the predicate describes a general property</li>
+        <li>whether the predicate describes a pattern or a property of the world</li>
       </ol>
 
       We give examples that will help you answer these questions below.
@@ -264,21 +289,21 @@ $(document).ready(function() {
 
         <blockquote>Hannah is <span class="predicate">running</span> a half marathon tomorrow.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">running</span> is dynamic - there is a point where Hannah started to run, then continued running, and stops running.
+        In this sentence, the predicate <span class="predicate">running</span> is dynamic, <bold>it describes a situation that extends over time</bold> - there are particular times where Hannah started to run, then continued running, and stops running.
 
-        Dynamic predicates can appear in various forms. For example the sentence below descibes :
+        Dynamic predicates can appear in various forms. For example the sentence below describes a past dynamic situation :
 
-        <blockquote>The <span class="predicate">lions</span> roared in unison.</blockquote>
+        <blockquote>Hannah <span class="predicate">won</span> the race.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">lions</span> refers to a particular group of things: a group of lions engaging in the act of roaring.
+        In this sentence, the predicate <span class="predicate">won</span> is a dynamic event since it again describes a past situation spread over time.
 
-        Not all predicates refer to physical things, but that doesn't mean they don't refer to particular things. An example of a predicate referring to
-        a particular non-physical thing can be seen in the following sentence:
+        Not all predicates are dynamic, for example:
 
-        <blockquote>That <span class="predicate">idea</span> is stupid.</blockquote>
+        <blockquote>Lee is <span class="predicate">sick</span>.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">idea</span> refers to a particular non-physical thing.
+        The predicate sick does not describe a dynamic situation, it expresses a state of being. Similarly for the following example,
 
+        <blockquote>The statue <span class="predicate">stood</span> in the middle of the park.</blockquote>
         </div>
 
         If you answered no to the first question, there will be no more questions for that predicate. If you answered yes, you will be presented with two questions.
@@ -290,21 +315,17 @@ $(document).ready(function() {
         <div id="part_examples" style="display: block" class="instructions_examples">
         An example of a predicate referring to a type of thing can be seen in the following sentence:
 
-        <blockquote><span class="predicate">Lions</span> eat meat.</blockquote>
+        <blockquote>The lions were <span class="predicate">eating</span> a zerba.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">lions</span> refers to lions in general – not any particular lion.
+        In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation - the sitatuon of these particular lions eating a zebra.
 
-        Not all predicates that refer to types of things refer to animal species.  An example of this can be seen in the following sentence:
+        Sometimes, the dynamic predicate can describe a particular set of situations.  An example of this can be seen in the following sentence:
 
-        <blockquote>Coke <span class="predicate">bottles</span> have long necks.</blockquote>
+        <blockquote>The UN Security council<span class="predicate">met</span> thrice last month alone.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">bottles</span> refers to Coke bottles in general – not any particular Coke bottle.
+        In this sentence, the predicate <span class="predicate">met</span> describes three particular situations where the security council met.
 
-        predicates that refer to types of things can come in various forms. For instance, we can also talk about Coke bottles in general using the following sentence:
-
-        <blockquote>The Coke <span class="predicate">bottle</span> has changed shape many times over the years.</blockquote>
-
-        In this case, you should also answer that the predicate <span class="predicate">bottle</span> refers to a type of thing.
+        
       </div>
 
 
@@ -312,22 +333,7 @@ $(document).ready(function() {
       </br>
         <h4><a href="javascript:hideshow(document.getElementById('pred_examples'))">Examples of predictive predicates (click to hide/show)</a></h4>
         <div id="pred_examples" style="display: block" class="instructions_examples">
-        An example of a predicate referring to an abstract concept can be seen in the following sentence:
 
-        <blockquote><span class="predicate">Corruption</span> is rampant in Washington.</blockquote>
-
-        In this sentence, the predicate <span class="predicate">corruption</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
-        Rather, it refers directly to the abstract concept of corruption.
-
-        Sometimes it will be difficult to tell what a predicate refers to. Consider the following sentence:
-
-        <blockquote>The <span class="predicate">service</span> is bad at that restaurant.</blockquote>
-
-        In this sentence, it seems reasonable to say that the predicate <span class="predicate">service</span> refers to a particular thing – service at that restaurant.
-        But it also seems reasonable to say that it refers to a type of thing, which encompasses all the different acts of service carried out at the restaurant.
-        It could even be that the predicate <span class="predicate">service</span> refers to an abstract concept of service more generally, since service at a restaurant
-        can involve lots of different types of things mashed together – how nice the waiters are, the ambiance of the restaurant, quality of the food, etc. –
-        that we wouldn't naturally call one type of thing.
 
         For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
 
