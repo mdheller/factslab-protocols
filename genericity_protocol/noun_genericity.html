@@ -180,11 +180,11 @@ function toggleVisibility() {
 
           question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
 
-      question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
+      question_html += '<br/><p id="question-noun-particularity' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
+      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-class"' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
+      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
 
       question_html += '<br/><hr>';
       }
@@ -236,6 +236,8 @@ $(document).ready(function() {
 
     <h2>How the task works</h2>
 
+    <h4><a href="javascript:hideshow(document.getElementById('all_examples'))">Click here to hide/show all examples</a></h4>
+    <div id="all_examples" style="display: block">
     <p class="instructions_intro">
         The first question is about whether the noun refers to a particular thing.
 
@@ -294,10 +296,10 @@ $(document).ready(function() {
         <div id="abs_examples" style="display: block" class="instructions_examples">
         An example of a noun referring to an abstract concept can be seen in the following sentence:
 
-        <blockquote><span class="noun">Corruption</span> is rampant in Washington.</blockquote>
+        <blockquote><span class="noun">Love</span> is magical.</blockquote>
 
-        In this sentence, the noun <span class="noun">corruption</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
-        Rather, it refers directly to the abstract concept of corruption.
+        In this sentence, the noun <span class="noun">love</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
+        Rather, it refers directly to the abstract concept of love.
 
         Sometimes it will be difficult to tell what a noun refers to. Consider the following sentence:
 
@@ -312,7 +314,7 @@ $(document).ready(function() {
         For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
 
     </p>
-
+  </div>
 </br>
 
 </div> <!-- Panel-body --> </div>
