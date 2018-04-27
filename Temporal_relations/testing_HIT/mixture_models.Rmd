@@ -3,9 +3,7 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 ```{r}
 #install.packages('sigmoid')
 library(lme4)
@@ -82,28 +80,20 @@ table(sign(df_end$intercept))
 table(sign(df_end$glmer_intercept_end))
 ```
 ```{r}
-#Left join intercept variables to 
-pilot_data = merge(x = pilot_data, y = df_inst[, c("sent_token", "glmer_intercept_inst")], 
+#Left join datasets
+pilot_sent_token_data = merge(x = df_inst, y = df_start[, c("sent_token", "glmer_intercept_start")], 
                     by = "sent_token", all.x = TRUE)
 
-pilot_data = merge(x = pilot_data, y = df_start[, c("sent_token", "glmer_intercept_start")], 
-                    by = "sent_token", all.x = TRUE)
+pilot_sent_token_data = merge(x = pilot_sent_token_data, y = df_end[, c("sent_token",
+                                                                        "glmer_intercept_end")], 
+                              by = "sent_token", all.x = TRUE)
 
-pilot_data = merge(x = pilot_data, y = df_end[, c("sent_token", "glmer_intercept_end")], 
-                    by = "sent_token", all.x = TRUE)
+pilot_sent_token_data = within(pilot_sent_token_data, rm(intercept))
 ```
 
 ```{r}
 #Output the final data:
 
-write.csv(pilot_data, file = "pilot_data_upd.csv",row.names=FALSE)
+write.csv(pilot_sent_token_data, file = "pilot_sent_token_data.csv",row.names=FALSE)
 ```
-
-
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
