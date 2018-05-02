@@ -14,7 +14,7 @@
   </style>
 
 
-  <link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">  -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -92,6 +92,8 @@ function hideshow(which){
  **
  ** options  a list of (option.value, label) pairs
  */
+
+
 function getSelectHTML(id, name, options) {
 
     var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+id+')">';
@@ -105,6 +107,7 @@ function getSelectHTML(id, name, options) {
     return select_html;
 }
 
+/*
 function toggleVisibility(id) {
 
      var questionElement = document.getElementById('question-happened'+id);
@@ -126,7 +129,126 @@ function toggleVisibility(id) {
      }
   }
 
+  */
 
+  // Function inspired from this script: http://jsfiddle.net/XZCxt/361/
+function loadSliders()
+  {
+   //Single slider ::: no highlight 
+     $(".slider").each(function() 
+    {
+        // $this is a reference to .slider in current iteration of each
+        $this = $(this);
+        // find any .slider-range element WITHIN scope of $this
+        var value_init = parseFloat($(this).find('.currentValue').text()); 
+        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
+        console.log("slider initiated ")
+        $(".slider-sub", $this).slider(
+        {
+
+            min: 0,
+            max: 100,
+            value: value_init,
+            slide: function( event, ui ) 
+            {
+               // find any element with class .amount WITHIN scope of $this
+               $(this).parent().find(".amount").html(ui.value);
+               console.log("sub-slider main")
+            }
+        });
+
+       
+        //$(".amount").html( $(".slider-sub").slider("value") );
+     });
+    //Dual sliders
+    $(".slider-range").each(function() {
+        // $this is a reference to .slider in current iteration of each
+        $this = $(this);
+        // find any .slider-range element WITHIN scope of $this
+
+        var value_start = parseFloat($(this).find('.ValueStart').text());
+        var value_end = parseFloat($(this).find('.ValueEnd').text());
+        console.log("slider range initiated ")
+        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
+
+        $(".slider-sub", $this).slider({
+            range:   true,
+            min: 0,
+            max: 100,
+            values: [value_start, value_end],
+            slide: function( event, ui ) {
+               // find any element with class .amount WITHIN scope of $this
+               $(this).parent().find(".amount").html(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+               console.log("sub-slider range")
+            }
+        });
+        //$(".amount").html( $(".slider-sub").slider("values", 0 ) + " - " + $(".slider-sub").slider("values", 1 ));
+     });
+     
+     
+     //Single slider ::: highlight to the right
+     
+     $(".slider-start").each(function() 
+    {
+        // $this is a reference to .slider in current iteration of each
+        $this = $(this);
+        // find any .slider-range element WITHIN scope of $this
+        
+        var value_init = parseFloat($(this).find('.currentValue').text()); 
+        console.log("slider start initiated ")
+        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
+
+        $(".slider-sub", $this).slider(
+        {
+            range:  "max",
+            min: 0,
+            max: 100,
+            value: value_init,
+            slide: function( event, ui ) 
+            {
+               // find any element with class .amount WITHIN scope of $this
+               $(this).parent().find(".amount").html(ui.value);
+               console.log("sub-slider start")
+            }
+        });
+
+       
+        //$(".amount").html( $(".slider-sub").slider("value") );
+     });
+     
+     
+     //Single slider ::: highlight to the left
+     
+     $(".slider-end").each(function() 
+    {
+        // $this is a reference to .slider in current iteration of each
+        $this = $(this);
+        // find any .slider-range element WITHIN scope of $this
+        var value_init = parseFloat($(this).find('.currentValue').text()); 
+        console.log("slider end initiated ")
+        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
+
+
+        $(".slider-sub", $this).slider(
+        {
+            range:  "min",
+            min: 0,
+            max: 100,
+            value: value_init,
+            slide: function( event, ui ) 
+            {
+               // find any element with class .amount WITHIN scope of $this
+               $(this).parent().find(".amount").html(ui.value);
+               console.log("sub-slider end")
+            }
+        });
+
+       
+       // $(".amount").html( $(".slider-sub").slider("value") );
+     });
+     
+     
+  }
 
   function writeQuestions() 
   {
@@ -142,28 +264,8 @@ function toggleVisibility(id) {
 
       	  // question answers
 
-      	  var select_instant = getSelectHTML(id,"instantaneous",
-      					     [['na', '  -------  '],
-      					      ['true','is'],
-      					      ['false','is not']]);
 
-      	  var select_predicate = getSelectHTML(id,"predicate",
-      					     [['na', '  -------  '],
-      						['true','does'],
-      						    ['false','does not']]);
-
-
-          var select_happened = getSelectHTML(id,"happened",
-                                   [['na', '  -------  '],
-                                    ['true', 'had happened or was happening'],
-                                    ['false', 'hadn\'t yet happened or wasn\'t currently happening']]);
-
-      	  var select_startendpt = getSelectHTML(id,"startendpt",
-                                   [['na', '  -------  '],
-                                    ['3', 'a definite start-point but not a definite end-point'],
-                                    ['2', 'a definite end-point but not a definite start-point'],
-                                    ['1', 'both a definite start-point and an end-point'],
-                                    ['0', 'neither a definite start-point nor an end-point']]);
+          //var select_slider1 = $(this).parent().find(".amount").html(ui.value);
 
       	  var select_confidence = getSelectHTML(id,"confidence",
       				      [['na', '  -------  '],
@@ -173,38 +275,74 @@ function toggleVisibility(id) {
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);
 
-          var select_duration = getSelectHTML(id,"duration",
-                    [['na', '  -------  '],
-                        ['8', 'happened within an instant'],
-                        ['7', 'took seconds to happen'],
-                        ['6', 'took minutes to happen'],
-                        ['5', 'took hours to happen'],
-                        ['4', 'took weeks to happen'],
-                        ['3', 'took months to happen'],
-                        ['2', 'took years to happen'],
-                        ['1', 'took centuries to happen'],
-                        ['0', 'is true forever']]);
-
-          
-
-
 	  // question html
 
           question_html += '<h3>' + var_array['sentence'] + '</h3>';
 
-          question_html += '<br/><p>The event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_instant + ' instantaneous .</p>';
+          // Predicate 1 Sliders
+          if (var_array['instant_pred1'] == "True") 
+          {
+           question_html += '<p><span class="predicate">' + var_array['pred1'] + '</span><div class="slider"><b>Range:</b><span class="amount"></span><div class="hiddenValues" style="display: none;"> <div class="currentValue"> 50 </div> </div> <!-- end hiddenValues --> <div class="slider-sub">hthjhgh</div> </div></p>' ;
+           console.log("**** pred1_ins");
+          }
 
-          question_html += '<br/><p id="question-happened'+id+'">Within the time period referenced by the sentence, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span>  has or had' + select_startendpt + ' and you are ' + select_confidence + ' about that.</p>' ;
+          else if( (var_array['start_pred1'] == "True") & (var_array['end_pred1'] == "False"))
+          {
 
-           question_html += '<br/><p id="question-happened2'+id+'">Roughly, the event described by the predicate <span class="predicate">' + var_array['pred'] + '</span> ' + select_duration + '.</p>';
+          question_html += '<p> <span class="predicate">' + var_array['pred1'] +'</span><div class="slider-start"> <b>Range:</b><span class="amount"></span><div class="hiddenValues" style="display: none;"> <div class="currentValue"> 50 </div> </div> <!-- end hiddenValues --> <div class="slider-sub">hjgfjhgjhg</div> </div></p>';
+          console.log("**** pred1_start");
+          }
 
-	         question_html += '<hr>';
+          else if ( (var_array['start_pred1'] == "False") & (var_array['end_pred1'] == "True") )
+          {
+            question_html += '<p> <span class="predicate">' + var_array['pred1'] +'</span><div class="slider-end"><b>Range:</b><span class="amount"></span> <div class="hiddenValues" style="display: none;"><div class="currentValue"> 50 </div> </div> <!-- end hiddenValues --> <div class="slider-sub"></div> </div> </p>';
+            console.log("**** pred1_end");
+           }
+
+           else 
+           {
+              question_html += '<p> <span class="predicate">' + var_array['pred1'] +'</span> <div class="slider-range"><b>Range:</b><span class="amount"></span><div class="hiddenValues" style="display: none;"> <div class="ValueStart"> 40 </div><div class="ValueEnd"> 60 </div></div> <!-- end hiddenValues --> <div class="slider-sub"></div> </div> </p>';
+              console.log("**** pred1_else");
+
+           }
+
+
+            // Predicate 2 Sliders
+           if (var_array['instant_pred2'] == "True") 
+          {
+           question_html += '<p><span class="predicate">' + var_array['pred2'] + '</span> <div class="slider"> <b>Range:</b> <span class="amount"></span><div class="hiddenValues" style="display: none;"><div class="currentValue"> 50 </div> </div> <!-- end hiddenValues --> <div class="slider-sub"></div> </div></p>' ;
+           console.log("**** pred2_ins");
+          }
+
+          else if( (var_array['start_pred2'] == "True") & (var_array['end_pred2'] == "False"))
+          {
+
+          question_html += '<p> <span class="predicate">' + var_array['pred2'] +'</span><div class="slider-start"> <b>Range:</b> <span class="amount"></span> <div class="hiddenValues" style="display: none;"> <div class="currentValue"> 50 </div></div> <!-- end hiddenValues --> <div class="slider-sub"></div> </div></p>';
+          console.log("**** pred2_start");
+          }
+
+          else if ( (var_array['start_pred2'] == "False") & (var_array['end_pred2'] == "True") )
+          {
+            question_html += '<p> <span class="predicate">' + var_array['pred2'] +'</span> <div class="slider-end"><b>Range:</b><span class="amount"></span><div class="hiddenValues" style="display: none;"><div class="currentValue"> 50 </div> </div> <!-- end hiddenValues --> <div class="slider-sub"></div> </div></p>';
+            console.log("**** pred2_end");
+           }
+
+           else 
+           {
+              question_html += '<p> <span class="predicate">' + var_array['pred2'] +'</span> <div class="slider-range"><b>Range:</b> <span class="amount"></span> <div class="hiddenValues" style="display: none;"> <div class="ValueStart"> 40 </div><div class="ValueEnd"> 60 </div></div> <!-- end hiddenValues --><div class="slider-sub">last bro</div></div></p>';
+              console.log("**** pred2_else");
+           }
+
+        question_html += '<br/><p>You are '  +select_confidence + ' about the ranges that you have selected.</p>' 
+
+	       question_html += '<hr>';
 
       }
 
       question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
-
+      //var var_temp = $(question_html);
       document.getElementById("questions").innerHTML = question_html;
+      //console.log(var_temp);
 
     }
 
@@ -226,123 +364,14 @@ function hideQuestions() {
 
 }
 
-// Function inspired from this script: http://jsfiddle.net/XZCxt/361/
-function loadSliders()
-  {
-   //Single slider ::: no highlight 
-     $(".slider").each(function() 
-    {
-        // $this is a reference to .slider in current iteration of each
-        $this = $(this);
-        // find any .slider-range element WITHIN scope of $this
-        var value_init = parseFloat($(this).find('.currentValue').text()); 
-        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
-        
-        $(".slider-sub", $this).slider(
-        {
-            min: 0,
-            max: 100,
-            value: value_init,
-            slide: function( event, ui ) 
-            {
-               // find any element with class .amount WITHIN scope of $this
-               $(this).parent().find(".amount").html(ui.value);
-            }
-        });
 
-       
-        //$(".amount").html( $(".slider-sub").slider("value") );
-     });
-    //Dual sliders
-    $(".slider-range").each(function() {
-        // $this is a reference to .slider in current iteration of each
-        $this = $(this);
-        // find any .slider-range element WITHIN scope of $this
-
-        var value_start = parseFloat($(this).find('.ValueStart').text());
-        var value_end = parseFloat($(this).find('.ValueEnd').text());
-        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
-
-        $(".slider-sub", $this).slider({
-            range:   true,
-            min: 0,
-            max: 100,
-            values: [value_start, value_end],
-            slide: function( event, ui ) {
-               // find any element with class .amount WITHIN scope of $this
-               $(this).parent().find(".amount").html(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-            }
-        });
-        //$(".amount").html( $(".slider-sub").slider("values", 0 ) + " - " + $(".slider-sub").slider("values", 1 ));
-     });
-     
-     
-     //Single slider ::: highlight to the right
-     
-     $(".slider-start").each(function() 
-    {
-        // $this is a reference to .slider in current iteration of each
-        $this = $(this);
-        // find any .slider-range element WITHIN scope of $this
-        
-        var value_init = parseFloat($(this).find('.currentValue').text()); 
-        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
-
-        $(".slider-sub", $this).slider(
-        {
-            range:  "max",
-            min: 0,
-            max: 100,
-            value: value_init,
-            slide: function( event, ui ) 
-            {
-               // find any element with class .amount WITHIN scope of $this
-               $(this).parent().find(".amount").html(ui.value);
-            }
-        });
-
-       
-        //$(".amount").html( $(".slider-sub").slider("value") );
-     });
-     
-     
-     //Single slider ::: highlight to the left
-     
-     $(".slider-end").each(function() 
-    {
-        // $this is a reference to .slider in current iteration of each
-        $this = $(this);
-        // find any .slider-range element WITHIN scope of $this
-        var value_init = parseFloat($(this).find('.currentValue').text()); 
-        // source: https://forum.jquery.com/topic/dynamic-initial-value-of-a-slider
-
-
-        $(".slider-sub", $this).slider(
-        {
-            range:  "min",
-            min: 0,
-            max: 100,
-            value: value_init,
-            slide: function( event, ui ) 
-            {
-               // find any element with class .amount WITHIN scope of $this
-               $(this).parent().find(".amount").html(ui.value);
-            }
-        });
-
-       
-       // $(".amount").html( $(".slider-sub").slider("value") );
-     });
-     
-     
-  }
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     loadSliders();
     console.log("**** run ready function");
     writeQuestions();
-    hideQuestions();
+    //hideQuestions();
     
 });
 
