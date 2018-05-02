@@ -27,6 +27,7 @@
     font-size:2.0em;
     border: 0px solid #FFFFFF;
     }
+    
 
     .panel-primary {
     border-color: #FFFFFF;
@@ -83,6 +84,15 @@ function hideshow(which){
     which.style.display="block";
     }
 }
+
+function hideshow_all(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+
+    which.style.display="none";
+  }
 
 /**
  ** id       the unique ID for this particular select (when the same name
@@ -250,6 +260,8 @@ function loadSliders()
      
   }
 
+  
+
   function writeQuestions() 
   {
       var var_arrays = jQuery.parseJSON('${var_arrays}');
@@ -266,7 +278,7 @@ function loadSliders()
 
 
           //var select_slider1 = $(this).parent().find(".amount").html(ui.value);
-
+          
       	  var select_confidence = getSelectHTML(id,"confidence",
       				      [['na', '  -------  '],
       					        ['4', 'totally confident'],
@@ -277,7 +289,7 @@ function loadSliders()
 
 	  // question html
 
-          question_html += '<h3>' + var_array['sentence'] + '</h3>';
+          question_html += '<h3>' + var_array['sentence'] + '</h3> ';
 
           // Predicate 1 Sliders
           if (var_array['instant_pred1'] == "True") 
@@ -364,13 +376,12 @@ function hideQuestions() {
 
 }
 
-
-
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
     loadSliders();
     console.log("**** run ready function");
     writeQuestions();
+    loadSliders();
     //hideQuestions();
     
 });
@@ -400,9 +411,13 @@ $(document).ready(function() {
       We are interested in knowing the chronology of the situations described by these predicates: did one happen before/after the other?; did they overlap in time?; etc. 
 
       </p>
+    <a href="javascript:hideshow_all(document.getElementById('instant_instr'));
+                          hideshow_all(document.getElementById('no_inst'));
+                          hideshow_all(document.getElementById('task_details'))">Click here to hide all examples and task details</a>
       
     <h2>How the task works</h2>
-
+    <a href="javascript:hideshow(document.getElementById('task_details'))">Expand/Hide task details</a>
+    <div id="task_details" >
     <p class="instructions_intro">
       The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar. If the situation described by the predicate is instantaneous, then the slider bar will have a single slider which can be moved along the horizontal line.
       <br>A single slider for an <b>instantaneous event</b> is shown below. Click and drag the slider horizontly to change the range. </br>
@@ -470,14 +485,16 @@ $(document).ready(function() {
        </div>
     </div>
 
+  </div>
+
     <p> You'll be presented with a slider bar for each highlighted predicate in the sentence.  <b>Your task is to move the sliders so that the chronology of the events is correct as per the slider positions</b>. </p>
     
     
     <!-- begin instantaneous examples -->
     
-    <a href="javascript:hideshow(document.getElementById('generic'))">Examples with one instantaneous event</a>
+    <a href="javascript:hideshow(document.getElementById('instant_instr'))">Examples with one instantaneous event</a>
     </br>
-    <div id="generic" style="display: block" class="instructions_examples">
+    <div id="instant_instr" style="display: block" class="instructions_examples">
 <p>Let's consider an example where one event is instantaneous and the other one has a definite start-point but no definite end-point.</p>
 
       
@@ -581,9 +598,9 @@ $(document).ready(function() {
 
 <!-- begin withh NO instantaneous examples -->
     
-    <a href="javascript:hideshow(document.getElementById('generic'))">Examples with no instantaneous events</a>
+    <a href="javascript:hideshow(document.getElementById('no_inst'))">Examples with no instantaneous events</a>
     </br>
-    <div id="generic" style="display: block" class="instructions_examples">
+    <div id="no_inst" style="display: block" class="instructions_examples">
 
 <p>In some situations, one event is contained in the other event. We want to capture the chronology of these events using the sliders. Consider the example below:</p>
 
