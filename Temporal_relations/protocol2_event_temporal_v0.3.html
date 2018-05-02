@@ -20,7 +20,6 @@
   input[class*="sld_pred"], textarea {
   height:20px;
   font-size:12pt;}
-
   </style>
 
   <!-- <link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">  -->
@@ -115,7 +114,7 @@ function hideshow_all(which){
 
 function getSelectHTML(id, name, options) {
 
-    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+id+')">';
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility()">';
 
     for (var i = 0; i < options.length; i++) {
 	select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
@@ -126,29 +125,39 @@ function getSelectHTML(id, name, options) {
     return select_html;
 }
 
-/*
-function toggleVisibility(id) {
 
-     var questionElement = document.getElementById('question-happened'+id);
+function toggleVisibility() {
+     // Enable/Disable the submit button:
+    
+    var num_questions = jQuery.parseJSON('${var_arrays}').length;
+    var submit = true;
 
-     var questionElement2 = document.getElementById('question-happened2'+id);
+     for (var i = 1; i < (num_questions+1); i++) 
+     {
+       ident = i
+      
+          var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + ident.toString()).val();
+          var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + ident.toString()).val();
 
-     var condition = document.getElementById("instantaneous"+id).value == "false";
-     //condition = condition && document.getElementById("predicate"+id).value == "true";
 
-     if (condition) {
-             questionElement.style.display = 'block' ;
-             questionElement2.style.display = 'block';
-             //questionElement.slideDown();
-     }
-     else {
-             questionElement.style.display = 'none' ;
-             questionElement2.style.display = 'none';
-             //questionElement.slideUp();
-     }
+         submit = submit && temp_pred1 != "";
+         submit = submit && temp_pred2 != "";
+         submit = submit &&  document.getElementById("confidence_range"+ident).value != "na";
+         
+      }
+
+     if (submit) {
+            document.getElementById("submit_button").disabled = false;
+            document.getElementById("all_fillup").style.display = 'none';
+                  }  
+      else {
+            document.getElementById("submit_button").disabled = true;
+            document.getElementById("all_fillup").style.display = 'block';
+            } 
+
   }
 
-  */
+  
   function getValueSlider(name, id, range, val1, val2){
            //Function that defines slider classes for each sentence id: val1 and val2 are initial values
            //Returns the html string used to display the sliders
@@ -166,6 +175,8 @@ function toggleVisibility(id) {
               slide: function( event, ui ) {
                    // find any element with class .amount WITHIN scope of $this
                   $("." + class_name).val( ui.value);
+                  toggleVisibility();
+
                     }
                });
               
@@ -180,6 +191,7 @@ function toggleVisibility(id) {
               slide: function( event, ui ) {
                    // find any element with class .amount WITHIN scope of $this
                   $("." + class_name).val( ui.value);
+                  toggleVisibility();
                     }
                });
             }
@@ -193,6 +205,7 @@ function toggleVisibility(id) {
               slide: function( event, ui ) {
                    // find any element with class .amount WITHIN scope of $this
                   $("." + class_name).val( ui.value);
+                  toggleVisibility();
                     }
                });
             }
@@ -206,6 +219,7 @@ function toggleVisibility(id) {
               slide: function( event, ui ) {
                    // find any element with class .amount WITHIN scope of $this
                   $("." + class_name).val( ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+                  toggleVisibility();
                     }
                });
 
@@ -215,6 +229,7 @@ function toggleVisibility(id) {
          $("." + class_name).change(function () {
             var value = this.value.substring(1);
             console.log(value);
+            //toggleVisibility();
             $("." + class_name).slider("value", parseInt(value));
             });
 
@@ -264,7 +279,7 @@ function toggleVisibility(id) {
           }
 
           //Confidence Options
-      	  var select_confidence = getSelectHTML(id,"confidence",
+      	  var select_confidence = getSelectHTML(id,"confidence_range",
       				      [['na', '  -------  '],
       					        ['4', 'totally confident'],
       					        ['3', 'very confident'],
@@ -282,35 +297,19 @@ function toggleVisibility(id) {
 
            question_html += '<p><span class="predicate">' + var_array['pred2'] + '</span><br><b>Range: </b>' + select_value_pred2 + '</p>' ;
           
-           question_html += '<br/><p>You are '  +select_confidence + ' about the ranges that you have selected.</p>' 
+           question_html += '<br/><p id="ques_conf'+id+'">You are '  +select_confidence + ' about the ranges that you have selected.</p>' 
 
 	       question_html += '<hr>';
 
       }
 
-      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+      question_html += 'Comments: (Optional) <br/><textarea name="comments" class=cols="60" rows="5"></textarea></div>';
       //var var_temp = $(question_html);
       document.getElementById("questions").innerHTML = question_html;
       //console.log(var_temp);
 
     }
 
-function hideQuestions() {
-
-   var var_arrays = jQuery.parseJSON('${var_arrays}');
-
-   for (var i = 0; i < var_arrays.length; i++) {
-      var var_array = var_arrays[i];
-      var id = var_array['id'];
-
-      var question_happened = document.getElementById('question-happened'+id);
-      question_happened.style.display = 'none';
-
-      var question_happened2 = document.getElementById('question-happened2'+id);
-      question_happened2.style.display = 'none';
-   }
-
-}
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
@@ -556,7 +555,9 @@ $(document).ready(function() {
       <div id="questions"></div>
     </fieldset>
 
-    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+    <div>
+      <p id="all_fillup"> Please answer all the questions to enable the submit button.<p>
+      <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
   </div>
   <!-- hit--></section>
 <!-- End Content Body --></div>
