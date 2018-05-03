@@ -76,22 +76,20 @@ with open('pilot_pred_dataset.csv', 'w+') as outfile:
         raw_sentence = " ".join([token.text for token in parse_sen.tokens])
         html_sentence = htmlify(raw_sentence)
         for predicate in parse_sen.instances:
+            # print(raw_sentence, parse_sen.instances)
             if predicate.root.tag != "VERB":
-                # print("RAW:", raw_sentence)
-                # print(" ".join([token.text for token in predicate.tokens]), predicate)
-                # pred = [token.text for token in predicate.tokens][0]
                 try:
                     pred = list(set(html_sentence.lower().split()) & set(copula_verbs))[0]
                     pred_token = html_sentence.split().index(pred)
                 except IndexError:
                     pred = predicate.root.text
                     pred_token = predicate.root.position
+                # print("PRED1:", pred)
             else:
                 pred = predicate.root.text
                 pred_token = predicate.root.position
-            print(html_sentence, pred, pred_token)
+                # print("PRED2:", pred, predicate.root.tag)
             token_dict = {}
-            pred = predicate.root.text
             pred_sentence = html_sentence.split().copy()
             pred_sentence.insert(pred_token, ' <span class=\"predicate\">')
             pred_sentence.insert(pred_token + 2, '</span> ')

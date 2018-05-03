@@ -207,11 +207,11 @@ function writeQuestions() {
 
         question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
 
-        question_html += '<br/><p>The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_dynamicity + ' dynamic and I am ' + select_dynamicity_certainty + ' about my choice.</p>';
+        question_html += '<br/><p>The situation referred to by <span class="predicate">' + var_array['pred'] + '</span> ' + select_dynamicity + ' dynamic and I am ' + select_dynamicity_certainty + ' about my choice.</p>';
 
-        question_html += '<br/><p id="question-pred-eventivity' + id + '">The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_eventivity + ' refer to an event or a set of events ' + select_eventivity_certainty + ' about my choice.</p>';
+        question_html += '<br/><p id="question-pred-eventivity' + id + '">The situation referred to by <span class="predicate"> ' + var_array['pred'] + '</span> ' + select_eventivity + ' refer to a particular situation or particular situations and I am ' + select_eventivity_certainty + ' about my choice.</p>';
 
-        question_html += '<br/><p id="question-pred-predictability' + id + '">The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_predictability + ' tell me something about the likelihood of the situation happening again in the future ' + select_predictability_certainty + ' about my choice.</p>';
+        // question_html += '<br/><p id="question-pred-predictability' + id + '">The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_predictability + ' tell me something about whether the situation can happen again in the future and I am ' + select_predictability_certainty + ' about my choice.</p>';
 
         question_html += '<br/><hr>';
     }
@@ -236,8 +236,8 @@ function hideQuestions() {
         console.log(question_eventivity)
         question_eventivity.style.display = 'none';
 
-        var question_predictability = document.getElementById('question-pred-predictability' + id);
-        question_predictability.style.display = 'none';
+        // var question_predictability = document.getElementById('question-pred-predictability' + id);
+        // question_predictability.style.display = 'none';
     }
 }
 
@@ -264,10 +264,10 @@ $(document).ready(function() {
 
     <p class="instructions_intro">
       In this task, you will be presented with a sentence containing <span class="predicate">a word highlighted in yellow</span> followed by questions about that word.
-      We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
+      We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness). We're interested in three different properties of the situations that different predicates refer to:
 
       <ol type="i">
-        <li>whether the predicate describes a dynamic situation</li>
+        <li>whether the predicate describes a dynamic situation(s)</li>
         <li>whether the predicate describes a particular situation(s)</li>
         <li>whether the predicate describes a pattern or a property of the world</li>
       </ol>
@@ -277,7 +277,8 @@ $(document).ready(function() {
     </p>
 
     <h2>How the task works</h2>
-
+    <h4><a href="javascript:hideshow(document.getElementById('all_examples'))">Click here to hide/show all examples</a></h4>
+    <div id="all_examples" style="display: block">
     <p class="instructions_intro">
         The task will begin with a question:
 
@@ -299,21 +300,21 @@ $(document).ready(function() {
 
         Not all predicates are dynamic, for example:
 
-        <blockquote>Lee is <span class="predicate">sick</span>.</blockquote>
+        <blockquote>James is <span class="predicate">sick</span>.</blockquote>
 
-        The predicate sick does not describe a dynamic situation, it expresses a state of being. Similarly for the following example,
+        The predicate sick does not describe a dynamic situation, it expresses a state of being for James. The predicate `sick' doesn't describe a sequence of events, unlike `run'. Similarly for the following example,
 
         <blockquote>The statue <span class="predicate">stood</span> in the middle of the park.</blockquote>
         </div>
 
         If you answered no to the first question, there will be no more questions for that predicate. If you answered yes, you will be presented with two questions.
 
-        The second question is about whether the predicate describes a particular situation or partcular situations.
+        The second question is about whether the predicate describes a particular situation or situations.
 
         </br>
         <h4><a href="javascript:hideshow(document.getElementById('part_examples'))">Examples of particular situations (click to hide/show)</a></h4>
         <div id="part_examples" style="display: block" class="instructions_examples">
-        An example of a predicate referring to a type of thing can be seen in the following sentence:
+        An example of a predicate referring to a particular situation can be seen in the following example
 
         <blockquote>The lions were <span class="predicate">eating</span> a zerba.</blockquote>
 
@@ -321,24 +322,31 @@ $(document).ready(function() {
 
         Sometimes, the dynamic predicate can describe a particular set of situations.  An example of this can be seen in the following sentence:
 
-        <blockquote>The UN Security council<span class="predicate">met</span> thrice last month alone.</blockquote>
+        <blockquote>Claire <span class="predicate">eats</span> steak every Sunday.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">met</span> describes three particular situations where the security council met.
+        In this sentence, the predicate <span class="predicate">eats</span> doesn't refer to a particular situation. It is describing a habit of Claire. In this case, the predicate <span class="predicate">eats</span> refers to the set of situations where Claire has eaten steak(hence her habit)
 
+        However, not all predicates refer to particular situations. Take the following example
+
+        <blockquote>Lions <span class="predicate">hunt</span> their prey in packs</blockquote>
         
+        The predicate <span class="predicate">hunt</span> doesn't describe a particular situations, nor does it refer to many situations. In this sentence the predicate <span class="predicate">hunt</span> describes a property of lions in general.
       </div>
 
 
-        The third question is about whether the predicate describes a general predictive property or habit.
+        The third question is about whether the predicate describes a predictive situation or not.
       </br>
-        <h4><a href="javascript:hideshow(document.getElementById('pred_examples'))">Examples of predictive predicates (click to hide/show)</a></h4>
+        <h4><a href="javascript:hideshow(document.getElementById('pred_examples'))">Examples of predictive situations (click to hide/show)</a></h4>
         <div id="pred_examples" style="display: block" class="instructions_examples">
 
+        Sometimes it'll be difficult to tell if the predicate is dynamic, and if so, it refers to a particular situation. For example,
 
-        For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
+        <blockquote>Rory <span class="predicate">plays</span> the piano.</blockquote>
+
+        The above sentence could be describing a hobby of Rory, as in it is an answer to the question `What does Rory like to do?'. In this case, it `play' is not a dynamic predicate, it describes the state that Rory is a piano player. However in a different context, the word `play' is dynamic, for example if the above sentence is an answer to the question `What does Rory do on Saturday evenings?'. In such a case, the predicate refers to a dynamic situation. There is no right answer to these questions, and you'll need to answer based on what you believe the best choice of answers are. For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
 
     </p>
-
+</div>
 </br>
 
 </div> <!-- Panel-body --> </div>
