@@ -264,12 +264,11 @@ $(document).ready(function() {
 
     <p class="instructions_intro">
       In this task, you will be presented with a sentence containing <span class="predicate">a word highlighted in yellow</span> followed by questions about that word.
-      We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness). We're interested in three different properties of the situations that different predicates refer to:
+      We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness). We're interested in two properties of the situations that different predicates refer to:
 
       <ol type="i">
         <li>whether the predicate describes a dynamic situation(s)</li>
         <li>whether the predicate describes a particular situation(s)</li>
-        <li>whether the predicate describes a pattern or a property of the world</li>
       </ol>
 
       We give examples that will help you answer these questions below.
@@ -288,63 +287,52 @@ $(document).ready(function() {
         <div id="dyn_examples" style="display: block" class="instructions_examples">
         An example of a predicate describing a dynamic situation can be seen in the following sentence:
 
-        <blockquote>Hannah is <span class="predicate">running</span> a half marathon tomorrow.</blockquote>
+        <blockquote>Mary is <span class="predicate">running</span> a half marathon tomorrow.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">running</span> is dynamic, <bold>it describes a situation that extends over time</bold> - there are particular times where Hannah started to run, then continued running, and stops running.
+        In this sentence, the predicate <span class="predicate">running</span> is dynamic, <b>it describes a situation that happened(or is happening, or will happen)</b>. Predicates that describe physical activities like running, walking, sleeping are dynamic, and so are mental activities like thinking.
 
-        Dynamic predicates can appear in various forms. For example the sentence below describes a past dynamic situation :
+        Dynamic predicates can appear in various forms. For example the sentence below describes a dynamic situation that takes place instantaneously(unlike running which takes some time):
 
-        <blockquote>Hannah <span class="predicate">won</span> the race.</blockquote>
+        <blockquote>Mary <span class="predicate">won</span> the race.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">won</span> is a dynamic event since it again describes a past situation spread over time.
+        In this sentence, the predicate <span class="predicate">won</span> is a dynamic event since it again describes a situation that happened.
 
         Not all predicates are dynamic, for example:
 
-        <blockquote>James is <span class="predicate">sick</span>.</blockquote>
+        <blockquote>James <span class="predicate">owns</span> a car.</blockquote>
 
-        The predicate sick does not describe a dynamic situation, it expresses a state of being for James. The predicate `sick' doesn't describe a sequence of events, unlike `run'. Similarly for the following example,
+        The predicate <span class="predicate">owns</span> does not describe a dynamic situation. Unlike dynamic predicates like running, `own' doesn't describe an event or situation that happened(or is happening, or will happen). It simply describes a state of being - James' ownership of a car. Predicates that describe mental activities can also be non-dynamic. For example:
 
-        <blockquote>The statue <span class="predicate">stood</span> in the middle of the park.</blockquote>
+        <blockquote>James <span class="predicate">believes</span> in god.</blockquote>
+
+        In this sentence, the predicate <span class="predicate">believes</span> doesn't describe a situation that can be considered to happen. Rather, it describes a state of being of James, namely his belief. 
         </div>
-
-        If you answered no to the first question, there will be no more questions for that predicate. If you answered yes, you will be presented with two questions.
 
         The second question is about whether the predicate describes a particular situation or situations.
 
         </br>
         <h4><a href="javascript:hideshow(document.getElementById('part_examples'))">Examples of particular situations (click to hide/show)</a></h4>
         <div id="part_examples" style="display: block" class="instructions_examples">
-        An example of a predicate referring to a particular situation can be seen in the following example
+        A particular situation is one where it is possible to tell when and where the situation described happened. An example of a predicate referring to a particular situation can be seen in the following example
 
-        <blockquote>The lions were <span class="predicate">eating</span> a zerba.</blockquote>
+        <blockquote>The lion was <span class="predicate">eating</span> a zerba.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation - the sitatuon of these particular lions eating a zebra.
+        In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation - a certain time in the past where a lion was eating a zebra.
 
-        Sometimes, the dynamic predicate can describe a particular set of situations.  An example of this can be seen in the following sentence:
+        Sometimes, the predicate can describe more than one particular situation.  An example of this can be seen in the following sentence:
 
-        <blockquote>Claire <span class="predicate">eats</span> steak every Sunday.</blockquote>
+        <blockquote>The boys<span class="predicate">ate</span> dinner at their homes.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">eats</span> doesn't refer to a particular situation. It is describing a habit of Claire. In this case, the predicate <span class="predicate">eats</span> refers to the set of situations where Claire has eaten steak(hence her habit)
+        In this sentence, the predicate <span class="predicate">ate</span> doesn't refer to one particular situation. Rather it refers to many particular situations of each boy eating dinner at their respective homes.
 
-        However, not all predicates refer to particular situations. Take the following example
+        However, not all predicates refer to particular situation or particular situations. Take the following example
 
-        <blockquote>Lions <span class="predicate">hunt</span> their prey in packs</blockquote>
+        <blockquote>Lions <span class="predicate">eat</span> meat.</blockquote>
         
-        The predicate <span class="predicate">hunt</span> doesn't describe a particular situations, nor does it refer to many situations. In this sentence the predicate <span class="predicate">hunt</span> describes a property of lions in general.
+        The predicate <span class="predicate">eat</span> doesn't describe a particular situation of eating, nor does it refer to many situations of eating. In this sentence the predicate <span class="predicate">eat</span> describes a general property of lions.
       </div>
 
-
-        The third question is about whether the predicate describes a predictive situation or not.
-      </br>
-        <h4><a href="javascript:hideshow(document.getElementById('pred_examples'))">Examples of predictive situations (click to hide/show)</a></h4>
-        <div id="pred_examples" style="display: block" class="instructions_examples">
-
-        Sometimes it'll be difficult to tell if the predicate is dynamic, and if so, it refers to a particular situation. For example,
-
-        <blockquote>Rory <span class="predicate">plays</span> the piano.</blockquote>
-
-        The above sentence could be describing a hobby of Rory, as in it is an answer to the question `What does Rory like to do?'. In this case, it `play' is not a dynamic predicate, it describes the state that Rory is a piano player. However in a different context, the word `play' is dynamic, for example if the above sentence is an answer to the question `What does Rory do on Saturday evenings?'. In such a case, the predicate refers to a dynamic situation. There is no right answer to these questions, and you'll need to answer based on what you believe the best choice of answers are. For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
-
+        Sometimes it'll be difficult to tell if the predicate is dynamic, or whether it refers to a particular situation. For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
     </p>
 </div>
 </br>
