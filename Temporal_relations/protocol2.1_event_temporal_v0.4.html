@@ -274,7 +274,7 @@ function toggleVisibility() {
           
            question_html += '<p><span class="predicate">' + var_array['pred1'] + '</span><br><b>Range: </b>' + select_value_pred1 + '</p>' ;
 
-           question_html += '<p><span class="predicate">' + var_array['pred2'] + '</span><br><b>Range: </b>' + select_value_pred2 + '</p>' ;
+           question_html += '<p><br><span class="predicate">' + var_array['pred2'] + '</span><br><b>Range: </b>' + select_value_pred2 + '</p>' ;
           
            question_html += '<br/><p id="ques_conf'+id+'">You are '  +select_confidence + ' about the ranges that you have selected.</p>' 
 
@@ -379,7 +379,7 @@ $(document).ready(function()
       <p>
         <span class="predicate">broke</span> <br>
         <b>Range:</b>
-        <input class="sld_ex_2" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_2"> </div>
+        <input class="sld_ex_2" type="text" size="7" readonly="readonly"> <div class="sld_ex_2"> </div>
       </p>
 
 
@@ -387,12 +387,12 @@ $(document).ready(function()
         <br>
         <span class="predicate">ran</span> <br>
         <b>Range:</b>
-        <input class="sld_ex_3" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_3"> </div>
+        <input class="sld_ex_3" type="text" size="7" readonly="readonly"> <div class="sld_ex_3"> </div>
       </p>
        
 <p>The situation described by the predicate <span class="predicate">ran</span> happened after the situation described by the predicate <span class="predicate">broke</span>. Hence the start-point of <span class="predicate">ran</span> is after the end-point of <span class="predicate">broke</span>. Also note that the area highlighting <span class="predicate">broke</span> is much smaller than the area highlighting <span class="predicate">ran</span> because the situation described by <span class="predicate">broke</span> probably took less time to happen than the situation described by <span class="predicate">ran</span>. </p>   
 
-<p>Try as much as possible to get the relative duration of events correct. We know it won't always be possible to get it abosolutely correct and hence we have given confidence labels to know how certain you are in your answer. </p>
+<p>Try as much as possible to get the relative duration of events correct. We know it won't always be possible to get it absolutely correct and hence we have given confidence labels to know how certain you are in your answer. </p>
 
 <p>Let's take another example where the first sitution has a larger area highlighted.</p>
 
@@ -400,18 +400,18 @@ $(document).ready(function()
 
       <p><span class="predicate">played</span> <br>
         <b>Range:</b>
-        <input class="sld_ex_4" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_4"> </div>
+        <input class="sld_ex_4" type="text" size="7" readonly="readonly"> <div class="sld_ex_4"> </div>
       </p>
 
 
     <p><br><span class="predicate">left</span> <br>
       <b>Range:</b>
-        <input class="sld_ex_5" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_5"> </div>
+        <input class="sld_ex_5" type="text" size="7" readonly="readonly"> <div class="sld_ex_5"> </div>
     </p>
 
-    <p>The situation described by <span class="predicate">played</span> took two hours to happen which is much longer than the duration of the situation described by <span class="predicate">left</span> which probably just took minutes. Again, note that the start-point of the situation described by <span class="predicate">left</span> is after the end-point of the situation described by <span class="predicate">played</span>. 
+    <p>The situation described by <span class="predicate">played</span> took two hours to happen which is much longer than the duration of the situation described by <span class="predicate">left</span> which probably just took seconds. Again, note that the start-point of the situation described by <span class="predicate">left</span> is after the end-point of the situation described by <span class="predicate">played</span>. 
 
-    <p>Our main interest is in knowing that the the start-point of <span class="predicate">left</span> is greater than or equal to the end-point of <span class="predicate">played</span>. Don't worry too much about the exact numerical values. They are just meant to get a sense of the chronology of events. </p>
+    <p>Our main interest is in knowing that the the start-point of <span class="predicate">left</span> is greater than or equal to the end-point of <span class="predicate">played</span>. Try to get the relative sizes of events correct as well. Don't worry too much about the exact numerical values. They are just meant to get a sense of the chronology of events.  </p>
 
   <p> In some situations, one event is contained in the other event. Consider the example below.</p>
 
@@ -419,12 +419,12 @@ $(document).ready(function()
 
     <p><span class="predicate">drove</span> <br>
       <b>Range:</b>
-        <input class="sld_ex_6" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_6"> </div>
+        <input class="sld_ex_6" type="text" size="7" readonly="readonly"> <div class="sld_ex_6"> </div>
     </p>
 
     <p><br><span class="predicate">escaped</span> <br>
       <b>Range:</b>
-        <input class="sld_ex_7" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_7"> </div>
+        <input class="sld_ex_7" type="text" size="7" readonly="readonly"> <div class="sld_ex_7"> </div>
     </p>
 
 <p>In the above example, the situation described by the predicate <span class="predicate">escaped</span> took place somewhere between the situation described by the predicate <span class="predicate">drove</span>.</p>
@@ -433,7 +433,7 @@ $(document).ready(function()
 
     <!-- end of NO instantaneous examples -->
 
-    </div>
+</div>
 
 
 </div> <!-- Panel-body --> </div>
