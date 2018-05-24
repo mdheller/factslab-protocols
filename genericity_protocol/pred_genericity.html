@@ -39,6 +39,16 @@
     font-weight:bold;
     }
 
+    .alert{
+    display:inline-block;
+    color : #FF0000;
+    font-weight : bold;
+    font-size : 1.2em;
+    text-indent: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    }
+
     p.example_sentence {
     border: 1px solid #E0E0E0;
     background-color: #F0F0FF;
@@ -247,19 +257,17 @@ $(document).ready(function() {
     --><!-- <div class="panel-body"> -->
 
     <div class="instructions_intro">
-
-    <h1>What is it?</h1>
-
+    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed</span>
+    <h1>What is going on?</h1>
     <h2>Overview</h2>
-
     <p class="instructions_intro">
         In this task, you will be presented with a sentence containing <span class="predicate">a word highlighted in yellow</span> followed by questions about that word.
         We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span> — for example, a dynamic event (like <span class="predicate">run</span> or <span class="predicate">think</span>) or a state of being (like <span class="predicate">know</span> or <span class="predicate">love</span>). We're interested in two properties of the different situations that predicates can refer to:
 
         <ol type="i">
-            <li>whether the predicate describes a hypothetical situation or situations</li>
-            <li>whether the predicate describes a particular situation or a group of particular situations</li>
-            <li>whether the predicate describes a dynamic situation or situations</li>
+            <li>whether the predicate describes a <span class="terminology">hypothetical</span> situation or situations</li>
+            <li>whether the predicate describes a <span class="terminology">particular</span> situation or a group of particular situations</li>
+            <li>whether the predicate describes a <span class="terminology">dynamic</span> situation or situations</li>
         </ol>
 
         We give examples that will help you answer these two questions below.
@@ -296,7 +304,7 @@ $(document).ready(function() {
         Sometimes it'll be difficult to tell if the situation described by the predicate is hypothetical or not. For this reason, we've provided a drop-down menu to input your confidence about your answer.
         </div>
         <br>
-
+        <!-- SECOND QUESTION -->
         The second question is about whether the predicate describes a particular situation or situations. A particular situation has a particular time and place associated with it (even though you may not be able to tell exactly which time and place that is from the sentence).
 
         </br>
@@ -308,7 +316,7 @@ $(document).ready(function() {
 
         In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation; the author of the sentence is saying that there is a particular time in the past when the lion was eating a zebra. Even though we can't be sure of the location associated with the situation , we can be sure that it <b>definitely happened at a particular location</b>.
 
-        <br>
+        <br><br>
         Sometimes, a predicate can describe more than one particular situation.  An example of this can be seen in the following sentence:
 
         <blockquote>The boys each <span class="predicate">ate</span> a steak.</blockquote>
@@ -322,18 +330,30 @@ $(document).ready(function() {
 
         The predicate <span class="predicate">eat</span> doesn't describe a particular situation of eating, or even a group of particular situations. Instead, <span class="predicate">eat</span> describes a general property of most lions you would come across: that they eat meat. There is no particular time, or particular place associated with <span class="predicate">eat</span> in this sentence.
 
-        <br>
-        Predicates can also refer to generalizations of particular things, but that doesn't mean that they refer to particular situation or situations. For example:
+        <br><br>
+        Predicates can also refer to generalizations of particular things, but that doesn't mean that they refer to a particular situation or particular situations. For example:
 
         <blockquote>Claire <span class="predicate">eats</span> steak for dinner every Friday.</blockquote>
 
         The predicate <span class="predicate">eats</span> doesn't refer to a particular situation or a group of particular situations. Rather it describes a habit of Claire - that she generally eats steak for dinner on Fridays. Here, there is a place and time associated with <span class="predicate">eats</span>, however it is <b>not a particular time and place</b>. 
 
-        <br>
+        <br><br>
+        Predicates can refer to hypothetical situations and still be particular. For example:
+
+        <blockquote>If Jo is <span class="predicate">running</span> a half marathon tomorrow, she should get lots of rest tonight.</blockquote>
+
+        It was mentioned that the predicate <span class="predicate">running</span> refers to a hypothetical situation. However, the predicate alo refers to a particular situation - the hypothetical situation where Bo may run a half marathon. Running takes place in a particular time and place(even if it not clear from the sentence)
+        <br><br>
+        However, hypothetical situations can also be non-particular as in the other example given:
+
+        <blockquote>Bo might <span class="predicate">know</span> French.</blockquote>
+
+        Again, the predicate <span class="predicate">know</span> refers to a hypothetical situation. However, it doesn't refer to a particular situation. Knowing something isn't assoicated with any time and place, it describes a general property of Bo that may or may not be true.
+        <br><br>
         Sometimes it'll be difficult to tell whether or not a predicate refers to a particular situation or group of situations. For this reason, we've provided a drop-down menu to input your confidence about your answer.
         </div>
         <br>
-
+        <!-- THIRD QUESTION -->
         The third question is about whether the predicate describes a dynamic situation. A dynamic situation is one that we can say <b>happened</b>.
         They will often involve physical activities, like running or kicking, but they can also involve mental activities like thinking or wondering.
         </br>
@@ -347,7 +367,6 @@ $(document).ready(function() {
 
         <blockquote>Bo <span class="predicate">thought</span> about Mo.</blockquote>
 
-        <br>
         Dynamic situations do not always need to unfold over time, as running and thinking do. For example, the predicate <span class="predicate">won</span> in the sentence below describes a dynamic situation that takes place instantaneously:
 
         <blockquote>Mo <span class="predicate">won</span> the race.</blockquote>
@@ -361,7 +380,15 @@ $(document).ready(function() {
         <blockquote>Bo <span class="predicate">believes</span> in Mo.</blockquote>
 
         Notice that this sentence looks a lot like the one involving the predicate <span class="predicate">thought</span> above. It's different because We don't say believing in someone happened, whereas we do say that thinking about someone happens.
-        <br>
+        <br><br>
+
+<!--         A particular situation can be dynamic and non-dynamic, and so can a non-particular situation. An example of a non-particular, dynamic situation is:
+
+        <blockquote>Lions <span class="predicate">eat</span> meat.</blockquote>        
+        The situation described by <span class="predicate">eat</span> is dynamic, since it can be said to have happened. An example of particular, non-dynamic situation is:
+
+        <blockquote>Lions <span class="predicate">eat</span> meat.</blockquote> -->
+    
         Sometimes it'll be difficult to tell if the predicate is dynamic or not. For this reason, we've provided a drop-down menu to input your confidence about your answer.
         </div>
         <br>
