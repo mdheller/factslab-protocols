@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
-*.csv
-
->>>>>>> origin/noungenericity
+genericity_protocol/.ipynb_checkpoints/
+genericity_protocol/__pycache__/
 *.csv

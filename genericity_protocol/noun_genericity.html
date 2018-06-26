@@ -34,6 +34,21 @@
     padding-right: 3px;
     }
 
+    .terminology{
+    color: #FF0000;
+    font-weight:bold;
+    }
+
+    .alert{
+    color: #FF8800;
+    display: inline-block;
+    font-weight : bold;
+    font-size : 1.2em;
+    text-indent: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    }
+
     p.example_sentence {
     border: 1px solid #E0E0E0;
     background-color: #F0F0FF;
@@ -84,30 +99,67 @@ function getSelectHTML(id, name, options) {
 
 function toggleVisibility() {
       // Toggle the submit button availability
-      var num_questions = jQuery.parseJSON('${var_arrays}').length;
-      var submit = true;
+      // var num_questions = jQuery.parseJSON('${var_arrays}').length;
+    var submit = true;
+    // if (responseType == "understandable") {
+    //     if (document.getElementById("understandable"+id).value == "true"){
+    //         document.getElementById("question-noun-particularity"+id).style.display="block";
+    //         document.getElementById("question-noun-class"+id).style.display="block";
+    //         document.getElementById("question-noun-abs"+id).style.display="block";
+    //         document.getElementById("noun_part"+id).value="na";
+    //         document.getElementById("noun_class"+id).value="na";
+    //         document.getElementById("noun_abs"+id).value="na";
+    //     }
+    //     else if (document.getElementById("understandable"+id).value == "false"){
+    //         document.getElementById("question-noun-particularity"+id).style.display="none";
+    //         document.getElementById("question-noun-class"+id).style.display="none";
+    //         document.getElementById("question-noun-abs"+id).style.display="none";
+    //         document.getElementById("noun_part"+id).value="true";
+    //         document.getElementById("noun_class"+id).value="true";
+    //         document.getElementById("noun_abs"+id).value="true";
+    //     }
+    //     else {
+    //         document.getElementById("question-noun-particularity"+id).style.display="none";
+    //         document.getElementById("question-noun-class"+id).style.display="none";
+    //         document.getElementById("question-noun-abs"+id).style.display="none";
+    //         document.getElementById("noun_part"+id).value="na";
+    //         document.getElementById("noun_class"+id).value="na";
+    //         document.getElementById("noun_abs"+id).value="na";
+    //     }
+    // }
 
-      for (var i = 1; i < 11; i++) {
-          id = String(i)
-          // console.log(i)
-          submit = submit && 
-          document.getElementById("noun_particularity"+id).value != "na" && 
-          document.getElementById("noun_class"+id).value != "na" && 
-          document.getElementById("noun_abs"+id).value != "na" && 
-          document.getElementById("noun_part_certainty"+id).value != "na" && 
-          document.getElementById("noun_class_certainty"+id).value != "na" && 
-          document.getElementById("noun_abs_certainty"+id).value != "na"
-         }
+    // for (var i = 1; i < 11; i++) {
+    //     id = String(i)
 
+    //     if (document.getElementById("understandable"+id).value == "na") {
+    //         submit = false;
+    //     }
+    //     else {
+    //     submit = submit &&
+    //     document.getElementById("noun_part"+id).value != "na" && 
+    //     document.getElementById("noun_class"+id).value != "na" && 
+    //     document.getElementById("noun_abs"+id).value != "na";
+    //     }
+    //  }
 
-     if (submit) {
-            document.getElementById("submit_button").disabled=false;
-            document.getElementById("submit_descr").style.display="none";
-                  }  
-      else {
-            document.getElementById("submit_button").disabled=true;
-            document.getElementById("submit_descr").style.display="block";
-            } 
+    for (var i = 1; i < 11; i++) {
+        id = String(i)
+
+        submit = submit &&
+        document.getElementById("noun_part"+id).value != "na" && 
+        document.getElementById("noun_class"+id).value != "na" && 
+        document.getElementById("noun_abs"+id).value != "na";
+
+     }
+
+    if (submit) {
+        document.getElementById("submit_button").disabled=false;
+        document.getElementById("submit_descr").style.display="none";
+              }  
+    else {
+        document.getElementById("submit_button").disabled=true;
+        document.getElementById("submit_descr").style.display="block";
+        } 
 
 }
 
@@ -127,78 +179,97 @@ function toggleVisibility() {
       // HTML template is rendered
 
   function writeQuestions() {
-      var var_arrays = jQuery.parseJSON('${var_arrays}');
+    var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-      var question_html = '';
-      question_html += '<div class="sentence_section">';
+    var question_html = '';
+    question_html += '<div class="sentence_section">';
 
-      for (var i = 0; i < var_arrays.length; i++) {
-          var var_array = var_arrays[i];
-          var id = var_array['id'];
+    for (var i = 0; i < var_arrays.length; i++) {
+        var var_array = var_arrays[i];
+        var id = var_array['id'];
 
-      // question answers
+        // question answers
+        // var select_understandable = getSelectHTML(id,"understandable",
+        //                  [['na', '  -------  '],
+        //                   ['true','is'],
+        //                   ['false','is not']]);
 
-      var select_noun_part = getSelectHTML(id,"noun_particularity",
+        var select_noun_part = getSelectHTML(id,"noun_part",
                          [['na', '  -------  '],
                           ['true','does'],
                           ['false','does not']]);
 
-      var select_noun_class = getSelectHTML(id,"noun_class",
+        var select_noun_class = getSelectHTML(id,"noun_class",
                          [['na', '  -------  '],
                           ['true','does'],
                           ['false','does not']]);
 
-      var select_noun_abs = getSelectHTML(id,"noun_abs",
+        var select_noun_abs = getSelectHTML(id,"noun_abs",
                          [['na', '  -------  '],
                           ['true','does'],
                           ['false','does not']]);
 
-      var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
-                          [['na', '  -------  '],
-                            ['4', 'totally confident'],
+        var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
+                           [['4', 'totally confident'],
                             ['3', 'very confident'],
                             ['2', 'somewhat confident'],
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      var select_noun_class_certainty = getSelectHTML(
+        var select_noun_class_certainty = getSelectHTML(
                           id,"noun_class_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
+                            [['4', 'totally confident'],
                             ['3', 'very confident'],
                             ['2', 'somewhat confident'],
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-      var select_noun_abs_certainty = getSelectHTML(id,"noun_abs_certainty",
-                          [['na', '  -------  '],
-                            ['4', 'totally confident'],
+        var select_noun_abs_certainty = getSelectHTML(id,"noun_abs_certainty",
+                          [ ['4', 'totally confident'],
                             ['3', 'very confident'],
                             ['2', 'somewhat confident'],
                             ['1', 'not very confident'],
                             ['0', 'not at all confident']]);
 
-          question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
+        question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
 
-      question_html += '<br/><p id="question-noun-particularity' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
+        // question_html += '<br/><p id="question-understandable' + id + '"> This sentence ' + select_understandable + ' understandable.</p>';
 
-      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
+        question_html += '<br/><p id="question-noun-particularity' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
+        question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
 
-      question_html += '<br/><hr>';
-      }
+        question_html += '<br/><p id="question-noun-abs' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
 
-      question_html += 'Comments(optional):<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+        question_html += '<br/><hr>';
+    }
 
-      document.getElementById("questions").innerHTML = question_html;
+    question_html += 'Comments(optional):<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
-  }
+    document.getElementById("questions").innerHTML = question_html;
+
+}
+
+// function hideQuestions() {
+
+//    var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+//    for (var i = 0; i < var_arrays.length; i++) {
+//         var var_array = var_arrays[i];
+//         var id = var_array['id'];
+
+//         document.getElementById("question-noun-particularity"+id).style.display="none";
+//         document.getElementById("question-noun-class"+id).style.display="none";
+//         document.getElementById("question-noun-abs"+id).style.display="none";
+//    }
+
+// }
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
-    console.log("**** run ready function");
+    // console.log("**** run ready function");
     writeQuestions();
+    // hideQuestions();
 });
 
 
@@ -212,22 +283,22 @@ $(document).ready(function() {
     <div class="instructions_intro">
 
     <h1>What is it?</h1>
-
+    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed recently(on June 20th).</span>
+    <span class="alert">You may do up to 25 HITs in this batch, unless we have given you explicit permission by email to do more. If you do more than 25 HITs without such permission, we reserve the right to reject any work done in excess of 25 HITs.</span>
     <h2>Overview</h2>
 
     <p class="instructions_intro">
       In this task, you will be presented with a sentence containing <span class="noun">a word highlighted in yellow</span> followed by questions about that word.
-      We call the highlighted words <span class="noun">nouns</span>. Nouns can refer to particular things (or groups of things), like particular lions, particular chairs, particular
-      ideas, or particular thoughts. But they can also refer to types of things – animal species (lion, dog, cat), kinds of inanimate things (chair, bottle, computer), etc. – or even
-      very abstract concepts – wealth, power, justice, crime, etc.
+      We call the highlighted words <span class="terminology">nouns</span>. Nouns can refer to particular things (or groups of things), like particular <span class="noun">lions</span>, particular <span class="noun">chairs</span>, particular <span class="noun">ideas</span>, or particular <span class="noun">thoughts</span>. But they can also refer to types of things – animal species (<span class="noun">lion</span>, <span class="noun">dog</span>, <span class="noun">cat</span>), kinds of inanimate things (<span class="noun">chair</span>, <span class="noun">bottle</span>, <span class="noun">computer</span>, etc.), or even
+      very abstract concepts – <span class="noun">wealth</span>, <span class="noun">power</span>, <span class="noun">justice</span>, <span class="noun">crime</span>, etc.
 
       We are interested in distinguishing among the different sorts of things nouns refer to in a particular sentence, and so the questions you will be asked about the
       highlighted noun will be:
 
       <ol type="i">
-        <li>whether the noun refers to a particular thing</li>
-        <li>whether the noun refers to a type of thing</li>
-         <li>whether the noun refers to an abstract concept</li>
+        <li>whether the noun refers to a <span class="terminology">particular</span> thing</li>
+        <li>whether the noun refers to a <span class="terminology">type</span>  of thing</li>
+         <li>whether the noun refers to an <span class="terminology">abstract</span> concept</li>
       </ol>
 
       We give examples that will help you answer these questions below.
@@ -260,7 +331,7 @@ $(document).ready(function() {
         Not all nouns refer to physical things, but that doesn't mean they don't refer to particular things. An example of a noun referring to
         a particular non-physical thing can be seen in the following sentence:
 
-        <blockquote>That <span class="noun">idea</span> is stupid.</blockquote>
+        <blockquote>He had an <span class="noun">idea</span>, but it was stupid.</blockquote>
 
         In this sentence, the noun <span class="noun">idea</span> refers to a particular non-physical thing.
       </div>
@@ -315,6 +386,9 @@ $(document).ready(function() {
 
     </p>
   </div>
+</div>
+<br>
+  <span class="alert">If the sentence is not understandable or if the highlighted word isn't actually a noun, then please answer 'Not at all confident' to all of the questions.</span>
 </br>
 
 </div> <!-- Panel-body --> </div>
@@ -334,7 +408,7 @@ $(document).ready(function() {
     </fieldset>
 
     <div>
-        <p id="submit_descr">Please answer all the questions</p>
+        <p id="submit_descr">Please answer all the questions.</p>
         <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true />
     </div>
   </div>

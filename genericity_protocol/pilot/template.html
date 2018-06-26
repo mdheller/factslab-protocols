@@ -1,0 +1,467 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" /><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Arial, Helvetica, Verdana, Geneva, sans-serif; color:#333333; font-size:1.2em;"><!-- style -->
+<style type="text/css">.panel-heading {
+    background-color: #FFFFFF !important;
+    color:#333333 !important;
+    font-size:2.0em;
+    border: 0px solid #FFFFFF;
+    }
+
+    .panel-primary {
+    border-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    }
+    .sentence_section {
+    margin-bottom: 2em;
+    }
+
+    blockquote {
+    border-left: 5px solid #666666;
+    }
+    
+    .instructions_examples {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+    
+    .predicate {
+    background-color: #EEDA6E;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+
+    .terminology{
+    color: #FF0000;
+    font-weight:bold;
+    }
+    
+    p.example_sentence {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+</style>
+<script type="text/javascript">
+
+
+    // taken from: http://www.javascriptkit.com/javatutors/dom3.shtml
+function hideshow(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+    
+    if (which.style.display=="block") {
+    which.style.display="none";
+    }
+    
+    else {
+    which.style.display="block";
+    }
+}
+
+/**
+ ** id       the unique ID for this particular select (when the same name
+ **          is being used multiple times on the same page)
+ **
+ ** name     the select.name
+ **
+ ** options  a list of (option.value, label) pairs
+ */
+function getSelectHTML(id, name, options) {
+
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+"'"+name+"'"+','+id+')">';
+
+    for (var i = 0; i < options.length; i++) {
+    select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
+    }
+
+    select_html += '</select>';
+
+    return select_html;
+}
+
+
+function toggleVisibility(responseType, id) {
+
+     if (responseType == "understandable" || responseType == "predicate") {
+    var questionElement = document.getElementById('question-situationtype'+id);
+
+    var condition = document.getElementById("understandable"+id).value == "true";
+    condition = condition && document.getElementById("predicate"+id).value == "true";
+     }
+
+     if (responseType == "situationtype") {
+    var questionElement = document.getElementById('question-happened'+id);
+
+    var condition = document.getElementById("situationtype"+id).value == "specific";
+     }
+
+
+     if (responseType == "happened" || responseType == "ishappening" || responseType == "willhappen") {
+    var questionElement = document.getElementById('question-duration'+id);
+
+    var condition = parseInt(document.getElementById("happened"+id).value) >= 4;
+    condition = condition || parseInt(document.getElementById("ishappening"+id).value) >= 4;
+    condition = condition || parseInt(document.getElementById("willhappen"+id).value) >= 4;
+     }     
+
+     if (condition) {
+             questionElement.style.visibility = 'visible';
+     } 
+     else {
+             questionElement.style.visibility = 'hidden';
+     }
+
+}
+
+
+
+  /** Add HTML for questions to DOM element with ID 'questions'
+   **
+   ** Assumes var_arrays is a list of tuples:
+   ** id : a numeric id that is used in the generation of the headers when the HIT data comes back
+   ** sentence_id : e.g., "en-ud-train.conllu 12"
+   ** pred_token : e.g., "6"
+   ** pred_lemma : e.g., "announce"
+   ** sentence
+   **
+  */
+
+      // Mechanical Turk will fill in '$ { varname }' variables when
+      // HTML template is rendered
+
+  function writeQuestions() {
+      var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+      var question_html = '';
+      question_html += '<div class="sentence_section">';
+
+      for (var i = 0; i < var_arrays.length; i++) {
+          var var_array = var_arrays[i];
+      var id = var_array['id'];
+
+      // question answers
+
+      var select_understandable = getSelectHTML(id,"understandable",
+                         [['na', '  -------  '],
+                          ['true','is'],
+                          ['false','is not']]);
+
+      var select_predicate = getSelectHTML(id,"predicate",
+                         [['na', '  -------  '],
+                        ['true','does'],
+                            ['false','does not']]);
+
+      var select_eventivity = getSelectHTML(id,"eventivity",
+                            [['na', '  -------  '],
+                             ['event','dynamic event'],
+                         ['state','state of being']]);
+
+      var select_situationtype = getSelectHTML(id,"situationtype",
+                         [['na', '  -------  '],
+                          ['generic','generic'],
+                          ['habitual','habitual'],
+                          ['hypothetical','hypothetical'],
+                                              ['specific','specific']]);
+
+      var select_happened = getSelectHTML(id,"happened",
+                                   [['na', '  -------  '],
+                                    ['6', 'definitely true that'],
+                            ['5', 'very likely that'],
+                            ['4', 'somewhat likely that'],
+                            ['3', 'hard to tell whether'],
+                            ['2', 'somewhat unlikely that'],
+                                    ['1', 'very unlikely that'],
+                                    ['0', 'definitely false that']]);
+
+      var select_time = getSelectHTML(id,"time",
+                                   [['na', '  -------  '],
+                                    ['before', 'happened or was true before'],
+                            ['during', 'was happening or was true while'],
+                            ['after', 'would happen or would be true after']]);
+
+      var select_duration = getSelectHTML(id,"duration",
+                          [['na', '  -------  '],
+                           ['0', '(almost) no time at all'],
+                           ['1', 'seconds'],
+                           ['60', 'minutes'],
+                           ['360', 'hours'],
+                           ['8640', 'days'],
+                           ['60480', 'weeks'],
+                           ['241920', 'months'],
+                           ['2903040', 'years'],
+                           ['29030400', 'decades'],
+                                   ['290404000', 'centuries'],
+                                   ['2903040000', 'forever']]);
+
+      var select_durationcertainty = getSelectHTML(id,"durationcertainty",
+                          [['na', '  -------  '],
+                            ['4', 'totally confident'],
+                            ['3', 'very confident'],
+                                                ['2', 'somewhat confident'],
+                            ['1', 'not very confident'],
+                                                ['0', 'not at all confident']]);
+
+      // question html
+
+          question_html += '<h3>' + var_array['sentence'] + '</h3>';
+
+      question_html += '<br/><p>The sentence ' + select_understandable + ' understandable, and <span class="predicate">' + var_array['pred_lemma'] + '</span> ' + select_predicate + ' refer to a predicate.</p>';
+
+      question_html += '<br/><p id="question-situationtype'+id+'">The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span> is (or would be) a ' + select_eventivity + ' and is ' + select_situationtype  + '.</p>';
+
+          question_html += '<br/><p id="question-happened'+id+'">According to the author, it is ' + select_happened + ' the situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span> ' + select_time + ' the author wrote the sentence.</p>';
+
+      question_html += '<br/><p id="question-duration'+id+'">The situation referred to by <span class="predicate">' + var_array['pred_lemma'] + '</span> most likely had (or will have) a total duration of ' + select_duration + ', and you are ' + select_durationcertainty + ' about that estimate.</p>';
+
+      question_html += '<br/><hr>';
+      }
+
+      question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+
+      document.getElementById("questions").innerHTML = question_html;
+
+  }
+
+function hideQuestions() {
+
+   var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+   for (var i = 0; i < var_arrays.length; i++) {
+      var var_array = var_arrays[i];
+      var id = var_array['id'];
+
+      var question_situationtype = document.getElementById('question-situationtype'+id);
+      question_situationtype.style.visibility = 'hidden';
+
+      var question_happened = document.getElementById('question-happened'+id);
+      question_happened.style.visibility = 'hidden';
+
+      var question_duration = document.getElementById('question-duration'+id);
+      question_duration.style.visibility = 'hidden';
+   }
+
+}
+
+// read when document is ready (like a "main" function)
+$(document).ready(function() {
+    console.log("**** run ready function");
+    writeQuestions();
+    hideQuestions();
+});
+
+
+</script>
+<div class="row col-xs-12 col-md-12"><!-- Instructions -->
+<div class="panel panel-primary"><!--
+    <div class="panel-heading"><strong>Task Name</strong></div>
+    --><!-- <div class="panel-body"> -->
+<div class="instructions_intro">
+<h1>Did it happen?</h1>
+
+<h2>Overview</h2>
+
+<p class="instructions_intro">In this task, you will be presented with a sentence containing <span class="predicate">a yellow-highlighted word</span>, followed by questions about that word. We call these words <i>predicates</i>. Predicates refer to some kind of situation&mdash;for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We are interested in (i) what kind of situation the predicate describes, (ii) how likely it is that that situation actually happened (or is happening or will happen) according to the author of the sentence, and (iii) how long that situation probably lasted.</p>
+
+<h2>How the task works</h2>
+
+<p class="instructions_intro">The task starts off with questions about (i) whether the sentence is understandable and (ii) whether the highlighted word is a predicate in the first place. These sentences are pulled from the web, and sometimes our automatic processing makes mistakes, so we need your help in filtering out those two kinds of errors. These errors should be relatively rare, so you can expect to answer that the sentence is understandable and that highlighted word is a predicate most of the time.</p>
+
+<p class="instructions_intro">If you answer either that the sentence isn&#39;t understandable or that the highlighted word isn&#39;t a predicate, the rest of the questions will not pop up, and you can move onto the next sentence.</p>
+
+<p class="instructions_intro">After confirming that the highlighted word is a predicate, you will be asked about what kind of situation it describes. There are many ways to classify situations, but we&#39;re most interested in distinguishing situations in two ways: (i) whether the situation is a <i>dynamic event</i> or a <i>state of being</i> and (ii) whether it is <i>generic</i>, <i>habitual</i>, <i>hypothetical</i>, or <i>specific</i>.</p>
+
+<p class="instructions_intro">Dynamic events are things like running or kicking, and states of being are things like happiness or redness. <i>Generics</i> involve a generalization about kinds of things, like &quot;dogs <span class="predicate">bark</span>&quot;, &quot;a tiger <span class="predicate">is</span> striped&quot;, &quot;the dodo <span class="predicate">is</span> extinct&quot;, &quot;ducks <span class="predicate">lay</span> eggs&quot;, and &quot;mosquitoes <span class="predicate">carry</span> the Zika virus&quot;. <i>Habituals</i> involve a generalization about particular people or things, like &quot;my dog <span class="predicate">barks</span>&quot; and &quot;John likes to <span class="predicate">eat</span> peanuts&quot;. <i>Hypotheticals</i> involve a generalization about the way the world could turn out if a particular situation happens, like &quot;if my dog <span class="predicate">barks</span>, my neighbors will complain&quot;. And <i>specifics</i> involve a particular situation, like &quot;my dog <span class="predicate">barked</span> yesterday&quot;, &quot;John is <span class="predicate">eating</span> peanuts right now&quot;, or &quot;John will not <span class="predicate">hug</span> Mary tomorrow&quot;. (Notice that sentences like the last one, which involve <i>negated situations</i>, can be specific.)</p>
+<!-- begin generic examples --><a href="javascript:hideshow(document.getElementById('generic'))">More examples</a>
+
+<div class="instructions_examples" id="generic" style="display: none">
+<p>In language, there are special categories of situations called <i>generics</i>, <i>habituals</i>, and <i>specifics</i>. We already gave some examples, but we will give some more examples below.</p>
+
+<p>Generic sentences involve kinds of things like &quot;lions&quot;.</p>
+
+<blockquote>Lions <span class="predicate">roar</span>.</blockquote>
+
+<p>This is an example of a <i>generic</i> sentence because it does not refer to a specific set of lions; rather, the author is making a general claim about the world.</p>
+
+<p>Not all sentences involving groups of things are generics.</p>
+
+<blockquote>Those lions <span class="predicate">roar</span>.</blockquote>
+
+<p>This is an example of a <i>habitual</i> sentence because it <u>does</u> refer to particular lions, but the author is still making a general claim about the world. In general, the particular lions the author is referring to roar.</p>
+
+<p>We can often turn a habitual sentence into a specific sentence.</p>
+
+<blockquote>Those lions <span class="predicate">roared</span> yesterday.</blockquote>
+
+<blockquote>Those lions are <span class="predicate">roaring</span> right now.</blockquote>
+
+<blockquote>Those lions will <span class="predicate">roar</span> tomorrow.</blockquote>
+
+<p>All of these sentences are specifics because they refer to a specific situation that did happen, is currently happening, or will happen at a specific time.</p>
+
+<p>A lot of sentences that refer to one specific entity are specifics, but we can also get a habitual if we talk about a specific entity, like a company.</p>
+
+<blockquote>Acme never <span class="predicate">cheats</span> customers.</blockquote>
+
+<p>This is an example of a <i>habitual</i> sentence because it refers to a specific company Acme, but the author is still making a general claim about the world. In general, Acme cheats its customers.</p>
+
+<p>Sometimes we use words like &quot;usually&quot; to show that we&#39;re making a habitual statement.</p>
+
+<blockquote>Acme usually <span class="predicate">cheats</span> customers.</blockquote>
+
+<p>Being able to add &quot;usually&quot; or &quot;generally&quot; to a particular sentence can be a good way to figure out if the sentence is a generic (involving generalizations about kinds of people/things) or a habitual (involving generalizations about particular people/things).</p>
+
+<p>Besides words like &quot;usually&quot; or &quot;generally&quot;, we can also get a habitual by using a predicate like &quot;like&quot;.</p>
+
+<blockquote>John likes to <span class="predicate">smoke</span> fine cigars.</blockquote>
+
+<p>This is an example of a <i>habitual</i> sentence because it refers to a specific person John, but the author is still making a general claim about the world. When he gets to smoke fine cigars, John likes it.</p>
+
+<p>Sometimes it can be hard to tell if a sentence is a habitual or a specific, and you may need to use the context of the sentence to figure it out.</p>
+
+<blockquote>John should <span class="predicate">excercise</span>.</blockquote>
+
+<p>This could be an example of a habitual statement because it could generally be true that John should exercise, but it could also be true that John should exercise at a specific time.</p>
+
+<blockquote>John should <span class="predicate">excercise</span> tomorrow.</blockquote>
+
+<p>This sentence is a specific because it refers to a specific time.</p>
+
+<p>But just because a time is referred to doesn&#39;t mean that the sentence is specific.</p>
+
+<blockquote>John should <span class="predicate">excercise</span> on Mondays and Tuesdays.</blockquote>
+
+<p>This sentence is a habitual because it refers to a generalization about when John should exercise.</p>
+</div>
+<!-- end generic examples -->
+
+<p class="instructions_intro">After answering what kind of situation the predicate refers to, you will be asked about how likely it is, according to the author, that the situation happened or was true in the past, is happening or is true now (the time of writing), or will happen or will be true in the future. Because it doesn&#39;t make much sense to ask these questions when the situation is a generic, habitual, or hypothetical, they will only pop up if you answered that the situation is <i>specific</i>.</p>
+
+<p class="instructions_intro">We provide many examples in the drop-down below. One crucial example involves negated specific situations like &quot;John never hugged Mary yesterday&quot;. According to the author, a hugging situation didn&#39;t happen. The fact that a situation doesn&#39;t exist makes it somewhat odd to call it &quot;the situation&quot;. Try to ignore this oddness as much as possible. For instance, in that case, you would answer that &quot;it is <i>definitely false that</i> the situation happened or was true in the past&quot;.</p>
+<!-- begin happened examples --> <a href="javascript:hideshow(document.getElementById('happened'))">More examples</a>
+
+<div class="instructions_examples" id="happened" style="display: none">
+<p>The following examples illustrate situations (dynamic events and states of being) and are paired with discussion on when we would say they do or do not happen.</p>
+
+<p>For some sentences, it is very clear whether it happened, is happening, or will happen according to the author.</p>
+
+<blockquote>Sue <span class="predicate">hugged</span> Jack.</blockquote>
+
+<p>We would say that, according to the author, it is definitely true that the hugging situation, which is a dynamic event, happened. As a simple test that you can use for many examples, try saying something to yourself like: &quot;... and because of the <i>hug</i>, something else happened (or will happen)&quot;. If you can imagine that kind of follow up sentence, that is good evidence that, according to the author, it is definitely true that the situation happened.</p>
+
+<p>The same thing can be true for states of being, like wanting.</p>
+
+<blockquote>Sue <span class="predicate">wanted</span> to hug Jack.</blockquote>
+
+<p>Here we would say that the wanting did happen. For example, we can imagine saying: &quot;Because she wanted to hug Jack, she walked over and gave him a hug.&quot;</p>
+
+<p>While the <i>wanting</i> did happen, it is less clear whether the hugging happened, is happening, or will happen.</p>
+
+<blockquote>Sue wanted to <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>There is not enough information to say that it did or did not happen or even that it is happening or will happen.</p>
+
+<p>There are situations we can be more sure about with respect to the future, which often have &quot;will&quot; in them.</p>
+
+<blockquote>Sue will <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>According to the author, it is definitely true that the hugging will happen in the future.</p>
+
+<p>Compare this to a sentence with &quot;may&quot; in it.</p>
+
+<blockquote>Sue may <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>According to the author, a hugging is possible (or allowed) in the future, but it&#39;s hard to tell whether it will happen.</p>
+
+<p>Sometimes, it is very clear that, according to the author, it is definitely false that the situation happened</p>
+
+<blockquote>Sue did not <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>According to the author, it is definitely false that a hugging happened.</p>
+
+<p>Not all sentences with &quot;not&quot; imply that it is definitely false that the situation happened.</p>
+
+<blockquote>Sue probably did not want to <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>The author is unsure about whether Sue <i>wanted</i> to perform a hug: we might think that the sentence does or does not imply that the hugging took place. In these cases use your best judgement: if you think that the sentence implies that an event probably took place, then go ahead and say that.</p>
+
+<p>We don&#39;t always need &quot;not&quot; to tell us that a situation didn&#39;t happen.</p>
+
+<blockquote>I wish that Sue would <span class="predicate">hug</span> Jack.</blockquote>
+
+<p>In this case, it&#39;s somewhat to very unlikely that situation happened or is happening. It&#39;s unclear whether, according to the author, the situation will happen.</p>
+</div>
+<!-- end happened examples -->
+
+<p class="instructions_intro">Finally, if you said that it was at least <i>somewhat likely</i> that the situation happened or was true, is happening or is true, or will happen/be happening or will be true, you will be asked about its likely total duration.</p>
+<!-- begin duration examples --> <a href="javascript:hideshow(document.getElementById('duration'))">More examples</a>
+
+<div class="instructions_examples" id="duration" style="display: none">
+<p>Examples regarding the duration of a situation.</p>
+&nbsp;
+
+<blockquote>Sue <span class="predicate">remodeled</span> her kitchen.</blockquote>
+
+<p>The <u>remodeling</u> happened, and it could have taken <i>days</i>, or more likely took <i>weeks</i>, or <i>months</i>. Use your best judgement: we would say <i>weeks</i>, but perhaps in your experience you would say <i>months</i>, and that would be OK too. Clearly the remodeling did not take seconds, nor centuries.</p>
+&nbsp;
+
+<blockquote>Sue <span class="predicate">smiled</span> at Jack.</blockquote>
+
+<p>This likely took <i>seconds</i>.</p>
+&nbsp;
+
+<blockquote>Sue <span class="predicate">sneezed</span>.</blockquote>
+
+<p>We usually think of activities like sneezes happening in <i>(almost) no time at all</i>, rather than &quot;seconds&quot;.</p>
+&nbsp;
+
+<blockquote>The bomb <span class="predicate">exploded</span>.</blockquote>
+
+<p>Similarly, explosions are things we tend to think of as events that happen in an instant.</p>
+&nbsp;
+
+<blockquote>Sue <span class="predicate">danced</span> with Jack all evening.</blockquote>
+
+<p>This took <i>hours</i>.</p>
+&nbsp;
+
+<blockquote>Sue is very <span class="predicate">tall</span>.</blockquote>
+
+<p>Being <u>tall</u> is not likely to change through most of a person&#39;s life, so we would say this happened over <i>decades</i>.</p>
+&nbsp;
+
+<blockquote>Russia is one of the <span class="predicate">largest</span> countries in the world.</blockquote>
+
+<p>This happens over the course of <i>centuries</i>.</p>
+&nbsp;
+
+<blockquote>Three is <span class="predicate">prime</span>.</blockquote>
+
+<p>This is a mathematical truth, it is true <i>forever</i>.</p>
+</div>
+<br />
+<!-- end duration examples --></div>
+</div>
+<!-- Panel-body --></div>
+<!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
+
+<section><input name="dummy" type="hidden" />
+<div id="hit">
+<h2>Sentences</h2>
+
+<fieldset>
+<div id="questions">&nbsp;</div>
+</fieldset>
+
+<div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+</div>
+<!-- hit--></section>
+<!-- End Content Body --></section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
