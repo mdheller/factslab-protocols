@@ -41,7 +41,7 @@
 
     .alert{
     display:inline-block;
-    color : #FF0000;
+    color : #FF8800;
     font-weight : bold;
     font-size : 1.2em;
     text-indent: 0;
@@ -97,47 +97,66 @@ function getSelectHTML(id, name, options) {
 
 
 function toggleVisibility() {
-    // toggle the visibility of the second and third question
 
-    // var question_particularity = document.getElementById('question-pred-particularity' + id);
-    // var question_predictability = document.getElementById('question-pred-predictability' + id);
-    // var cond = document.getElementById('pred_dynamicity' + id).value == "true";
-
-    // if (cond) {
-    //     console.log("hello");
-    //     question_particularity.style.display = 'block';
-    //     question_predictability.style.display = 'block';
+       var submit = true;
+    // if (responseType == "understandable") {
+    //     if (document.getElementById("understandable"+id).value == "true"){
+    //         document.getElementById("question-part"+id).style.display="block";
+    //         document.getElementById("question-hyp"+id).style.display="block";
+    //         document.getElementById("question-dyn"+id).style.display="block";
+    //         document.getElementById("pred_part"+id).value="na";
+    //         document.getElementById("pred_dyn"+id).value="na";
+    //         document.getElementById("pred_hyp"+id).value="na";
+    //     }
+    //     else if (document.getElementById("understandable"+id).value == "false"){
+    //         document.getElementById("question-part"+id).style.display="none";
+    //         document.getElementById("question-dyn"+id).style.display="none";
+    //         document.getElementById("question-hyp"+id).style.display="none";
+    //         document.getElementById("pred_part"+id).value="true";
+    //         document.getElementById("pred_dyn"+id).value="true";
+    //         document.getElementById("pred_hyp"+id).value="true";
+    //     }
+    //     else {
+    //         document.getElementById("question-part"+id).style.display="none";
+    //         document.getElementById("question-hyp"+id).style.display="none";
+    //         document.getElementById("question-dyn"+id).style.display="none";
+    //         document.getElementById("pred_part"+id).value="na";
+    //         document.getElementById("pred_dyn"+id).value="na";
+    //         document.getElementById("pred_hyp"+id).value="na";
+    //     }
     // }
 
-    // else {
-    //     console.log("yo");
-    //     question_particularity.style.display = 'none';
-    //     question_predictability.style.display = 'none';
-    // }
+    // for (var i = 1; i < 11; i++) {
+    //     id = String(i)
 
-    // Toggle the submit button availability
-    // var num_questions = jQuery.parseJSON('${var_arrays}').length;
-    var submit = true;
+    //     if (document.getElementById("understandable"+id).value == "na") {
+    //         submit = false;
+    //     }
+    //     else {
+    //     submit = submit &&
+    //     document.getElementById("pred_part"+id).value != "na" && 
+    //     document.getElementById("pred_dyn"+id).value != "na" && 
+    //     document.getElementById("pred_hyp"+id).value != "na";
+    //     }
+    //  }
 
     for (var i = 1; i < 11; i++) {
-        id = String(i);
-        // console.log(i)
-        submit = submit &&
-        document.getElementById("pred_dynamicity" + id).value != "na" &&
-        document.getElementById("pred_particular" + id).value != "na" &&
-        document.getElementById("dynamicity_certainty" + id).value != "na" &&
-        document.getElementById("particular_certainty" + id).value != "na";
-        }
+        id = String(i)
 
+        submit = submit &&
+        document.getElementById("pred_part"+id).value != "na" && 
+        document.getElementById("pred_dyn"+id).value != "na" && 
+        document.getElementById("pred_hyp"+id).value != "na";
+     }
 
     if (submit) {
         document.getElementById("submit_button").disabled=false;
         document.getElementById("submit_descr").style.display="none";
-    }
+              }  
     else {
         document.getElementById("submit_button").disabled=true;
         document.getElementById("submit_descr").style.display="block";
-    }
+        } 
 }
 
 
@@ -166,60 +185,58 @@ function writeQuestions() {
         var id = var_array['id'];
 
         // question answers
-        var select_hypothetical = getSelectHTML(id,"pred_dynamicity",
-                                            [['na', '  -------  '],
-                                            ['true','is'],
-                                            ['false','is not']]);
+        // var select_understandable = getSelectHTML(id,"understandable",
+        //                                          [['na', '  -------  '],
+        //                                           ['true','is'],
+        //                                           ['false','is not']]);
+        var select_hyp = getSelectHTML(id,"pred_hyp",
+                                       [['na', '  -------  '],
+                                       ['true','is'],
+                                       ['false','is not']]);
 
-        var select_dynamicity = getSelectHTML(id,"pred_dynamicity",
-                                            [['na', '  -------  '],
-                                            ['true','is'],
-                                            ['false','is not']]);
+        var select_dyn = getSelectHTML(id,"pred_dyn",
+                                       [['na', '  -------  '],
+                                       ['true','is'],
+                                       ['false','is not']]);
 
-        var select_particular = getSelectHTML(id,"pred_particular",
-                                            [['na', '  -------  '],
-                                            ['true','does'],
-                                            ['false','does not']]);
+        var select_part = getSelectHTML(id,"pred_part",
+                                        [['na', '  -------  '],
+                                        ['true','is'],
+                                        ['false','is not']]);
 
-        var select_hyp_certainty = getSelectHTML(
-                            id,"dynamicity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+        var select_hyp_conf = getSelectHTML(id,"hyp_conf",
+                                            [['4', 'totally confident'],
+                                            ['3', 'very confident'],
+                                            ['2', 'somewhat confident'],
+                                            ['1', 'not very confident'],
+                                            ['0', 'not at all confident']]);
 
-        var select_dynamicity_certainty = getSelectHTML(
-                            id,"dynamicity_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+        var select_dyn_conf = getSelectHTML(id,"dyn_conf",
+                                            [['4', 'totally confident'],
+                                            ['3', 'very confident'],
+                                            ['2', 'somewhat confident'],
+                                            ['1', 'not very confident'],
+                                            ['0', 'not at all confident']]);
 
-        var select_particular_certainty = getSelectHTML(
-                            id,"particular_certainty",
-                            [['na', '  -------  '],
-                            ['4', 'totally confident'],
-                            ['3', 'very confident'],
-                            ['2', 'somewhat confident'],
-                            ['1', 'not very confident'],
-                            ['0', 'not at all confident']]);
+        var select_part_conf = getSelectHTML(id,"part_conf",
+                                             [['4', 'totally confident'],
+                                             ['3', 'very confident'],
+                                             ['2', 'somewhat confident'],
+                                             ['1', 'not very confident'],
+                                             ['0', 'not at all confident']]);
 
         question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
 
-        question_html += '<br/><p>The situation referred to by <span class="predicate">' + var_array['pred'] + '</span> ' + select_hypothetical + ' hypothetical and I am ' + select_hyp_certainty + ' about my choice.</p>';
+        // question_html += '<br/><p id="question-understandable' + id + '"> This sentence ' + select_understandable + ' understandable.</p>';
 
-        question_html += '<br/><p>The situation referred to by <span class="predicate"> ' + var_array['pred'] + '</span> ' + select_particular + ' refer to a particular situation or a group of particular situations and I am ' + select_particular_certainty + ' about my choice.</p>';
+        question_html += '<br/><p id="question-hyp">The situation referred to by <span class="predicate">' + var_array['predicate'] + '</span> ' + select_hyp + ' hypothetical and I am ' + select_hyp_conf + ' about my choice.</p>';
 
-        question_html += '<br/><p>The situation referred to by <span class="predicate">' + var_array['pred'] + '</span> ' + select_dynamicity + ' dynamic and I am ' + select_dynamicity_certainty + ' about my choice.</p>';
+        question_html += '<br/><p id="question-part">The situation referred to by <span class="predicate"> ' + var_array['predicate'] + '</span> ' + select_part + ' a particular situation or a group of particular situations and I am ' + select_part_conf + ' about my choice.</p>';
+
+        question_html += '<br/><p id="question-dyn">The situation referred to by <span class="predicate">' + var_array['predicate'] + '</span> ' + select_dyn + ' dynamic and I am ' + select_dyn_conf + ' about my choice.</p>';
 
         question_html += '<br/><hr>';
     }
-
-    console.log(question_html)
 
     question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
 
@@ -229,21 +246,21 @@ function writeQuestions() {
 
 // function hideQuestions() {
 
-//     var var_arrays = jQuery.parseJSON('${var_arrays}');
+//    var var_arrays = jQuery.parseJSON('${var_arrays}');
 
-//     for (var i = 0; i < var_arrays.length; i++) {
+//    for (var i = 0; i < var_arrays.length; i++) {
 //         var var_array = var_arrays[i];
 //         var id = var_array['id'];
 
-//         var question_particularity = document.getElementById('question-pred-particularity' + id);
-//         console.log(question_particularity)
-//         question_particularity.style.display = 'none';
-//     }
+//         document.getElementById("question-part"+id).style.display="none";
+//         document.getElementById("question-hyp"+id).style.display="none";
+//         document.getElementById("question-dyn"+id).style.display="none";
+//    }
 // }
 
 // read when document is ready (like a "main" function)
 $(document).ready(function() {
-    console.log("**** run ready function");
+    // console.log("**** run ready function");
     writeQuestions();
     // hideQuestions();
 });
@@ -257,17 +274,19 @@ $(document).ready(function() {
     --><!-- <div class="panel-body"> -->
 
     <div class="instructions_intro">
-    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed</span>
+
     <h1>What is going on?</h1>
+    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed recently(on June 20th).</span>
+    <span class="alert">You may do up to 25 HITs in this batch, unless we have given you explicit permission by email to do more. If you do more than 25 HITs without such permission, we reserve the right to reject any work done in excess of 25 HITs.</span>
     <h2>Overview</h2>
     <p class="instructions_intro">
         In this task, you will be presented with a sentence containing <span class="predicate">a word highlighted in yellow</span> followed by questions about that word.
-        We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span> — for example, a dynamic event (like <span class="predicate">run</span> or <span class="predicate">think</span>) or a state of being (like <span class="predicate">know</span> or <span class="predicate">love</span>). We're interested in two properties of the different situations that predicates can refer to:
+        We call these words <span class="terminology">predicates</span>. Predicates refer to some kind of <span class="terminology">situation</span> — for example, a dynamic event (like <span class="predicate">run</span> or <span class="predicate">think</span>) or a state of being (like <span class="predicate">know</span> or <span class="predicate">love</span>). We're interested in two properties of the different situations that predicates can refer to:
 
         <ol type="i">
-            <li>whether the predicate describes a <span class="terminology">hypothetical</span> situation or situations</li>
-            <li>whether the predicate describes a <span class="terminology">particular</span> situation or a group of particular situations</li>
-            <li>whether the predicate describes a <span class="terminology">dynamic</span> situation or situations</li>
+            <li>whether the predicate describes a <span class="terminology">hypothetical</span> situation(or situations)</li>
+            <li>whether the predicate describes a <span class="terminology">particular</span> situation(or situations)</li>
+            <li>whether the predicate describes a <span class="terminology">dynamic</span> situation(or situations)</li>
         </ol>
 
         We give examples that will help you answer these two questions below.
@@ -278,7 +297,7 @@ $(document).ready(function() {
     <h4><a href="javascript:hideshow(document.getElementById('all_examples'))">Click here to hide/show all examples</a></h4>
     <div id="all_examples" style="display: block">
     <p class="instructions_intro">
-        The first question is about whether the predicate describes a hypothetical situation, or hypothetical situations.
+        The first question is about whether the predicate describes a hypothetical situation.
 
         <h4><a href="javascript:hideshow(document.getElementById('hyp_examples'))">Examples of hypothetical situations (click to hide/show)</a></h4>
         <div id="hyp_examples" style="display: block" class="instructions_examples">
@@ -286,7 +305,7 @@ $(document).ready(function() {
 
         <blockquote>If Jo is <span class="predicate">running</span> a half marathon tomorrow, she should get lots of rest tonight.</blockquote>
 
-        In this case, the predicate <span class="predicate">running</span> describes a hypothetical situation - Jo may or may not run a marathon tomorrow. Notice that only the situation corresponding to the predicate <span class="predicate">running</span>  is answered. The hypothetical situation of Jo getting lot of rest is not described by the same predicate.
+        In this case, the predicate <span class="predicate">running</span> describes a hypothetical situation - Jo may or may not run a marathon tomorrow. Notice that only the situation corresponding to the predicate <span class="predicate">running</span>  is answered. The hypothetical situation of Jo getting lots of rest is not described by the same predicate.
 
         Another example of a predicate describing a hypothetical situation is <span class="predicate">know</span> in the following sentence:
 
@@ -305,7 +324,7 @@ $(document).ready(function() {
         </div>
         <br>
         <!-- SECOND QUESTION -->
-        The second question is about whether the predicate describes a particular situation or situations. A particular situation has a particular time and place associated with it (even though you may not be able to tell exactly which time and place that is from the sentence).
+        The second question is about whether the predicate describes a particular situation or situations. A particular situation has a particular time and place associated with it (<b>even though you may not be able to tell exactly which time and place that is from the sentence</b>).
 
         </br>
         <h4><a href="javascript:hideshow(document.getElementById('part_examples'))">Examples of particular situations (click to hide/show)</a></h4>
@@ -314,7 +333,7 @@ $(document).ready(function() {
 
         <blockquote>The lion was <span class="predicate">eating</span> a zebra.</blockquote>
 
-        In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation; the author of the sentence is saying that there is a particular time in the past when the lion was eating a zebra. Even though we can't be sure of the location associated with the situation , we can be sure that it <b>definitely happened at a particular location</b>.
+        In this sentence, the predicate <span class="predicate">eating</span> refers to a particular situation in the past - the author of the sentence is saying that there is a particular time in the past when the lion was eating a zebra. Even though we can't be sure of the exact time and location associated with the situation, we can be sure that it <b>definitely happened at a particular location at a particular time</b>.
 
         <br><br>
         Sometimes, a predicate can describe more than one particular situation.  An example of this can be seen in the following sentence:
@@ -324,7 +343,7 @@ $(document).ready(function() {
         In this sentence, the predicate <span class="predicate">ate</span> doesn't refer to one particular situation. Instead, it refers to a group of particular situations – one eating for each boy.
         For the purposes of answering whether the predicate refers to a particular situation, we would like you to group predicates that refer to one particular situation and predicates that refer to a group of particular situations together.
         <br>
-        Not all predicates refer to particular situation or group of particular situations. Take the following example.
+        Not all predicates refer to a particular situation or a group of particular situations. Take the following example.
 
         <blockquote>Lions <span class="predicate">eat</span> meat.</blockquote>
 
@@ -335,14 +354,14 @@ $(document).ready(function() {
 
         <blockquote>Claire <span class="predicate">eats</span> steak for dinner every Friday.</blockquote>
 
-        The predicate <span class="predicate">eats</span> doesn't refer to a particular situation or a group of particular situations. Rather it describes a habit of Claire - that she generally eats steak for dinner on Fridays. Here, there is a place and time associated with <span class="predicate">eats</span>, however it is <b>not a particular time and place</b>. 
+        The predicate <span class="predicate">eats</span> doesn't refer to a particular situation or a group of particular situations. Rather it describes a habit of Claire - that she generally eats steak for dinner on Fridays. Here, there is a place and time associated with <span class="predicate">eats</span>, however it is <b>not a particular time and place</b>.  For instance, we are not talking about a particular event on a particular Friday
 
         <br><br>
         Predicates can refer to hypothetical situations and still be particular. For example:
 
         <blockquote>If Jo is <span class="predicate">running</span> a half marathon tomorrow, she should get lots of rest tonight.</blockquote>
 
-        It was mentioned that the predicate <span class="predicate">running</span> refers to a hypothetical situation. However, the predicate alo refers to a particular situation - the hypothetical situation where Bo may run a half marathon. Running takes place in a particular time and place(even if it not clear from the sentence)
+        It was mentioned that the predicate <span class="predicate">running</span> refers to a hypothetical situation. However, the predicate also refers to a particular situation - the hypothetical situation where Bo may run a half marathon. Running takes place in a particular time and place(even if the particular time and place aren't mentioned in the sentence).
         <br><br>
         However, hypothetical situations can also be non-particular as in the other example given:
 
@@ -354,8 +373,7 @@ $(document).ready(function() {
         </div>
         <br>
         <!-- THIRD QUESTION -->
-        The third question is about whether the predicate describes a dynamic situation. A dynamic situation is one that we can say <b>happened</b>.
-        They will often involve physical activities, like running or kicking, but they can also involve mental activities like thinking or wondering.
+        The third question is about whether the predicate describes a dynamic situation. A dynamic situation, which can be either hypothetical or not, is one that involves someone doing something or something happening. A dynamic situation is one that we can say <b>happened</b>. They will often involve physical activities, like running or kicking, but they can also involve mental activities like thinking or wondering. Non-dynamic situations, on the other hand, tend to involve relationships between people or objects, like owning, liking, or believing.
         </br>
         <h4><a href="javascript:hideshow(document.getElementById('dyn_examples'))">Examples of dynamic situations (click to hide/show)</a></h4>
         <div id="dyn_examples" style="display: block" class="instructions_examples">
@@ -379,7 +397,7 @@ $(document).ready(function() {
 
         <blockquote>Bo <span class="predicate">believes</span> in Mo.</blockquote>
 
-        Notice that this sentence looks a lot like the one involving the predicate <span class="predicate">thought</span> above. It's different because We don't say believing in someone happened, whereas we do say that thinking about someone happens.
+        Notice that this sentence looks a lot like the one involving the predicate <span class="predicate">thought</span> above. It's different because we don't say believing in someone happened, whereas we do say that thinking about someone happens.
         <br><br>
 
 <!--         A particular situation can be dynamic and non-dynamic, and so can a non-particular situation. An example of a non-particular, dynamic situation is:
@@ -388,12 +406,14 @@ $(document).ready(function() {
         The situation described by <span class="predicate">eat</span> is dynamic, since it can be said to have happened. An example of particular, non-dynamic situation is:
 
         <blockquote>Lions <span class="predicate">eat</span> meat.</blockquote> -->
-    
+
         Sometimes it'll be difficult to tell if the predicate is dynamic or not. For this reason, we've provided a drop-down menu to input your confidence about your answer.
         </div>
         <br>
     </p>
 </div>
+</div>
+<span class="alert">If the sentence is not understandable or if the highlighted word isn't actually a predicate, then please answer 'Not at all confident' to all of the questions.</span>
 </br>
 
 </div> <!-- Panel-body --> </div>
@@ -412,7 +432,7 @@ $(document).ready(function() {
       </div>
     </fieldset>
 
-    <div><p id="submit_descr">Please answer all the questions</p><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
+    <div><p id="submit_descr">Please answer all the questions.</p><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
   </div>
   <!-- hit--></section>
 <!-- End Content Body --></div>
