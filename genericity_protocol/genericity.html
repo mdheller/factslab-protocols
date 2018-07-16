@@ -1,0 +1,398 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Arial, Helvetica, Verdana, Geneva, sans-serif; color:#333333; font-size:1.2em;"><!-- style -->
+  <style type="text/css">.panel-heading {
+    background-color: #FFFFFF !important;
+    color:#333333 !important;
+    font-size:2.0em;
+    border: 0px solid #FFFFFF;
+    }
+
+    .panel-primary {
+    border-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    }
+    .sentence_section {
+    margin-bottom: 2em;
+    }
+
+    blockquote {
+    border-left: 5px solid #666666;
+    }
+    
+    .instructions_examples {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+    
+    .predicate {
+    background-color: #BC0D0C;
+    padding-left: 3px;
+    padding-right: 3px;
+    color:#FFFFFF;
+    }
+
+    .noun {
+    background-color: #006FA8;
+    padding-left: 3px;
+    padding-right: 3px;
+    color:#FFFFFF;
+    }
+
+    p.example_sentence {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+
+    // taken from: http://www.javascriptkit.com/javatutors/dom3.shtml
+function hideshow(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+    
+    if (which.style.display=="block") {
+    which.style.display="none";
+    }
+    
+    else {
+    which.style.display="block";
+    }
+}
+
+/**
+ ** id       the unique ID for this particular select (when the same name
+ **          is being used multiple times on the same page)
+ **
+ ** name     the select.name
+ **
+ ** options  a list of (option.value, label) pairs
+ */
+function getSelectHTML(id, name, options) {
+
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility('+"'"+name+"'"+','+id+')">';
+
+    for (var i = 0; i < options.length; i++) {
+    select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
+    }
+
+    select_html += '</select>';
+
+    return select_html;
+}
+
+
+function toggleVisibility(responseType, id) {
+
+     if (responseType == "understandable" || responseType == "noun") {
+      var questionElement = document.getElementById('question-noun-particularity'+id);
+
+      var condition = document.getElementById("understandable"+id).value == "true";
+      condition = condition && document.getElementById("predicate"+id).value == "true";
+      condition = condition && ocument.getElementById("noun"+id).value == "true";
+     }
+
+     if (responseType == "question-noun-particularity") {
+      var questionElement = document.getElementById('question-noun-class'+id);
+
+      var condition = document.getElementById("question-noun-particularity"+id).value == "false";
+     }
+
+     // for now pred questions follow after the noun class question
+
+     if (responseType == "question-noun-class") {
+      var questionElement = document.getElementById('question-pred-dynamicity'+id);
+
+      var condition = true;
+     }
+
+      if (responseType == "question-pred-dynamicity") {
+      var questionElement = document.getElementById('question-pred-eventivity'+id);
+
+      var condition = document.getElementById("question-pred-dynamicity"+id).value == "true";
+     }
+
+     if (responseType == "question-pred-eventivity") {
+      var questionElement = document.getElementById('question-pred-predictability'+id);
+
+      var condition = true;
+     }
+
+     // if (responseType == "question-noun-class") {
+      // maybe put an abstraction question
+     // }     
+
+     if (condition) {
+             questionElement.style.visibility = 'visible';
+     } 
+     else {
+             questionElement.style.visibility = 'hidden';
+     }
+
+}
+
+
+
+  /** Add HTML for questions to DOM element with ID 'questions'
+   **
+   ** Assumes var_arrays is a list of tuples:
+   ** id : a numeric id that is used in the generation of the headers when the HIT data comes back
+   ** sentence_id : e.g., "en-ud-train.conllu 12"
+   ** pred_token : e.g., "6"
+   ** noun_lemma : e.g., "announce"
+   ** sentence
+   **
+  */
+
+      // Mechanical Turk will fill in '$ { varname }' variables when
+      // HTML template is rendered
+
+    function writeQuestions() {
+        var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+        var question_html = '';
+        question_html += '<div class="sentence_section">';
+        for (var i = 0; i < var_arrays.length; i++) {
+            var var_array = var_arrays[i];
+            var id = var_array['id'];
+            // question answers
+            var select_understandable = getSelectHTML(id,"understandable",
+                             [['na', '  -------  '],
+                              ['true','is'],
+                              ['false','is not']]);
+
+            var select_noun = getSelectHTML(id,"noun",
+                             [['na', '  -------  '],
+                            ['true','does'],
+                                ['false','does not']]);
+
+            var select_noun = getSelectHTML(id,"predicate",
+                             [['na', '  -------  '],
+                            ['true','does'],
+                                ['false','does not']]);
+
+            var select_noun_part = getSelectHTML(id,"noun_particularity",
+                             [['na', '  -------  '],
+                              ['true','denotes'],
+                              ['false','does not denote']]);
+
+            var select_noun_class = getSelectHTML(id,"noun_class",
+                             [['na', '  -------  '],
+                              ['true','denotes'],
+                              ['false','does not denote']]);
+
+            var select_dynamicity = getSelectHTML(id,"dynamicity",
+                                [['na', '  -------  '],
+                                 ['true','is'],
+                             ['false','is not']]);
+
+            var select_eventivity = getSelectHTML(id,"eventivity",
+                             [['na', '  -------  '],
+                              ['true','does'],
+                              ['false','does not']]);
+
+            var select_predictability = getSelectHTML(id,"predictability",
+                             [['na', '  -------  '],
+                              ['true','does'],
+                              ['false','does not']]);
+
+            var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
+                              [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
+
+            var select_noun_class_certainty = getSelectHTML(
+                              id,"noun_class_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
+
+            var select_dynamicity_certainty = getSelectHTML(
+                              id,"dynamicity_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
+
+            var select_eventivity_certainty = getSelectHTML(
+                              id,"eventivity_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
+
+            var select_predictability_certainty = getSelectHTML(
+                              id,"predictability_certainty",
+                                [['na', '  -------  '],
+                                ['4', 'totally confident'],
+                                ['3', 'very confident'],
+                                ['2', 'somewhat confident'],
+                                ['1', 'not very confident'],
+                                ['0', 'not at all confident']]);
+
+            // question html
+
+            question_html += '<h2> Part I </h2>' 
+              question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
+
+            question_html += '<br/><p>The sentence ' + select_understandable + ' understandable, and <span class="noun">' + var_array['noun'] + '</span> ' + select_noun + ' refers to a noun-like entity';
+
+            question_html += '<br/><p id="question-noun-particularity"' + id + '"> The noun <span class="noun">' + var_array['noun'] + '</span>' + select_noun_part + ' a particular object in and I am ' + select_noun_part_certainty + 'about my choice.</p>';
+
+            question_html += '<br/><p id="question-noun-class"' + id + '"> The noun <span class="noun">' + var_array['noun'] + '</span>' + select_noun_class + ' a class of objects and I am ' + select_noun_class_certainty + 'about my choice.</p>';
+
+            question_html += '<h2> Part II </h2>' 
+            question_html += '<h3>' + var_array['pred_sentence'] + '</h3>';
+
+            question_html += '<br/><p id="question-pred-dynamicity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_dynamicity + 'dynamic and I am ' + select_dynamicity_certainty + 'about my choice.</p>';
+
+            question_html += '<br/><p id="question-pred-eventivity"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_eventivity + 'refer to an event or a set of events ' + select_eventivity_certainty + 'about my choice.</p>';
+
+            question_html += '<br/><p id="question-pred-predictability"' + id + '"> The situation referred to by <span class="predicate">' + var_array['pred'] + '</span>' + select_predictability + 'tell me something about the likelihood of the situation happening again in the future ' + select_predictability_certainty + 'about my choice.</p>';
+
+            question_html += '<br/><hr>';
+        }
+        question_html += 'Comments:<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+
+        document.getElementById("questions").innerHTML = question_html;
+}
+
+function hideQuestions() {
+
+   var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+   for (var i = 0; i < var_arrays.length; i++) {
+      var var_array = var_arrays[i];
+      var id = var_array['id'];
+
+      var question_noun_particularity = document.getElementById('question-noun-particularity'+id);
+      question_noun_particularity.style.visibility = 'hidden';
+
+      var question_noun_class = document.getElementById('question-noun-class'+id);
+      question_noun_class.style.visibility = 'hidden';
+
+      var question_pred_dynamicity = document.getElementById('question-pred-dynamicity'+id);
+      question_pred_dynamicity.style.visibility = 'hidden';
+
+      var question_pred_eventivity = document.getElementById('question-pred-eventivity'+id);
+      question_pred_eventivity.style.visibility = 'hidden';
+
+      var question_pred_predictability = document.getElementById('question-pred-predictability'+id);
+      question_pred_predictability.style.visibility = 'hidden';
+   }
+}
+
+// read when document is ready (like a "main" function)
+$(document).ready(function() {
+    console.log("**** run ready function");
+    writeQuestions();
+    hideQuestions();
+});
+
+
+</script>
+
+    <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+    <div class="panel panel-primary"><!--
+    <div class="panel-heading"><strong>Task Name</strong></div>
+    --><!-- <div class="panel-body"> -->
+
+    <div class="instructions_intro">
+
+    <h1>What is it?</h1>
+
+    <h2>Overview</h2>
+
+    <p class="instructions_intro">
+      In this task you will be presented with a sentence containing <span class="noun">a word highlighted in blue</span>, <span class="predicate">a word highlighted in red</span> followed by questions about these words. The yellow highlighted words are <i>nouns</i>, and the red highlighted words are <i>predicates</i>. Nouns refer to entities like lions, chairs etc and predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness).
+
+      We are interested in studying the properties of certain sentences called <b>generics</b>. For example, the sentence "<span class="noun">Lions</span> eat meat" is a generic sentence, where lion is the noun. Generic sentences express general truths of the world or essential properties of nouns. Contrast this with a sentence like "<span class="noun">John</span> smoked a cigar", where John is the noun. This is not a generic sentence.     
+    </p>
+
+    <h2>How the task works</h2>
+
+    <p class="instructions_intro">
+        The task for each sentence has two parts. Part I has questions about the noun. Each question has only two answers in a drop down menu(of the form yes/no, is/is not, does/does not). Depending on the answer to a question, the following questions may or may not appear. <b>You must answer the question taking into consideration the context of the whole sentence.</b>
+        
+        1) Something <b>particular</b>
+
+        <blockquote><span class="noun">Roxane the lion</span> likes to play with her food.</blockquote>
+        <span class="noun">Roxane the lion</span> <b>is</b> a particular noun in this sentence.
+
+        <blockquote><span class="noun">The lions</span> roared in unison.</blockquote>
+        <span class="noun">The lions</span> <b>is</b> a particular noun in this sentence, since it refers to a specific group of lions engaging in the act of roaring. 
+
+        <blockquote><span class="noun">A lion</span> escaped from his enclosure the other day.</blockquote>
+        <span class="noun">A lion</span> <b>is</b> a particular noun in this sentence, since it refers to a specific lion which escaped.
+
+        <blockquote><span class="noun">Lions</span> eat meat.</blockquote> 
+        <span class="noun">Lions</span> <b>is not</b> a particular noun in this sentence, since the sentence does not talk about any specific lion(or lions). It talks about lions in general.
+
+        <blockquote><span class="noun">Wealth</span> is concentrated among the rich.</blockquote> 
+        <span class="noun">Wealth</span> <b>is not</b> particular noun in this sentence, since it talks about wealth in general.
+
+        <br><br>
+
+        2) Does the noun refer to a class of things?
+        <br><br>
+        3) an abstract entity(like "love", "justice"). You will also be asked to give a rating of how sure you are of this answer of yours(from 1(uncertain) to 7(very certain))
+
+        <br><br>
+        Part II has questions about the predicate. You will be asked the following questions about the predicate.
+
+        <br><br>
+
+        1)Does the predicate talk about a dynamic event? Dynamic events are things like running or kicking, and states of being are things like happiness or redness.
+
+        <br><br>
+        2) Does the predicate talk about a particular event or a particular set of events?
+
+        <br><br>
+        3) Does the predicate tell you something about the future, that is, is it predictive?
+
+    </p>
+
+</br>
+
+</div> <!-- Panel-body --> </div>
+<!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
+
+
+<section>
+  <input name="dummy", type="hidden" />  
+  <div id="hit">
+    <h2>Sentences</h2>
+
+    <fieldset>
+      <div id="questions">
+
+      </div>
+    </fieldset>
+
+    <div><input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" /></div>
+  </div>
+  <!-- hit--></section>
+<!-- End Content Body --></div>
+</section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
