@@ -1,0 +1,346 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Arial, Helvetica, Verdana, Geneva, sans-serif; color:#333333; font-size:1.2em;"><!-- style -->
+  <style type="text/css">.panel-heading {
+    background-color: #FFFFFF !important;
+    color:#333333 !important;
+    font-size:2.0em;
+    border: 0px solid #FFFFFF;
+    }
+
+    .panel-primary {
+    border-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    }
+    .sentence_section {
+    margin-bottom: 2em;
+    }
+
+    blockquote {
+    border-left: 5px solid #666666;
+    }
+
+    .instructions_examples {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+
+    .noun {
+    background-color: #EBC944;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+
+    p.example_sentence {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+
+    // taken from: http://www.javascriptkit.com/javatutors/dom3.shtml
+function hideshow(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+
+    if (which.style.display=="block") {
+    which.style.display="none";
+    }
+
+    else {
+    which.style.display="block";
+    }
+}
+
+/**
+ ** id       the unique ID for this particular select (when the same name
+ **          is being used multiple times on the same page)
+ **
+ ** name     the select.name
+ **
+ ** options  a list of (option.value, label) pairs
+ */
+function getSelectHTML(id, name, options) {
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility()">';
+
+    for (var i = 0; i < options.length; i++) {
+    select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
+    }
+
+    select_html += '</select>';
+
+    return select_html;
+}
+
+
+function toggleVisibility() {
+      // Toggle the submit button availability
+      var num_questions = jQuery.parseJSON('${var_arrays}').length;
+      var submit = true;
+
+      for (var i = 1; i < 11; i++) {
+          id = String(i)
+          // console.log(i)
+          submit = submit && 
+          document.getElementById("noun_particularity"+id).value != "na" && 
+          document.getElementById("noun_class"+id).value != "na" && 
+          document.getElementById("noun_abs"+id).value != "na" && 
+          document.getElementById("noun_part_certainty"+id).value != "na" && 
+          document.getElementById("noun_class_certainty"+id).value != "na" && 
+          document.getElementById("noun_abs_certainty"+id).value != "na"
+         }
+
+
+     if (submit) {
+            document.getElementById("submit_button").disabled=false;
+            document.getElementById("submit_descr").style.display="none";
+                  }  
+      else {
+            document.getElementById("submit_button").disabled=true;
+            document.getElementById("submit_descr").style.display="block";
+            } 
+
+}
+
+
+  /** Add HTML for questions to DOM element with ID 'questions'
+   **
+   ** Assumes var_arrays is a list of tuples:
+   ** id : a numeric id that is used in the generation of the headers when the HIT data comes back
+   ** sentence_id : e.g., "en-ud-train.conllu 12"
+   ** pred_token : e.g., "6"
+   ** noun_lemma : e.g., "announce"
+   ** sentence
+   **
+  */
+
+      // Mechanical Turk will fill in '$ { varname }' variables when
+      // HTML template is rendered
+
+  function writeQuestions() {
+      var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+      var question_html = '';
+      question_html += '<div class="sentence_section">';
+
+      for (var i = 0; i < var_arrays.length; i++) {
+          var var_array = var_arrays[i];
+          var id = var_array['id'];
+
+      // question answers
+
+      var select_noun_part = getSelectHTML(id,"noun_particularity",
+                         [['na', '  -------  '],
+                          ['true','does'],
+                          ['false','does not']]);
+
+      var select_noun_class = getSelectHTML(id,"noun_class",
+                         [['na', '  -------  '],
+                          ['true','does'],
+                          ['false','does not']]);
+
+      var select_noun_abs = getSelectHTML(id,"noun_abs",
+                         [['na', '  -------  '],
+                          ['true','does'],
+                          ['false','does not']]);
+
+      var select_noun_part_certainty = getSelectHTML(id,"noun_part_certainty",
+                          [['na', '  -------  '],
+                            ['4', 'totally confident'],
+                            ['3', 'very confident'],
+                            ['2', 'somewhat confident'],
+                            ['1', 'not very confident'],
+                            ['0', 'not at all confident']]);
+
+      var select_noun_class_certainty = getSelectHTML(
+                          id,"noun_class_certainty",
+                            [['na', '  -------  '],
+                            ['4', 'totally confident'],
+                            ['3', 'very confident'],
+                            ['2', 'somewhat confident'],
+                            ['1', 'not very confident'],
+                            ['0', 'not at all confident']]);
+
+      var select_noun_abs_certainty = getSelectHTML(id,"noun_abs_certainty",
+                          [['na', '  -------  '],
+                            ['4', 'totally confident'],
+                            ['3', 'very confident'],
+                            ['2', 'somewhat confident'],
+                            ['1', 'not very confident'],
+                            ['0', 'not at all confident']]);
+
+          question_html += '<h3>' + var_array['noun_sentence'] + '</h3>';
+
+      question_html += '<br/><p id="question-noun-particularity' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_part + ' refer to a particular thing in this sentence and I am ' + select_noun_part_certainty + ' about my choice.</p>';
+
+      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_class + ' refer to a type of thing in this sentence and I am ' + select_noun_class_certainty + ' about my choice.</p>';
+
+      question_html += '<br/><p id="question-noun-class' + id + '"> The noun  <span class="noun">' + var_array['noun'] + '</span> ' + select_noun_abs + ' refer to an abstract concept in this sentence and I am ' + select_noun_abs_certainty + ' about my choice.</p>';
+
+      question_html += '<br/><hr>';
+      }
+
+      question_html += 'Comments(optional):<br/><textarea name="comments" cols="60" rows="5"></textarea></div>';
+
+      document.getElementById("questions").innerHTML = question_html;
+
+  }
+
+// read when document is ready (like a "main" function)
+$(document).ready(function() {
+    console.log("**** run ready function");
+    writeQuestions();
+});
+
+
+</script>
+
+    <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+    <div class="panel panel-primary"><!--
+    <div class="panel-heading"><strong>Task Name</strong></div>
+    --><!-- <div class="panel-body"> -->
+
+    <div class="instructions_intro">
+
+    <h1>What is it?</h1>
+
+    <h2>Overview</h2>
+
+    <p class="instructions_intro">
+      In this task, you will be presented with a sentence containing <span class="noun">a word highlighted in yellow</span> followed by questions about that word.
+      We call the highlighted words <span class="noun">nouns</span>. Nouns can refer to particular things (or groups of things), like particular lions, particular chairs, particular
+      ideas, or particular thoughts. But they can also refer to types of things – animal species (lion, dog, cat), kinds of inanimate things (chair, bottle, computer), etc. – or even
+      very abstract concepts – wealth, power, justice, crime, etc.
+
+      We are interested in distinguishing among the different sorts of things nouns refer to in a particular sentence, and so the questions you will be asked about the
+      highlighted noun will be:
+
+      <ol type="i">
+        <li>whether the noun refers to a particular thing</li>
+        <li>whether the noun refers to a type of thing</li>
+         <li>whether the noun refers to an abstract concept</li>
+      </ol>
+
+      We give examples that will help you answer these questions below.
+
+    </p>
+
+    <h2>How the task works</h2>
+
+    <h4><a href="javascript:hideshow(document.getElementById('all_examples'))">Click here to hide/show all examples</a></h4>
+    <div id="all_examples" style="display: block">
+    <p class="instructions_intro">
+        The first question is about whether the noun refers to a particular thing.
+
+        </br>
+        <h4><a href="javascript:hideshow(document.getElementById('part_examples'))">Examples of particular nouns (click to hide/show)</a></h4>
+        <div id="part_examples" style="display: block" class="instructions_examples">
+        An example of a noun referring to a particular thing can be seen in the following sentence:
+
+        <blockquote>That <span class="noun">lion</span> likes to play with her food.</blockquote>
+
+        In this sentence, the noun <span class="noun">lion</span> refers to a particular lion that likes to play with her food.
+
+        An example of a noun referring to a particular group of things can be seen in the following sentence:
+
+        <blockquote>The <span class="noun">lions</span> roared in unison.</blockquote>
+
+        In this sentence, the noun <span class="noun">lions</span> refers to a particular group of things: a group of lions engaging in the act of roaring.
+
+
+        Not all nouns refer to physical things, but that doesn't mean they don't refer to particular things. An example of a noun referring to
+        a particular non-physical thing can be seen in the following sentence:
+
+        <blockquote>That <span class="noun">idea</span> is stupid.</blockquote>
+
+        In this sentence, the noun <span class="noun">idea</span> refers to a particular non-physical thing.
+      </div>
+    </br>
+        The second question is about whether the noun refers to a type of thing.
+
+        </br>
+        <h4><a href="javascript:hideshow(document.getElementById('kind_examples'))">Examples of nouns referring to a type of thing (click to hide/show)</a></h4>
+        <div id="kind_examples" style="display: block" class="instructions_examples">
+        An example of a noun referring to a type of thing can be seen in the following sentence:
+
+        <blockquote><span class="noun">Lions</span> eat meat.</blockquote>
+
+        In this sentence, the noun <span class="noun">lions</span> refers to lions in general – not any particular lion.
+
+        Not all nouns that refer to types of things refer to animal species.  An example of this can be seen in the following sentence:
+
+        <blockquote>Coke <span class="noun">bottles</span> have long necks.</blockquote>
+
+        In this sentence, the noun <span class="noun">bottles</span> refers to Coke bottles in general – not any particular Coke bottle.
+
+        Nouns that refer to types of things can come in various forms. For instance, we can also talk about Coke bottles in general using the following sentence:
+
+        <blockquote>The Coke <span class="noun">bottle</span> has changed shape many times over the years.</blockquote>
+
+        In this case, you should also answer that the noun <span class="noun">bottle</span> refers to a type of thing.
+      </div>
+    </br>
+        The third question is about whether the noun refers to an abstract concept.
+
+        </br>
+        <h4><a href="javascript:hideshow(document.getElementById('abs_examples'))">Examples of nouns referring to an abstract concept (click to hide/show)</a></h4>
+        <div id="abs_examples" style="display: block" class="instructions_examples">
+        An example of a noun referring to an abstract concept can be seen in the following sentence:
+
+        <blockquote><span class="noun">Love</span> is magical.</blockquote>
+
+        In this sentence, the noun <span class="noun">love</span> doesn't refer to particular thing or group of things, nor does it refer to a type of thing.
+        Rather, it refers directly to the abstract concept of love.
+
+        Sometimes it will be difficult to tell what a noun refers to. Consider the following sentence:
+
+        <blockquote>The <span class="noun">service</span> is bad at that restaurant.</blockquote>
+
+        In this sentence, it seems reasonable to say that the noun <span class="noun">service</span> refers to a particular thing – service at that restaurant.
+        But it also seems reasonable to say that it refers to a type of thing, which encompasses all the different acts of service carried out at the restaurant.
+        It could even be that the noun <span class="noun">service</span> refers to an abstract concept of service more generally, since service at a restaurant
+        can involve lots of different types of things mashed together – how nice the waiters are, the ambiance of the restaurant, quality of the food, etc. –
+        that we wouldn't naturally call one type of thing.
+
+        For this reason, we've provided a drop-down menu to input your confidence about your answer for each of the three questions.
+
+    </p>
+  </div>
+</br>
+
+</div> <!-- Panel-body --> </div>
+<!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
+
+
+<section>
+  <input name="dummy", type="hidden" />
+  <div id="hit">
+    <h2>Sentences</h2>
+
+    <fieldset>
+      <div id="questions">
+
+
+      </div>
+    </fieldset>
+
+    <div>
+        <p id="submit_descr">Please answer all the questions</p>
+        <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true />
+    </div>
+  </div>
+  <!-- hit--></section>
+<!-- End Content Body --></div>
+</section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
