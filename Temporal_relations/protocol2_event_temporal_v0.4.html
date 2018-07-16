@@ -1,0 +1,464 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Temporal relations</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style type="text/css">
+  .slider {width: 500px;}
+  .slider-range {width: 500px;}
+  .slider-start {width: 500px;}
+  .slider-end {width: 500px;}
+  div[class*='sld_pred'] {width: 500px;}
+  div[class*='sld_ex'] {width: 500px;}
+  input[class*="sld_ex"], textarea {
+  background-color : #F0F0FF; 
+  height:20px;
+  font-size:12pt;}
+  input[class*="sld_pred"], textarea {
+  height:20px;
+  font-size:12pt;}
+  </style>
+
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">  -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Arial, Helvetica, Verdana, Geneva, sans-serif; color:#333333; font-size:1.2em;"><!-- style -->
+  <style type="text/css">.panel-heading {
+    background-color: #FFFFFF !important;
+    color:#333333 !important;
+    font-size:2.0em;
+    border: 0px solid #FFFFFF;
+    }
+    
+
+    .panel-primary {
+    border-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    }
+    .sentence_section {
+	margin-bottom: 2em;
+    }
+
+    blockquote {
+    border-left: 5px solid #666666;
+    }
+
+    .instructions_examples {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+
+    .predicate {
+    background-color: #EEDA6E;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+    .notpredicate {
+    background-color: #808080;
+    color: #FFFFFF;
+    padding-left: 3px;
+    padding-right: 3px;
+    }
+    p.example_sentence {
+    border: 1px solid #E0E0E0;
+    background-color: #F0F0FF;
+    margin-left: 0em;
+    padding: 0.5em;
+    }
+  </style>
+
+  <script >
+
+    // taken from: http://www.javascriptkit.com/javatutors/dom3.shtml
+function hideshow(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+    
+    if (which.style.display=="block") {
+    which.style.display="none";
+    }
+    
+    else {
+    which.style.display="block";
+    }
+}
+
+function hideshow_all(which){
+
+    if (!document.getElementById) {
+    return;
+    }
+
+    which.style.display="none";
+  }
+
+/**
+ ** id       the unique ID for this particular select (when the same name
+ **          is being used multiple times on the same page)
+ **
+ ** name     the select.name
+ **
+ ** options  a list of (option.value, label) pairs
+ */
+
+
+function getSelectHTML(id, name, options) {
+
+    var select_html = '<select name="' + name + id + '" id="' + name + id + '" onchange="toggleVisibility()">';
+
+    for (var i = 0; i < options.length; i++) {
+	select_html += '<option value="' + options[i][0] + '">' + options[i][1] + '</option>';
+    }
+
+    select_html += '</select>';
+
+    return select_html;
+}
+
+
+function toggleVisibility() {
+     // Enable/Disable the submit button:
+    
+    var num_questions = jQuery.parseJSON('${var_arrays}').length;
+    var submit = true;
+
+     for (var i = 1; i < (num_questions+1); i++) 
+     {
+       ident = i
+      
+          var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + ident.toString()).val();
+          var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + ident.toString()).val();
+
+
+         submit = submit && temp_pred1 != "";
+         submit = submit && temp_pred2 != "";
+         submit = submit &&  document.getElementById("confidence_range"+ident).value != "na";
+         
+      }
+
+     if (submit) {
+            document.getElementById("submit_button").disabled = false;
+            document.getElementById("all_fillup").style.display = 'none';
+                  }  
+      else {
+            document.getElementById("submit_button").disabled = true;
+            document.getElementById("all_fillup").style.display = 'block';
+            } 
+
+  }
+
+  
+  function getValueSlider(name, id, range, val1, val2){
+           //Function that defines slider classes for each sentence id: val1 and val2 are initial values
+           //Returns the html string used to display the sliders
+    
+            var class_name = "sld_" + name + "_" + id;
+
+            var answer = '<input name ="' + class_name + '" class="' + class_name + '" type="text" size="7" readonly="readonly"><br> <div class="' + class_name + '"> </div>';
+            
+            if (range=="instant")
+            {
+              $("." + class_name).slider({
+              min: 0,
+              max: 100,
+              value: val1,
+              slide: function( event, ui ) {
+                   // find any element with class .amount WITHIN scope of $this
+                  $("." + class_name).val( ui.value);
+                  toggleVisibility();
+
+                    }
+               });
+              
+            }
+
+            else if (range=="start"){
+              $("." + class_name).slider({
+              range: "max",
+              min: 0,
+              max: 100,
+              value: val1,
+              slide: function( event, ui ) {
+                   // find any element with class .amount WITHIN scope of $this
+                  $("." + class_name).val( ui.value);
+                  toggleVisibility();
+                    }
+               });
+            }
+
+            else if (range=="end"){
+              $("." + class_name).slider({
+              range: "min",
+              min: 0,
+              max: 100,
+              value: val1,
+              slide: function( event, ui ) {
+                   // find any element with class .amount WITHIN scope of $this
+                  $("." + class_name).val( ui.value);
+                  toggleVisibility();
+                    }
+               });
+            }
+
+            else{
+              $("." + class_name).slider({
+              range:  true,
+              min: 0,
+              max: 100,
+              values: [val1, val2],
+              slide: function( event, ui ) {
+                   // find any element with class .amount WITHIN scope of $this
+                  $("." + class_name).val( ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+                  toggleVisibility();
+                    }
+               });
+
+            }
+
+            // Updated value of the slider
+         $("." + class_name).change(function () {
+            var value = this.value.substring(1);
+            console.log(value);
+            //toggleVisibility();
+            $("." + class_name).slider("value", parseInt(value));
+            });
+
+            return answer
+  }
+
+  function writeQuestions() 
+  {
+      var var_arrays = jQuery.parseJSON('${var_arrays}');
+
+      var question_html = '';
+      question_html += '<div class="sentence_section">';
+
+      for (var i = 0; i < var_arrays.length; i++) 
+      {
+       	  var var_array = var_arrays[i];
+	        var id = var_array['id'];
+
+      	  // Select the corresponding slider based on dict values in the json(csv) file
+
+          //Predicate 1:
+          var select_value_pred1 = getValueSlider('pred1', id, 'both', 35, 65);
+    
+          //Predicate 2:
+          var select_value_pred2 = getValueSlider('pred2', id, 'both', 35, 65);
+          
+
+          //Confidence Options
+      	  var select_confidence = getSelectHTML(id,"confidence_range",
+
+      				      [  ['4', 'totally confident'],
+      					        ['3', 'very confident'],
+                        ['2', 'somewhat confident'],
+      					        ['1', 'not very confident'],
+                        ['0', 'not at all confident']]);
+
+	         // question html
+
+          question_html += '<h3>' + var_array['sentence'] + '</h3> ';
+
+          // Predicate 1 Sliders
+          
+           question_html += '<p><span class="predicate">' + var_array['pred1'] + '</span><br><b>Range: </b>' + select_value_pred1 + '</p>' ;
+
+           question_html += '<p><br><span class="predicate">' + var_array['pred2'] + '</span><br><b>Range: </b>' + select_value_pred2 + '</p>' ;
+          
+           question_html += '<br/><p id="ques_conf'+id+'">You are '  +select_confidence + ' about the ranges that you have selected.</p>' 
+
+	       question_html += '<hr>';
+
+      }
+
+      question_html += 'Comments: (Optional) <br/><textarea name="comments" class=cols="60" rows="5"></textarea></div>';
+      //var var_temp = $(question_html);
+      document.getElementById("questions").innerHTML = question_html;
+      //console.log(var_temp);
+
+    }
+
+
+// read when document is ready (like a "main" function)
+$(document).ready(function() 
+{
+    //Load sliders for instructions
+    getValueSlider('ex', '1', 'both', 35, 65);
+    getValueSlider('ex', '2', 'both', 10, 17);
+    getValueSlider('ex', '3', 'both', 30, 80);
+    getValueSlider('ex', '4', 'both', 10, 50);
+    getValueSlider('ex', '5', 'both', 55, 62);
+    getValueSlider('ex', '6', 'both', 30, 80);
+    getValueSlider('ex', '7', 'both', 50, 60);
+  
+    console.log("**** run ready function");
+
+    //Write Questions
+    writeQuestions();
+
+    // Load sliders for Questions
+    var var_arrays = jQuery.parseJSON('${var_arrays}');
+    for (var i = 0; i < var_arrays.length; i++) 
+      {
+          var var_array = var_arrays[i];
+          var id = var_array['id'];
+
+          //Predicate 1:
+          getValueSlider('pred1', id, 'both', 35, 65);
+
+          //Predicate 2:
+          getValueSlider('pred2', id, 'both', 35, 65);
+          
+        }
+    });
+
+
+</script>
+
+    <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+    <div class="panel panel-primary"><!--
+    <div class="panel-heading"><strong>Task Name</strong></div>
+    --><!-- <div class="panel-body"> -->
+
+    <div class="instructions_intro">
+
+    <h1>What is the relation between the two events described?</h1>
+
+    <h2>Overview</h2>
+
+
+    <p class="instructions_intro">
+
+      
+      In this task, you will be presented with a sentence containing two <span class="predicate">yellow-highlighted</span> words, followed by questions about these words. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness).
+    </p>
+
+    <p class="instructions_intro">
+      We are interested in knowing the chronology of the situations described by these predicates: did one happen before/after the other?; did they overlap in time?; etc. 
+
+      </p>
+    <a href="javascript:hideshow_all(document.getElementById('instant_instr'))">Click here to hide all examples</a>
+      
+    <h2>How the task works</h2>
+    <div id="task_details" >
+    <p class="instructions_intro">
+      The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar with two sliders on it. The left slider represents the <b>start-point</b> of the situation described the predicate. The right slider represents the <b>end-point</b> of the situation described by the predicate. 
+      <br>The slider bar is shown below. Click and drag the slider horizontly to change the range. </br>
+      <div id="generic" style="display: block" class="instructions_examples">
+        <b>Range:</b>
+        <input class="sld_ex_1" type="text" size="7" readonly="readonly"><br> <div class="sld_ex_1"> </div>
+
+      </div>
+    </p>
+  
+  </div>
+
+    <p> You'll be presented with a slider bar for each highlighted predicate in the sentence.  <b>Your task is to move the sliders so that the chronology of the events is correct as per the slider positions</b>. Let's look at some examples</p>
+    
+    <!-- begin instantaneous examples -->
+    
+    <a href="javascript:hideshow(document.getElementById('instant_instr'))">Examples </a>
+    </br>
+    <div id="instant_instr" style="display: block" class="instructions_examples">
+<p>Consider the below example.</p>
+
+      
+      <blockquote>Sam <span class="predicate">broke</span> the window and <span class="predicate">ran</span> away.</blockquote>
+
+      <p>
+        <span class="predicate">broke</span> <br>
+        <b>Range:</b>
+        <input class="sld_ex_2" type="text" size="7" readonly="readonly"> <div class="sld_ex_2"> </div>
+      </p>
+
+
+      <p>
+        <br>
+        <span class="predicate">ran</span> <br>
+        <b>Range:</b>
+        <input class="sld_ex_3" type="text" size="7" readonly="readonly"> <div class="sld_ex_3"> </div>
+      </p>
+       
+<p>The situation described by the predicate <span class="predicate">ran</span> happened after the situation described by the predicate <span class="predicate">broke</span>. Hence the start-point of <span class="predicate">ran</span> is after the end-point of <span class="predicate">broke</span>. Also note that the area highlighting <span class="predicate">broke</span> is much smaller than the area highlighting <span class="predicate">ran</span> because the situation described by <span class="predicate">broke</span> probably took less time to happen than the situation described by <span class="predicate">ran</span>. </p>   
+
+<p>Try as much as possible to get the relative duration of events correct. We know it won't always be possible to get it absolutely correct and hence we have given confidence labels to know how certain you are in your answer. </p>
+
+<p>Let's take another example where the first situation has a larger area highlighted.</p>
+
+      <blockquote>The musician <span class="predicate">played</span> guitar for two hours and then <span class="predicate">left</span> the music room.</blockquote>
+
+      <p><span class="predicate">played</span> <br>
+        <b>Range:</b>
+        <input class="sld_ex_4" type="text" size="7" readonly="readonly"> <div class="sld_ex_4"> </div>
+      </p>
+
+
+    <p><br><span class="predicate">left</span> <br>
+      <b>Range:</b>
+        <input class="sld_ex_5" type="text" size="7" readonly="readonly"> <div class="sld_ex_5"> </div>
+    </p>
+
+    <p>The situation described by <span class="predicate">played</span> took two hours to happen which is much longer than the duration of the situation described by <span class="predicate">left</span> which probably just took seconds. Again, note that the start-point of the situation described by <span class="predicate">left</span> is after the end-point of the situation described by <span class="predicate">played</span>. 
+
+    <p>Our main interest is in knowing that the the start-point of <span class="predicate">left</span> is greater than or equal to the end-point of <span class="predicate">played</span>. Try to get the relative sizes of events correct as well. Don't worry too much about the exact numerical values. They are just meant to get a sense of the chronology of events.  </p>
+
+  <p> In some situations, one event is contained in the other event. Consider the example below.</p>
+
+    <blockquote>We <span class="predicate">drove</span> the car from New York City to Boston and realized only later that we had <span class="predicate">escaped</span> a major highway crash on our route.</blockquote>
+
+    <p><span class="predicate">drove</span> <br>
+      <b>Range:</b>
+        <input class="sld_ex_6" type="text" size="7" readonly="readonly"> <div class="sld_ex_6"> </div>
+    </p>
+
+    <p><br><span class="predicate">escaped</span> <br>
+      <b>Range:</b>
+        <input class="sld_ex_7" type="text" size="7" readonly="readonly"> <div class="sld_ex_7"> </div>
+    </p>
+
+<p>In the above example, the situation described by the predicate <span class="predicate">escaped</span> took place somewhere between the situation described by the predicate <span class="predicate">drove</span>.</p>
+
+</div>
+
+    <!-- end of NO instantaneous examples -->
+
+</div>
+
+
+</div> <!-- Panel-body --> </div>
+<!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
+
+<section>
+  <input name="dummy" type="hidden" />
+  <div id="hit">
+    <h2>Sentences</h2>
+
+    <fieldset>
+      <div id="questions"></div>
+    </fieldset>
+
+    <div>
+      <p id="all_fillup"> Please answer all the questions to enable the submit button.<p>
+      <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
+  </div>
+  <!-- hit--></section>
+<!-- End Content Body --></div>
+</section>
+
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
+
+
+
