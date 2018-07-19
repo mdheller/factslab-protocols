@@ -1,5 +1,4 @@
-genericity_protocol/.ipynb_checkpoints/
-genericity_protocol/__pycache__/
+.ipynb_checkpoints/
+__pycache__/
 *.csv
-
-*.csv
+*.tsv

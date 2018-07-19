@@ -5,8 +5,6 @@ from predpatt.filters import isNotCopula
 import json
 from os.path import expanduser
 import re
-import random
-from collections import Counter
 import pdb
 
 
@@ -66,6 +64,7 @@ for file in files:
         parsed['devte'] += [(file[17:] + " " + sent_id, PredPatt(ud_parse, opts=options)) for sent_id, ud_parse in load_conllu(data)]
 # random.shuffle(parsed['train'])
 c = {'train': 0, 'devte': 0}
+d = {'train': 0, 'dev': 0, 'test': 0}
 copp = {'train': 0, 'devte': 0}
 auxverb = {'train': 0, 'devte': 0}
 ign = {'train': 0, 'devte': 0}
@@ -79,6 +78,7 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
             raw_sentence = " ".join([token.text for token in parse_sen.tokens])
             html_sentence = htmlify(raw_sentence)
             sent_preds = []
+            split = sent_id[6:11].strip('.c')
             for predicate in parse_sen.instances:
                 sent_check = [pr.position for pr in sent_preds]
                 if predicate.position not in sent_check:
@@ -106,6 +106,7 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                     pred = [predicate.root.text]
                     pred_token = [predicate.root.position]
                 c[dat] += 1
+                d[split] += 1
                 token_dict = {}
                 pred_sentence = html_sentence.split().copy()
                 acc = 0
@@ -120,7 +121,7 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                 token_dict['pred_token'] = htmlify(pred_token)
                 token_dict['pred_sentence'] = " ".join(pred_sentence)
                 token_dict['sent_id'] = sent_id
-
+                token_dict['pred_root_pos'] = str(predicate.root.position)
                 out_data.append(json.dumps(token_dict))
                 id += 1
                 if id == 11:
@@ -130,3 +131,4 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
         outfile.write("\"" + replace_string(str(out_data)) + "\"\n")
         out_data = []
 print("INCL", c, "COP", copp, "VERB", auxverb, "IGN", ign)
+print("SPLIT", d)
