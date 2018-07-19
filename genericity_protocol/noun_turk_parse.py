@@ -6,6 +6,7 @@ from os.path import expanduser
 import re
 import pdb
 
+
 def html_ify(s):
     '''
         Takes care of &quot &lsqb &rsqb &#39
