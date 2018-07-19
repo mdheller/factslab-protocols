@@ -4,8 +4,6 @@ from predpatt import PredPattOpts
 import json
 from os.path import expanduser
 import re
-import random
-from pilot_ids import pilot_ids
 import pdb
 
 def html_ify(s):
@@ -63,6 +61,7 @@ for file in files:
             sent_id, ud_parse in load_conllu(data)]
 
 c = {'train': 0, 'devte': 0}
+d = {'train': 0, 'dev': 0, 'test': 0}
 ign = {'train': 0, 'devte': 0}
 prons_incl = ["you", "they", "yourself", "themselves", "them", "themself",
               "theirself", "theirselves"]
@@ -75,6 +74,7 @@ for write_file in ['noun_train_data.csv', 'noun_devte_data.csv']:
         for sent_id, parse_sen in parsed[dat]:
             raw_sentence = " ".join([token.text for token in parse_sen.tokens])
             html_sentence = html_ify(raw_sentence)
+            split = sent_id[6:11].strip('.c')
             sent_args = []
             for predicate in parse_sen.instances:
                 if predicate.root.tag in ["NOUN"]:
@@ -94,6 +94,7 @@ for write_file in ['noun_train_data.csv', 'noun_devte_data.csv']:
                             ign[dat] += 1
                             continue
                     c[dat] += 1
+                    d[split] += 1
                     noun = argument.root.text
                     token_dict = {}
                     noun = html_ify(noun)
@@ -118,3 +119,4 @@ for write_file in ['noun_train_data.csv', 'noun_devte_data.csv']:
         outfile.write("\"" + replace_string(str(out_data)) + "\"\n")
         out_data = []
 print("INCL", c, "IGN", ign)
+print("SPLIT", d)
