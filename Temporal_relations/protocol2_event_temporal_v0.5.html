@@ -294,7 +294,7 @@ function toggleVisibility() {
     var var_arrays = jQuery.parseJSON('${var_arrays}');
     var submit = true;
 
-    for (var i = 0; i < num_questions; i++) 
+    for (var i = 0; i < var_arrays.length; i++) 
       {
           var var_array = var_arrays[i];
           var id = var_array['id'];
@@ -317,28 +317,19 @@ function toggleVisibility() {
           }
 
           //Predicate 1:
-          if (pred1_array.constructor === Array)
-          {
-              for (j = 0; j < pred1_array.length; j++) 
-                        { 
-                          var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + id + '_' + j.toString()).val();
-                          submit = submit && temp_pred1 != "";
-                        } ;
-          }
-            
-
+          for (j = 0; j < pred1_array.length; j++) 
+                    { 
+                      var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + id + '_' + j.toString()).val();
+                      submit = submit && temp_pred1 != "";
+                    } ;
+          
           //Predicate 2:
-          if (pred2_array.constructor === Array)
-          {
-              for (k = 0; k < pred2_array.length; k++) 
-                        { 
-                          var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + id + '_' + k.toString()).val();
-                          submit = submit && temp_pred2 != "";
-                        } ;
-          }
-
-
-
+          for (k = 0; k < pred2_array.length; k++) 
+                    { 
+                      var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + id + '_' + k.toString()).val();
+                      submit = submit && temp_pred2 != "";
+                    } ;
+          
           submit = submit &&  document.getElementById("confidence_range"+id).value != "na";
 
        }   
@@ -465,28 +456,20 @@ function toggleVisibility() {
 
           //Predicate 1:
           var select_value_pred1 = [];
-          
-          if (pred1_array.constructor === Array)
-
-              for (j = 0; j < pred1_array.length; j++) 
-                        { 
-
-                          select_value_pred1[j] = getValueSlider('pred1', id, j.toString(), 'both', 35, 65);
-                        } ;
+        
+          for (j = 0; j < pred1_array.length; j++) 
+                    { 
+                      select_value_pred1[j] = getValueSlider('pred1', id, j.toString(), 'both', 35, 65);
+                    } ;
             
-
           //Predicate 2:
-          var select_value_pred2 = []
+          var select_value_pred2 = [];
 
-          if (pred2_array.constructor === Array)
-
-            {
-              for (k = 0; k < pred2_array.length; k++) 
-                        { 
-                          select_value_pred2[k] = getValueSlider('pred2', id, k.toString(), 'both', 35, 65);
-                        } ;
-            };
-            
+          for (k = 0; k < pred2_array.length; k++) 
+                    { 
+                      select_value_pred2[k] = getValueSlider('pred2', id, k.toString(), 'both', 35, 65);
+                    } ;
+        
           //Confidence Options
       	  var select_confidence = getSelectHTML(id,"confidence_range",
 
@@ -573,7 +556,7 @@ $(document).ready(function()
 
           if (var_array['pred2'] != "_null_")
           {
-            var pred2_array = var_array['pred1'].split(',');
+            var pred2_array = var_array['pred2'].split(',');
           }
           else{
             var pred2_array = []
