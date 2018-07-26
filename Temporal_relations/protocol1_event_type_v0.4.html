@@ -325,7 +325,7 @@ $(document).ready(function() {
     <p class="instructions_intro">
 
 
-      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
+      In this task, you will be presented with a sentence containing some <span class="predicate">yellow-highlighted</span> words, followed by questions about those words. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
       <ol type="i">
         <li>whether the event/state described was instantaneous or not,</li>
         <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
@@ -335,6 +335,8 @@ $(document).ready(function() {
          </ol>
          <li>roughly how long event/state likely lasted or will last</li>
       </ol>
+
+      <p>Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what type of situations those would be if they had happened or do happen in the future.</p>
       <a href="javascript:hideshow_all(document.getElementById('instant_instr'));
                           hideshow_all(document.getElementById('start_end_instr'));
                           hideshow_all(document.getElementById('duration_instr'))">Click here to hide all examples</a>
@@ -345,7 +347,7 @@ $(document).ready(function() {
     <p class="instructions_intro">
       The task will begin with a question:
       <ul>
-        <li>Do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
+        <li>Do you think the event or state described by the yellow-highlighted words is instantaneous or not? </li>
       </ul>
     </p>
 
@@ -377,7 +379,13 @@ $(document).ready(function() {
 <blockquote>The teenager <span class="predicate">broke</span> the window.</blockquote>
 <!-- <blockquote>The gas main <span class="predicate">exploded</span>.</blockquote> -->
 <!-- <blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote> -->
+<p> So because the change from broken to unbroken probably happened in an instant, we say that broke refers to an instantaneous situation.</p>
 
+<p>
+    Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what type of situations those would be if they had happened or do happen in the future. Look at the example below.</p>
+    
+    <blockquote>I have never <span class="predicate">broken</span> a bone in my body.</blockquote>
+      <p>Even though the situation described by <span class="predicate">broken</span> didn't happen, one can still answer that the situation described by <span class="predicate">broken</span> is instantaneous.</p>
 
 </div>
 
@@ -432,7 +440,7 @@ $(document).ready(function() {
     <!-- end instantaneous examples -->
     <br>
     <p class="instructions_intro">
-      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, years, decades, or centuries to happen, or if it's possibly always true.
+      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, days, weeks, years, decades, or centuries to happen, or if it's possibly always true.
    </p>
 
     <!-- begin duration examples -->
@@ -493,7 +501,7 @@ say <i>months</i>, and that would be an okay response too.</p>
     <!-- end duration examples -->
 
     </div>
-
+    
 
 </div> <!-- Panel-body --> </div>
 <!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
