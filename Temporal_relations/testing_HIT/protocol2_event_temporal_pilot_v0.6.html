@@ -339,14 +339,25 @@ function toggleVisibility() {
           for (j = 0; j < pred1_array.length; j++) 
                     { 
                       var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + id + '_' + j.toString()).val();
-                      submit = submit && temp_pred1 != "";
+
+                      var temp_pred1_conf =  document.getElementById("conf_pred1"+id+"_"+j.toString()).value;
+
+                      var temp_bool = (temp_pred1 != "") || (temp_pred1_conf == '0') ;
+
+                      submit = submit && temp_bool;
+
                     } ;
           
           //Predicate 2:
           for (k = 0; k < pred2_array.length; k++) 
                     { 
                       var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + id + '_' + k.toString()).val();
-                      submit = submit && temp_pred2 != "";
+
+                      var temp_pred2_conf =  document.getElementById("conf_pred2"+id+"_"+k.toString()).value;
+
+                      var temp_bool = (temp_pred2 != "") || (temp_pred2_conf == '0') ;
+
+                      submit = submit && temp_bool;
                     } ;
           
           //submit = submit &&  document.getElementById("confidence_range"+id).value != "na";
@@ -640,7 +651,7 @@ $(document).ready(function()
 
       <p class="instructions_intro">Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what their chronology would be if they had happened or do happen in the future.</p>
 
-      <p>We have also given a drop-down list for each predicate for you to denote how confident you are in your answer. If you feel that for a particular predicate you don't know what to answer, make your best guess and select the "not at all confident" option. This would help us identify predicates which were difficult to answer. </p>
+      <p>We have also provided a drop-down list for each predicate to tell us how confident you are in your answer for that predicate. If you can't answer for a particular predicate, you don't need to move the sliders; just select the "not at all confident" option.</p>
 
     <a href="javascript:hideshow_all(document.getElementById('instant_instr'))">Click here to hide all examples</a>
       
@@ -740,10 +751,13 @@ $(document).ready(function()
 </div>
 <br>
 
+<br>
+
     <!-- end of NO instantaneous examples -->
 
 </div>
 
+ <p> You can find out more about this task and the research it supports <a href="https://aaronstevenwhite.io/Information_Sheet_Turk.pdf">here</a>. </p>
 
 </div> <!-- Panel-body --> </div>  
 <!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
@@ -758,7 +772,7 @@ $(document).ready(function()
     </fieldset>
 
     <div>
-      <p id="all_fillup"> Please answer all the questions to enable the submit button.<p>
+      <p id="all_fillup"> To enable the submit button, please either answer every question or select the "not at all confident" option for a question if you don't know the answer.<p>
       <input class="btn btn-primary btn-lg" id="submit_button" type="submit" value="Submit" disabled=true /></div>
   </div>
   <!-- hit--></section>
