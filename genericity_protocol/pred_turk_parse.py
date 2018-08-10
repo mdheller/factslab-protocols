@@ -1,11 +1,9 @@
 from predpatt import load_conllu
 from predpatt import PredPatt
 from predpatt import PredPattOpts
-from predpatt.filters import isNotCopula
 import json
 from os.path import expanduser
 import re
-import pdb
 
 
 def htmlify(s):
@@ -50,7 +48,7 @@ parsed = {'train': [], 'devte': []}
 out_data = []
 
 # Resolve relative clause
-options = PredPattOpts(resolve_relcl=True, borrow_arg_for_relcl=True, resolve_conj=False)
+options = PredPattOpts(resolve_relcl=True, borrow_arg_for_relcl=True, resolve_conj=False, cut=True)
 
 path = home + '/UD_English-r1.2/en-ud-train.conllu'
 with open(path, 'r') as infile:
@@ -68,6 +66,7 @@ d = {'train': 0, 'dev': 0, 'test': 0}
 copp = {'train': 0, 'devte': 0}
 auxverb = {'train': 0, 'devte': 0}
 ign = {'train': 0, 'devte': 0}
+adj = {'train': 0, 'devte': 0}
 
 for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
     dat = write_file[5:10]
@@ -98,8 +97,13 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                         pred = [x.text for x in all_pred[cop_pos:]]
                         pred_token = [x.position for x in all_pred[cop_pos:]]
                     else:
-                        ign[dat] += 1
-                        continue
+                        if predicate.root.tag == "ADJ":
+                            adj[dat] += 1
+                            pred = [predicate.root.text]
+                            pred_token = [predicate.root.position]
+                        else:
+                            ign[dat] += 1
+                            continue
                 else:
                     # Just choose the verb or aux root as pred
                     auxverb[dat] += 1
@@ -122,7 +126,7 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                 token_dict['pred_sentence'] = " ".join(pred_sentence)
                 token_dict['sent_id'] = sent_id
                 # This was added after production
-                token_dict['pred_root_pos'] = str(predicate.root.position)
+                token_dict['pred_root_token'] = str(predicate.root.position)
                 out_data.append(json.dumps(token_dict))
                 id += 1
                 if id == 11:
@@ -131,5 +135,5 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                     out_data = []
         outfile.write("\"" + replace_string(str(out_data)) + "\"\n")
         out_data = []
-print("INCL", c, "COP", copp, "VERB", auxverb, "IGN", ign)
+print("INCL", c, "COP", copp, "VERB", auxverb, "ADJ", adj, "IGN", ign)
 print("SPLIT", d)
