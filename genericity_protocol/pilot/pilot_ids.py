@@ -98,8 +98,8 @@ def pilot_ids():
 "en-ud-train.conllu sent_9343",
 "en-ud-train.conllu sent_8939",
 "en-ud-train.conllu sent_3463",
-"en-ud-dev.conllu sent_1652",
-"en-ud-dev.conllu sent_263",
+"en-ud-train.conllu sent_5465",       #Duplicate en-ud-dev.conllu sent_1652
+"en-ud-train.conllu sent_8406",        #Duplicate en-ud-dev.conllu sent_263
 "en-ud-train.conllu sent_8621"
     ]
 

@@ -1,7 +1,13 @@
 <<<<<<< HEAD
+.ipynb_checkpoints/
+__pycache__/
+=======
+<<<<<<< HEAD
 =======
 
 *.csv
 
 >>>>>>> origin/noungenericity
+>>>>>>> d428901071413eb3ced92f9f73b6904d8b210da9
 *.csv
+*.tsv
