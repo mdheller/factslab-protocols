@@ -13,7 +13,7 @@
   .slider-end {width: 500px;}
   div[class*='sld_pred'] {width: 500px; display : inline-block;}
   div[class*='sld_ex'] {width: 500px; display : inline-block;}
-  
+
 
   textarea#styled {
   width: 600px;
@@ -28,7 +28,7 @@
   height:20px;
   font-size:12pt;}
 
-  
+
   </style>
 
   <!-- <link rel="stylesheet" href="https://code.jquery.com/resources/demos/style.css">  -->
@@ -44,7 +44,7 @@
     font-size:2.0em;
     border: 0px solid #FFFFFF;
     }
-    
+
 
     .panel-primary {
     border-color: #FFFFFF;
@@ -85,7 +85,7 @@
     background-color: #eaf47c;  /* light yellow */
     padding-left: 3px;
     padding-right: 3px;
-    }  
+    }
 
     .predicate2 {
     background-color: #FF7F00; /* orange */
@@ -112,7 +112,7 @@
     padding-left: 3px;
     padding-right: 3px;
     }
-    
+
 
     .predicate6 {
     background-color: #eaa47c;  /* pinkish */
@@ -162,7 +162,7 @@
     padding-right: 3px;
     }
 
-  
+
     .predicate13 {
     background-color: #749bc8; /* pale blue */
     padding-left: 3px;
@@ -175,7 +175,7 @@
     padding-right: 3px;
     }
 
-  
+
     .predicate15 {
     background-color: #FFFF00; /* yellow */
     padding-left: 3px;
@@ -209,27 +209,27 @@
     background-color: #8899fa; /* light violetish */
     padding-left: 3px;
     padding-right: 3px;
-    }   
+    }
     .predicate21 {
     background-color: #faaca5; /* creamy */
     padding-left: 3px;
     padding-right: 3px;
-    }  
+    }
     .predicate22 {
     background-color: #40cfa5; /* pale green */
     padding-left: 3px;
     padding-right: 3px;
-    }     
+    }
     .predicate23 {
     background-color: #adb1a5; /* grey */
     padding-left: 3px;
     padding-right: 3px;
-    }     
+    }
     .predicate24 {
     background-color: #1fe5f5; /* pale bright blue */
     padding-left: 3px;
     padding-right: 3px;
-    }    
+    }
     .predicate25 {
     background-color: #b4b567; /* greenish grey */
     padding-left: 3px;
@@ -263,11 +263,11 @@ function hideshow(which){
     if (!document.getElementById) {
     return;
     }
-    
+
     if (which.style.display=="block") {
     which.style.display="none";
     }
-    
+
     else {
     which.style.display="block";
     }
@@ -308,12 +308,12 @@ function getSelectHTML(name, id, count, options) {
 
 function toggleVisibility() {
      // Enable/Disable the submit button:
-    
+
     var num_questions = jQuery.parseJSON('${var_arrays}').length;
     var var_arrays = jQuery.parseJSON('${var_arrays}');
     var submit = true;
 
-    for (var i = 0; i < var_arrays.length; i++) 
+    for (var i = 0; i < var_arrays.length; i++)
       {
           var var_array = var_arrays[i];
           var id = var_array['id'];
@@ -336,8 +336,8 @@ function toggleVisibility() {
           }
 
           //Predicate 1:
-          for (j = 0; j < pred1_array.length; j++) 
-                    { 
+          for (j = 0; j < pred1_array.length; j++)
+                    {
                       var temp_pred1 = $('.' + 'sld_'+ 'pred1' + '_' + id + '_' + j.toString()).val();
 
                       var temp_pred1_conf =  document.getElementById("conf_pred1"+id+"_"+j.toString()).value;
@@ -347,10 +347,10 @@ function toggleVisibility() {
                       submit = submit && temp_bool;
 
                     } ;
-          
+
           //Predicate 2:
-          for (k = 0; k < pred2_array.length; k++) 
-                    { 
+          for (k = 0; k < pred2_array.length; k++)
+                    {
                       var temp_pred2 = $('.' + 'sld_'+ 'pred2' + '_' + id + '_' + k.toString()).val();
 
                       var temp_pred2_conf =  document.getElementById("conf_pred2"+id+"_"+k.toString()).value;
@@ -359,31 +359,31 @@ function toggleVisibility() {
 
                       submit = submit && temp_bool;
                     } ;
-          
+
           //submit = submit &&  document.getElementById("confidence_range"+id).value != "na";
 
-       }   
+       }
 
      if (submit) {
             document.getElementById("submit_button").disabled = false;
             document.getElementById("all_fillup").style.display = 'none';
-                  }  
+                  }
       else {
             document.getElementById("submit_button").disabled = true;
             document.getElementById("all_fillup").style.display = 'block';
-            } 
+            }
 
   }
 
-  
+
   function getValueSlider(name, id, count, range, val1, val2){
            //Function that defines slider classes for each sentence id: val1 and val2 are initial values
            //Returns the html string used to display the sliders
-    
+
             var class_name = "sld_" + name + "_" + id + "_" + count;
 
             var answer = '<input name ="' + class_name + '" class="' + class_name + '" type="text" size="7" readonly="readonly"> <div class="' + class_name + '"> </div>';
-            
+
             if (range=="instant")
             {
               $("." + class_name).slider({
@@ -397,7 +397,7 @@ function toggleVisibility() {
 
                     }
                });
-              
+
             }
 
             else if (range=="start"){
@@ -454,14 +454,14 @@ function toggleVisibility() {
             return answer
   }
 
-  function writeQuestions() 
+  function writeQuestions()
   {
       var var_arrays = jQuery.parseJSON('${var_arrays}');
 
       var question_html = '';
       question_html += '<div class="sentence_section">';
 
-      for (var i = 0; i < var_arrays.length; i++) 
+      for (var i = 0; i < var_arrays.length; i++)
       {
           var var_array = var_arrays[i];
           var id = var_array['id'];
@@ -487,12 +487,12 @@ function toggleVisibility() {
           //Predicate 1:
           var select_value_pred1 = [];
           var select_conf_pred1 = [];
-        
-          for (j = 0; j < pred1_array.length; j++) 
-                    { 
+
+          for (j = 0; j < pred1_array.length; j++)
+                    {
                       select_value_pred1[j] = getValueSlider('pred1', id, j.toString(), 'both', 35, 65);
 
-                      select_conf_pred1[j] = getSelectHTML("conf_pred1", id, j.toString(), 
+                      select_conf_pred1[j] = getSelectHTML("conf_pred1", id, j.toString(),
 
                                                     [ ['4', 'totally confident'],
                                                       ['3', 'very confident'],
@@ -500,16 +500,16 @@ function toggleVisibility() {
                                                       ['1', 'not very confident'],
                                                       ['0', 'not at all confident']]);
                     } ;
-            
+
           //Predicate 2:
           var select_value_pred2 = [];
           var select_conf_pred2 = [];
 
-          for (k = 0; k < pred2_array.length; k++) 
-                    { 
+          for (k = 0; k < pred2_array.length; k++)
+                    {
                       select_value_pred2[k] = getValueSlider('pred2', id, k.toString(), 'both', 35, 65);
 
-                      select_conf_pred2[k] = getSelectHTML("conf_pred2", id, k.toString(), 
+                      select_conf_pred2[k] = getSelectHTML("conf_pred2", id, k.toString(),
 
                                                     [ ['4', 'totally confident'],
                                                       ['3', 'very confident'],
@@ -517,38 +517,38 @@ function toggleVisibility() {
                                                       ['1', 'not very confident'],
                                                       ['0', 'not at all confident']]);
                     } ;
-        
-    
+
+
            // question html
 
           question_html += '<h3>' + var_array['sentence'] + '</h3> ';
 
 
-          
+
 
           // Predicate 1 Sliders
-           
+
             var l=0;
-            for (l = 0; l < pred1_array.length; l++) 
-            {    
+            for (l = 0; l < pred1_array.length; l++)
+            {
             question_html += '<div><br></div><span class="predicate' + (l+1).toString()  + '">' + '<sup>'+ (l+1).toString() +'</sup>' + pred1_array[l] + '</span><br><b>Range: </b>' + select_value_pred1[l] ;
 
             // Confidence Question
             question_html += ' Confidence: '  +select_conf_pred1[l];
 
             };
-          
+
            // Predicate 2 Sliders
 
-            for (m = 0; m < pred2_array.length; m++) 
-            { 
+            for (m = 0; m < pred2_array.length; m++)
+            {
                 question_html += '<div><br></div><span class="predicate' + (l+m+1).toString()  + '">' + '<sup>'+ (l+m+1).toString() +'</sup>'+ pred2_array[m] + '</span><br><b>Range: </b>' + select_value_pred2[m]  ;
 
                 // Confidence Question
                 question_html += ' Confidence: ' +select_conf_pred2[m] ;
             };
 
-      
+
          question_html += '<hr>';
 
       };
@@ -562,7 +562,7 @@ function toggleVisibility() {
 
 
 // read when document is ready (like a "main" function)
-$(document).ready(function() 
+$(document).ready(function()
 {
     //Load sliders for instructions
     getValueSlider('ex', '1', '1','both', 35, 65);
@@ -572,9 +572,15 @@ $(document).ready(function()
     getValueSlider('ex', '5', '1','both', 55, 62);
     getValueSlider('ex', '6', '1','both', 30, 80);
     getValueSlider('ex', '7', '1','both', 50, 60);
-    getValueSlider('ex', '8', '1','both', 30, 40);
-    getValueSlider('ex', '9', '1','both', 50, 55);
-  
+    getValueSlider('ex', '8', '1','both', 0, 90);
+    getValueSlider('ex', '9', '1','both', 90, 95);
+    getValueSlider('ex', '10', '1','both', 0, 100);
+    getValueSlider('ex', '11', '1','both', 45, 55);
+    getValueSlider('ex', '12', '1','both', 45, 55);
+    getValueSlider('ex', '13', '1','both', 0, 100);
+    getValueSlider('ex', '14', '1','both', 30, 40);
+    getValueSlider('ex', '15', '1','both', 50, 55);
+
     console.log("**** run ready function");
 
     //Write Questions
@@ -582,7 +588,7 @@ $(document).ready(function()
 
     // Load sliders for Questions
     var var_arrays = jQuery.parseJSON('${var_arrays}');
-    for (var i = 0; i < var_arrays.length; i++) 
+    for (var i = 0; i < var_arrays.length; i++)
       {
           var var_array = var_arrays[i];
           var id = var_array['id'];
@@ -602,22 +608,22 @@ $(document).ready(function()
           else{
             var pred2_array = []
           }
-      
+
           //Predicate 1:
-          
-          for (j= 0; j < pred1_array.length; j++) 
-                    { 
+
+          for (j= 0; j < pred1_array.length; j++)
+                    {
                       //console.log(pred1_array[j]);
                       getValueSlider('pred1', id, j.toString(), 'both', 35, 65);
                     } ;
 
 
           //Predicate 2:
-          for (k = 0; k < pred2_array.length; k++) 
-                    { 
+          for (k = 0; k < pred2_array.length; k++)
+                    {
                       getValueSlider('pred2', id, k.toString(), 'both', 35, 65);
                     } ;
-          
+
         }
     });
 
@@ -642,12 +648,12 @@ $(document).ready(function()
 
     <p class="instructions_intro">
 
-      
+
       In this task, you will be presented with a sentence containing some <span class="predicate">color-highlighted</span> words, followed by questions about these words. We call these words predicates. Predicates refer to some kind of situation—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness).
     </p>
 
     <p class="instructions_intro">
-      We are interested in knowing the chronology of the situations described by these predicates: did one happen before/after the other?; did they overlap in time?; etc. 
+      We are interested in knowing the chronology of the situations described by these predicates: did one happen before/after the other?; did they overlap in time?; etc.
 
       </p>
 
@@ -656,46 +662,46 @@ $(document).ready(function()
       <p>We have also provided a drop-down list for each predicate to tell us how confident you are in your answer for that predicate. If you can't answer for a particular predicate, you don't need to move the sliders; just select the "not at all confident" option.</p>
 
     <a href="javascript:hideshow_all(document.getElementById('instant_instr'))">Click here to hide all examples</a>
-      
+
     <h2>How the task works</h2>
     <div id="task_details" >
     <p class="instructions_intro">
-      The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar with two sliders on it. The left slider represents the <b>start-point</b> of the situation described the predicate. The right slider represents the <b>end-point</b> of the situation described by the predicate. 
+      The task starts with a sentence with some highlighted words within the sentence. For each highlighted predicate, you'll see a slider bar with two sliders on it. The left slider represents the <b>start-point</b> of the situation described the predicate. The right slider represents the <b>end-point</b> of the situation described by the predicate.
       <br>The slider bar is shown below. Click and drag the slider horizontally to change the range. </br>
       <div id="generic" style="display: block" class="instructions_examples">
-        <b>Range</b> 
-        <input class="sld_ex_1_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_1_1"> </div> 
+        <b>Range</b>
+        <input class="sld_ex_1_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_1_1"> </div>
 
       </div>
     </p>
-  
+
     </div>
 
     <p> You'll be presented with a slider bar for each highlighted predicate in the sentence.  <b>Your task is to move the sliders so that the chronology of the events is correct as per the slider positions</b>. Let's look at some examples</p>
-    
+
     <!-- begin instantaneous examples -->
-    
+
     <a href="javascript:hideshow(document.getElementById('instant_instr'))">Examples </a>
     </br>
     <div id="instant_instr" style="display: block" class="instructions_examples">
 <p>Consider the below example.</p>
 
-      
+
       <blockquote>Sam <span class="predicate1"><sup>1</sup>broke</span> the window and <span class="predicate2"><sup>2</sup>ran</span> away.</blockquote>
 
-     
+
         <span class="predicate1"><sup>1</sup>broke</span> <br>
         <b>Range:</b>
         <input class="sld_ex_2_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_2_1"> </div>
-  
-    
+
+
         <div><br></div>
         <span class="predicate2"><sup>2</sup>ran</span> <br>
         <b>Range:</b>
         <input class="sld_ex_3_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_3_1"> </div>
- 
-       
-<p>The situation described by the predicate <span class="predicate2"><sup>2</sup>ran</span> happened after the situation described by the predicate <span class="predicate1"><sup>1</sup>broke</span>. Hence the start-point of <span class="predicate2"><sup>2</sup>ran</span> is after the end-point of <span class="predicate1"><sup>1</sup>broke</span>. Also note that the area highlighting <span class="predicate1"><sup>1</sup>broke</span> is much smaller than the area highlighting <span class="predicate2"><sup>2</sup>ran</span> because the situation described by <span class="predicate1"><sup>1</sup>broke</span> probably took less time to happen than the situation described by <span class="predicate2"><sup>2</sup>ran</span>. </p>   
+
+
+<p>The situation described by the predicate <span class="predicate2"><sup>2</sup>ran</span> happened after the situation described by the predicate <span class="predicate1"><sup>1</sup>broke</span>. Hence the start-point of <span class="predicate2"><sup>2</sup>ran</span> is after the end-point of <span class="predicate1"><sup>1</sup>broke</span>. Also note that the area highlighting <span class="predicate1"><sup>1</sup>broke</span> is much smaller than the area highlighting <span class="predicate2"><sup>2</sup>ran</span> because the situation described by <span class="predicate1"><sup>1</sup>broke</span> probably took less time to happen than the situation described by <span class="predicate2"><sup>2</sup>ran</span>. </p>
 
 <p>Try as much as possible to get the relative duration of events correct. We know it won't always be possible to get it absolutely correct and hence we have given confidence labels to know how certain you are in your answer. </p>
 
@@ -706,44 +712,90 @@ $(document).ready(function()
      <span class="predicate1"><sup>1</sup>played</span> <br>
         <b>Range:</b>
         <input class="sld_ex_4_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_4_1"> </div>
-   
+
           <div><br></div>
    <span class="predicate2"><sup>2</sup>left</span> <br>
       <b>Range:</b>
         <input class="sld_ex_5_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_5_1"> </div>
-   
+
 
     <p>The situation described by <span class="predicate1"><sup>1</sup>played</span> took two hours to happen which is much longer than the duration of the situation described by <span class="predicate2"><sup>2</sup>left</span> which probably just took seconds. Again, note that the start-point of the situation described by <span class="predicate2"><sup>2</sup>left</span> is after the end-point of the situation described by <span class="predicate1"><sup>1</sup>played</span>.  </p>
- 
-  <p> In some situations, one event is contained in the other event. Consider the example below.</p>
+
+  <p> In some situations, one event happens in the middle of another event. Consider the example below.</p>
 
     <blockquote>We <span class="predicate1"><sup>1</sup>drove</span> the car from New York City to Boston and realized only later that we had <span class="predicate2"><sup>2</sup>escaped</span> a major highway crash on our route.</blockquote>
 
     <span class="predicate1"><sup>1</sup>drove</span> <br>
       <b>Range:</b>
         <input class="sld_ex_6_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_6_1"> </div>
-    
+
       <div><br></div>
     <span class="predicate2"><sup>2</sup>escaped</span> <br>
       <b>Range:</b>
         <input class="sld_ex_7_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_7_1"> </div>
-    
+
 
 <p>In the above example, the situation described by the predicate <span class="predicate2"><sup>2</sup>escaped</span> took place somewhere between the situation described by the predicate <span class="predicate1"><sup>1</sup>drove</span>.</p>
 
+<h3>Very long situations</h3>
 
-<p> Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what their chronology would be if they had happened or do happen in the future. Look at the following sentence.</p>
+<p>In certain cases, one situation is much longer than another, so it is hard to show their relative lengths using the slider bars. In this case, you should extend the slider all the way to the relevant edge position (0, 100, or both).</p>
+
+<p>For example, in the below example, <span class="predicate1"><sup>1</sup>lasted</span> spans nearly 200 years before <span class="predicate2"><sup>2</sup>overthrew</span>, but <span class="predicate2"><sup>2</sup>overthrew</span> only took weeks. We denote that <span class="predicate1"><sup>1</sup>lasted</span> extends into the past up to <span class="predicate2"><sup>2</sup>overthrew</span> by placing the slider at the edge.</p>
+
+<blockquote>The Russian Empire <span class="predicate1"><sup>1</sup>lasted</span> from 1721 until the February Revolution of 1917, when The Bolsheviks <span class="predicate2"><sup>2</sup>overthrew</span> the Tsarist system.</blockquote>
+
+<span class="predicate1"><sup>1</sup>lasted</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_8_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_8_1"> </div>
+
+  <div><br></div>
+<span class="predicate2"><sup>2</sup>overthrew</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_9_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_9_1"> </div>
+
+Another example comes from habits and generalizations. For instance, in the below example, <span class="predicate1"><sup>1</sup>runs</span> describes a habit of Ben's that may last over weeks, months, or even years. In contrast, <span class="predicate2"><sup>2</sup>saw</span> describes a single situation that happens over a very short period of time, so in this case, you would extend <span class="predicate1"><sup>1</sup>runs</span> to both endpoints.
+
+<blockquote>Ben <span class="predicate1"><sup>1</sup>runs</span> in the park every day, and today he <span class="predicate2"><sup>2</sup>saw</span> Sally running there too.</blockquote>
+
+<span class="predicate1"><sup>1</sup>run</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_10_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_10_1"> </div>
+
+  <div><br></div>
+<span class="predicate2"><sup>2</sup>saw</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_11_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_11_1"> </div>
+
+Similarly, in the below example, <span class="predicate2"><sup>2</sup>eat</span> describes a habit of all lions that will likely last as long as there are lions, while <span class="predicate1"><sup>1</sup>carrying</span> describes a single situation that happens over a very short period of time, so you would extend <span class="predicate1"><sup>1</sup>eat</span> to both endpoints.
+
+<blockquote>I avoided <span class="predicate2"><sup>2</sup>carrying</span> meat while in the park because lions <span class="predicate1"><sup>1</sup>eat</span> meat.</blockquote>
+
+
+<span class="predicate1"><sup>1</sup>carrying</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_12_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_12_1"> </div>
+
+  <div><br></div>
+<span class="predicate2"><sup>2</sup>eat</span> <br>
+  <b>Range:</b>
+    <input class="sld_ex_13_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_13_1"> </div>
+
+
+<h3>Hypothetical situations</h3>
+
+<p> Some of the highlighted predicates may refer to situations that didn't happen, haven't happened yet, or are hypothetical. In these cases, make your best guess about what their chronology would be if they had happened or do happen in the future. Look at the following sentence.</p>
 
 <blockquote>Even if John had <span class="predicate1"><sup>1</sup>gone</span> to the store, he would still have forgotten to <span class="predicate2"><sup>2</sup>buy</span> milk.</blockquote>
 
   <span class="predicate1"><sup>1</sup>gone</span> <br>
       <b>Range:</b>
-        <input class="sld_ex_8_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_8_1"> </div>
-  
+        <input class="sld_ex_14_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_14_1"> </div>
+
     <div><br></div>
     <span class="predicate2"><sup>2</sup>buy</span> <br>
       <b>Range:</b>
-        <input class="sld_ex_9_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_9_1"> </div>
+        <input class="sld_ex_15_1" type="text" size="7" readonly="readonly"> <div class="sld_ex_15_1"> </div>
 
 
 <p> In the above example, even though none of the situations described by the predicates have happened, it can be said that the situation described by <span class="predicate1"><sup>1</sup>gone</span> would have happened before the situation described by <span class="predicate2"><sup>2</sup>buy</span>.</p>
@@ -759,7 +811,7 @@ $(document).ready(function()
 
  <p> You can find out more about this task and the research it supports <a href="http://aaronstevenwhite.io/Information_Sheet_Turk.pdf">here</a>. </p>
 
-</div> <!-- Panel-body --> </div>  
+</div> <!-- Panel-body --> </div>
 <!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
 
 <section>
@@ -782,6 +834,3 @@ $(document).ready(function()
 <!-- close container -->
 <style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
 </style>
-
-
-
