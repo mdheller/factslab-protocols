@@ -1,0 +1,99 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+#install.packages('sigmoid')
+library(lme4)
+library(sigmoid)
+
+
+```
+
+```{r}
+#Convert into factors
+pilot_data = read_csv("pilot_data.csv")
+
+pilot_data$has_start = ifelse(pilot_data$is_instant=='True', 'true', pilot_data$has_start)
+pilot_data$has_end = ifelse(pilot_data$is_instant=='True', 'true', pilot_data$has_end)
+
+pilot_data$is_instant = as.factor(pilot_data$is_instant)
+pilot_data$has_start = as.factor(pilot_data$has_start)
+pilot_data$has_end = as.factor(pilot_data$has_end)
+summary(pilot_data)
+```
+```{r}
+#Modelling Is_instant
+
+model = glmer(is_instant~1+(1|worker_id) + (1|sent_token) + (1|hit_id), data=pilot_data, family="binomial")
+
+summary(model)
+
+#Model intercepts:
+df_inst = ranef(model)$sent_token
+colnames(df_inst) <- c('intercept')
+
+df_inst$glmer_intercept_inst = df_inst$intercept + -0.4101  #constant added manually
+df_inst$sent_token <- rownames(df_inst) 
+#How many positive is_instant intercepts
+table(sign(df_inst$intercept))
+table(sign(df_inst$glmer_intercept_inst))
+```
+
+
+
+```{r}
+## Modelling Has_Start
+model = glmer(has_start~1+(1|worker_id) + (1|sent_token) + (1|hit_id), data=pilot_data, family="binomial")
+
+summary(model)
+
+#Model intercepts:
+df_start = ranef(model)$sent_token
+colnames(df_start) <- c('intercept')
+
+df_start$glmer_intercept_start = df_start$intercept + 1.1608  #constant added manually
+df_start$sent_token <- rownames(df_start) 
+#How many positive is_instant intercepts
+table(sign(df_start$intercept))
+table(sign(df_start$glmer_intercept_start))
+
+```
+
+```{r}
+## Modelling Has_End
+model = glmer(has_end~1+(1|worker_id) + (1|sent_token) + (1|hit_id), data=pilot_data, family="binomial")
+
+summary(model)
+
+#Model intercepts:
+df_end = ranef(model)$sent_token
+colnames(df_end) <- c('intercept')
+
+df_end$glmer_intercept_end = df_end$intercept + 0.8758  #constant added manually
+df_end$sent_token <- rownames(df_end) 
+
+#How many positive is_instant intercepts
+table(sign(df_end$intercept))
+table(sign(df_end$glmer_intercept_end))
+```
+```{r}
+#Left join datasets
+pilot_sent_token_data = merge(x = df_inst, y = df_start[, c("sent_token", "glmer_intercept_start")], 
+                    by = "sent_token", all.x = TRUE)
+
+pilot_sent_token_data = merge(x = pilot_sent_token_data, y = df_end[, c("sent_token",
+                                                                        "glmer_intercept_end")], 
+                              by = "sent_token", all.x = TRUE)
+
+pilot_sent_token_data = within(pilot_sent_token_data, rm(intercept))
+```
+
+```{r}
+#Output the final data:
+
+write.csv(pilot_sent_token_data, file = "pilot_sent_token_data.csv",row.names=FALSE)
+```
+

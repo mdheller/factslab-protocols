@@ -21,6 +21,16 @@
     border-left: 5px solid #666666;
     }
 
+    .alert{
+    color: #FF8800;
+    display: inline-block;
+    font-weight : bold;
+    font-size : 1.2em;
+    text-indent: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    }
+
     .instructions_examples {
     border: 1px solid #E0E0E0;
     background-color: #F0F0FF;
@@ -217,42 +227,40 @@ function toggleVisibility(id) {
 
           var select_duration = getSelectHTML(id,"duration",
                     [['na', '  -------  '],
-                        ['7', 'took seconds to happen'],
-                        ['6', 'took minutes to happen'],
-                        ['5', 'took hours to happen'],
-                        ['4', 'took weeks to happen'],
-                        ['3', 'took months to happen'],
-                        ['2', 'took years to happen'],
+                        ['9', 'took seconds to happen'],
+                        ['8', 'took minutes to happen'],
+                        ['7', 'took hours to happen'],
+                        ['6', 'took days to happen'],
+                        ['5', 'took weeks to happen'],
+                        ['4', 'took months to happen'],
+                        ['3', 'took years to happen'],
+                        ['2', 'took decades to happen'],
                         ['1', 'took centuries to happen'],
                         ['0', 'is true forever']]);
 
       	  var select_confidence_instantaneous = getSelectHTML(id,"confidence_instantaneous",
-      				      [['na', '  -------  '],
-      					        ['4', 'totally confident'],
+      				      [ ['4', 'totally confident'],
       					        ['3', 'very confident'],
                         ['2', 'somewhat confident'],
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);
 
       	  var select_confidence_startpoint = getSelectHTML(id,"confidence_startpoint",
-      				      [['na', '  -------  '],
-      					        ['4', 'totally confident'],
+      				      [  ['4', 'totally confident'],
       					        ['3', 'very confident'],
                         ['2', 'somewhat confident'],
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);
 
       	  var select_confidence_endpoint = getSelectHTML(id,"confidence_endpoint",
-      				      [['na', '  -------  '],
-      					        ['4', 'totally confident'],
+      				      [  ['4', 'totally confident'],
       					        ['3', 'very confident'],
                         ['2', 'somewhat confident'],
       					        ['1', 'not very confident'],
                         ['0', 'not at all confident']]);
 
       	  var select_confidence_duration = getSelectHTML(id,"confidence_duration",
-      				      [['na', '  -------  '],
-      					        ['4', 'totally confident'],
+      				      [ ['4', 'totally confident'],
       					        ['3', 'very confident'],
                         ['2', 'somewhat confident'],
       					        ['1', 'not very confident'],
@@ -321,13 +329,15 @@ $(document).ready(function() {
     <div class="instructions_intro">
 
     <h1>What kind of event is it?</h1>
+    
+    <span class="alert">You may do up to 25 HITs in this batch, unless we have given you explicit permission by email to do more. If you do more than 25 HITs without such permission, we reserve the right to reject any work done in excess of 25 HITs.</span>
 
     <h2>Overview</h2>
 
     <p class="instructions_intro">
 
 
-      In this task, you will be presented with a sentence containing a <span class="predicate">yellow-highlighted</span> word, followed by questions about that word. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
+      In this task, you will be presented with a sentence containing some <span class="predicate">yellow-highlighted</span> words, followed by questions about those words. We call these words predicates. Predicates refer to some kind of <span class="terminology">situation</span>—for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We're interested in three different properties of the situations that different predicates refer to:
       <ol type="i">
         <li>whether the event/state described was instantaneous or not,</li>
         <li>if not, whether, within the time period referenced by the sentence, the event has: </li>
@@ -337,6 +347,8 @@ $(document).ready(function() {
          </ol>
          <li>roughly how long event/state likely lasted or will last</li>
       </ol>
+
+      <p>Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what type of situations those would be if they had happened or do happen in the future.</p>
       <a href="javascript:hideshow_all(document.getElementById('instant_instr'));
                           hideshow_all(document.getElementById('start_end_instr'));
                           hideshow_all(document.getElementById('duration_instr'))">Click here to hide all examples</a>
@@ -347,7 +359,7 @@ $(document).ready(function() {
     <p class="instructions_intro">
       The task will begin with a question:
       <ul>
-        <li>Do you think the event or state described by the yellow-highlighted word is instantaneous or not? </li>
+        <li>Do you think the event or state described by the yellow-highlighted words is instantaneous or not? </li>
       </ul>
     </p>
 
@@ -379,7 +391,13 @@ $(document).ready(function() {
 <blockquote>The teenager <span class="predicate">broke</span> the window.</blockquote>
 <!-- <blockquote>The gas main <span class="predicate">exploded</span>.</blockquote> -->
 <!-- <blockquote>The appraiser <span class="predicate">noticed</span> the flaw in the glass.</blockquote> -->
+<p> So because the change from broken to unbroken probably happened in an instant, we say that broke refers to an instantaneous situation.</p>
 
+<p>
+    Some of the highlighted predicates may refer to situations that didn't happen or haven't happened yet. In these cases, make your best guess about what type of situations those would be if they had happened or do happen in the future. Look at the example below.</p>
+    
+    <blockquote>I have never <span class="predicate">broken</span> a bone in my body.</blockquote>
+      <p>Even though the situation described by <span class="predicate">broken</span> didn't happen, one can still answer that the situation described by <span class="predicate">broken</span> is instantaneous.</p>
 
 </div>
 
@@ -434,7 +452,7 @@ $(document).ready(function() {
     <!-- end instantaneous examples -->
     <br>
     <p class="instructions_intro">
-      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, years, decades, or centuries to happen, or if it's possibly always true.
+      Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, days, weeks, years, decades, or centuries to happen, or if it's possibly always true.
    </p>
 
     <!-- begin duration examples -->
@@ -495,7 +513,8 @@ say <i>months</i>, and that would be an okay response too.</p>
     <!-- end duration examples -->
 
     </div>
-
+    <br>
+    <p> You can find out more about this task and the research it supports <a href="https://aaronstevenwhite.io/Information_Sheet_Turk.pdf">here</a>. </p>
 
 </div> <!-- Panel-body --> </div>
 <!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
