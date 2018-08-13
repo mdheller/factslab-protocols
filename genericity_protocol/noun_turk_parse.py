@@ -4,7 +4,6 @@ from predpatt import PredPattOpts
 import json
 from os.path import expanduser
 import re
-import pdb
 
 
 def html_ify(s):
@@ -47,7 +46,7 @@ home = expanduser("~/Downloads/")
 parsed = {'train': [], 'devte': []}
 out_data = []
 
-options = PredPattOpts(resolve_relcl=True, borrow_arg_for_relcl=True, resolve_conj=False)  # Resolve relative clause
+options = PredPattOpts(resolve_relcl=True, borrow_arg_for_relcl=True, resolve_conj=False, cut=True)  # Resolve relative clause
 
 path = home + '/UD_English-r1.2/en-ud-train.conllu'
 with open(path, 'r') as infile:
@@ -94,6 +93,7 @@ for write_file in ['noun_train_data.csv', 'noun_devte_data.csv']:
                         if argument.root.text.lower() not in prons_incl:
                             ign[dat] += 1
                             continue
+
                     c[dat] += 1
                     d[split] += 1
                     noun = argument.root.text
