@@ -279,7 +279,7 @@ function hideshow_all(which){
     return;
     }
 
-    which.style.display="none";
+    which.style.display="block";
   }
 
 /**
@@ -560,13 +560,9 @@ function toggleVisibility() {
                                                       ['0', 'not at all confident']]);
 
 
-
-
            // question html
 
           question_html += '<h3>' + var_array['sentence'] + '</h3> ';
-
-
 
 
           // Predicate 1 Sliders
@@ -684,7 +680,7 @@ $(document).ready(function()
 
     <h1>Relation between two events and their respective durations</h1>
 
-    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed recently (10th August, 2018).</span>
+    <span class="alert">Please read the instructions even if you have attempted the survey before as the instructions have changed recently (11th August, 2018).</span>
 
     <!-- <span class="alert">You may do up to 25 HITs in this batch, unless we have given you explicit permission by email to do more. If you do more than 25 HITs without such permission, we reserve the right to reject any work done in excess of 25 HITs.</span> -->
 
@@ -705,7 +701,7 @@ $(document).ready(function()
       </p>
 
     <a href="javascript:hideshow_all(document.getElementById('instant_instr'));
-                        hideshow_all(document.getElementById('duration_instr'))">Click here to hide all examples</a>
+                        hideshow_all(document.getElementById('duration_instr'))">Click here to show all examples</a>
 
     <h2>How the task works</h2>
     <div id="task_details" >
@@ -727,7 +723,7 @@ $(document).ready(function()
 
     <a href="javascript:hideshow(document.getElementById('instant_instr'))">Examples of relations between events</a>
     </br>
-    <div id="instant_instr" style="display: block" class="instructions_examples">
+    <div id="instant_instr" style="display: none" class="instructions_examples">
 <p>Consider the below example.</p>
 
 
@@ -848,8 +844,6 @@ $(document).ready(function()
 </div>
 <br>
 
-<br>
-
     <!-- end of NO instantaneous examples -->
     <p class="instructions_intro">
       Finally, you will be asked about the likely total duration of the happened event. We are interested in knowing whether the event took place in seconds, minutes, hours, days, weeks, years, decades, or centuries to happen, or if it's possibly always true.
@@ -860,7 +854,7 @@ $(document).ready(function()
 
     </br>
 
-    <div id="duration_instr" style="display: block" class="instructions_examples">
+    <div id="duration_instr" style="display: none" class="instructions_examples">
 
 
       <p>Consider a predicate like <span class="predicate">remodeled</span>.</p>
@@ -934,7 +928,21 @@ say <i>months</i>, and that would be an okay response too.</p>
 
 </div>
 
- <p> You can find out more about this task and the research it supports <a href="http://aaronstevenwhite.io/Information_Sheet_Turk.pdf">here</a>. </p>
+<a href="javascript:hideshow(document.getElementById('rejectionn_instr'))">Click here to check reasons that could lead to rejection</a>
+
+    </br>
+
+    <div id="rejectionn_instr" style="display: none" class="instructions_examples">
+
+  <li><b> Inconsistent duration and slider-range:</b> Example: If you select duration for the first and second predicate as seconds and days respectively, but your slider positions show that the range of the first predicate is larger than the range of the second predicate, that would be considered an inconsistent annotation. This does not apply if the duration of both predicates is the same.</li>
+  <li><b>Default slider-values</b>: If most of your slider positions are at default values, then it will be subjected to further scrutiny and might be rejected if found unreasonable.</li>
+
+  We understand that sometimes the above mentioned scenarios can genuinely happen and we will take that into consideration. Chances of rejection increase if multiple such cases are found among your answers. </p>
+ 
+ </div>
+
+<br>
+<p> You can find out more about this task and the research it supports <a href="http://aaronstevenwhite.io/Information_Sheet_Turk.pdf">here</a>. </p>
 
 </div> <!-- Panel-body --> </div>
 <!-- Panel-primary --><!-- End Instructions --><!-- Content Body -->
