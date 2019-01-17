@@ -117,6 +117,8 @@ for write_file in ['noun_train_data.csv', 'noun_devte_data.csv']:
                         id = 1
                         outfile.write("\"" + replace_string(str(out_data)) + "\"\n")
                         out_data = []
+                else:
+                    ign[dat] += 1
         outfile.write("\"" + replace_string(str(out_data)) + "\"\n")
         out_data = []
 print("INCL", c, "IGN", ign)

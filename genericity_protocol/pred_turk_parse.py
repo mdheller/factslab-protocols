@@ -125,7 +125,7 @@ for write_file in ['pred_train_data.csv', 'pred_devte_data.csv']:
                 token_dict['pred_token'] = htmlify(pred_token)
                 token_dict['pred_sentence'] = " ".join(pred_sentence)
                 token_dict['sent_id'] = sent_id
-                # This was added after production
+                # This was added after pilot, and initial runs perhaps
                 token_dict['pred_root_token'] = str(predicate.root.position)
                 out_data.append(json.dumps(token_dict))
                 id += 1
