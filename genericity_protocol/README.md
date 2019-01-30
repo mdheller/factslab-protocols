@@ -26,11 +26,11 @@ The column descriptions and values for `arg_long_data.tsv` can be found below.
 | Arg.Word | The argument token | `string` |
 | Arg.Lemma | The argument lemma | `string` |
 | Is.Particular | The particular property annotation | `True, False` |
-| Is.Particular.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Part.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 | Is.Kind | The kind property annotation | `True, False` |
-| Is.Kind.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Kind.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 | Is.Abstract | The abstract property annotation | `True, False` |
-| Is.Abstract.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Abs.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 
 
 The column descriptions and values for `arg_norm_data.tsv` can be found below.
@@ -61,11 +61,11 @@ The column descriptions and values for `pred_long_data.tsv` can be found below.
 | Pred.Word | The predicate token | `string` |
 | Pred.Lemma | The predicate lemma | `string` |
 | Is.Particular | The particular property annotation | `True, False` |
-| Is.Particular.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Part.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 | Is.Dynamic | The dynamic property annotation | `True, False` |
-| Is.Dynamic.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Dyn.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 | Is.Hypothetical | The hypothetical property annotation | `True, False` |
-| Is.Hypothetical.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
+| Hyp.Confidence | The 5-point Likert scale annotation confidence of the property | `0, 1, 2, 3, 4` |
 
 The column descriptions and values for `pred_norm_data.tsv` can be found below.
 
