@@ -1,3 +1,5 @@
 # Protocol code and design for genericity annotation
 
 This folder contains the styling and markup files for running the genericity protocol on Amazon Mechanical Turk. It also contains the code necessary to generate the .csv datafile that MTurk requires as input. To generate these datafiles, ensure that the scripts point to the current location of the [Universal Dependencies v1.2 dataset](https://github.com/UniversalDependencies/UD_English-EWT/releases/tag/r1.2). You are free to use the scripts and the markup files to rerun the protocol as is, or to generate your own protocol. For a detailed description of the protocol and data collected please refer to the following papers. If you use these scripts or protocol designs  in a presentation or publication, we ask that you cite the following paper.
+
+V. S. Govindarajan, B. Van Durme. 2016, & White, A. S. [Decomposing Generalization: Models of Generic, Habitual, and Episodic Statements](). In *Arxiv*.
