@@ -3,3 +3,4 @@ __pycache__/
 *.csv
 *.tsv
 *.txt
+/genericity_protocol/pilot
