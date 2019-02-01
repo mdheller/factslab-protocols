@@ -3,3 +3,5 @@ __pycache__/
 *.csv
 *.tsv
 *.txt
+/genericity_protocol/pilot
+/genericity_protocol/pilot/.ipynb_checkpoints
