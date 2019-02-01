@@ -4,3 +4,4 @@ __pycache__/
 *.tsv
 *.txt
 /genericity_protocol/pilot
+/genericity_protocol/pilot/.ipynb_checkpoints
